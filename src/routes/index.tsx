@@ -6,6 +6,7 @@ import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
   Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
 } from "lucide-react";
+import techHero from "@/assets/tech-hero.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -59,8 +60,8 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-20 lg:pt-16">
-          <div className="animate-fade-up max-w-5xl">
+        <div className="mx-auto grid w-full max-w-7xl grid-cols-1 gap-12 px-6 pb-16 pt-12 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-10 lg:px-10 lg:pb-20 lg:pt-16">
+          <div className="animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.55_0.13_162)] opacity-75" />
@@ -69,7 +70,7 @@ function Home() {
               Cimientos firmes · Transformación que perdura
             </span>
 
-            <h1 className="mt-8 text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[6.5rem]">
+            <h1 className="mt-8 text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[5.5rem]">
               Es momento de{" "}
               <span className="bg-gradient-to-br from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)] bg-clip-text text-transparent">
                 evolucionar.
@@ -88,7 +89,18 @@ function Home() {
             </div>
           </div>
 
-
+          <div className="animate-fade-up relative">
+            <div className="absolute -inset-6 -z-10 rounded-[2rem] bg-gradient-to-br from-[oklch(0.55_0.13_162)]/25 via-transparent to-[oklch(0.78_0.12_162)]/20 blur-2xl" />
+            <div className="overflow-hidden rounded-2xl border border-border/60 shadow-soft ring-1 ring-[oklch(0.55_0.13_162)]/10">
+              <img
+                src={techHero}
+                alt="Visualización de tecnología y transformación digital"
+                width={1536}
+                height={1024}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
         </div>
 
         {/* Roles strip — full width */}
