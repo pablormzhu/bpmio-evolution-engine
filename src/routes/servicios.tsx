@@ -66,11 +66,36 @@ const steps = [
 ];
 
 const pieces = [
-  { icon: Database, t: "Información estandarizada y en tiempo real", d: "Tu información deja de vivir dispersa y de analizarse a destiempo. Te vuelves dueño en tiempo real." },
-  { icon: Workflow, t: "Automatización de procesos", d: "Devolvemos tiempo a tu equipo automatizando el trabajo repetitivo. Liberar, no reemplazar." },
-  { icon: Brain, t: "IA que trabaja contigo", d: "IA entrenada y afinada para tus procesos. Un compañero más, no un sustituto." },
-  { icon: Plug, t: "Integración y flujo de información", d: "Construimos lo que falta para que la información fluya. Que nada quede separado." },
-  { icon: Code2, t: "Software a la medida", d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita." },
+  {
+    icon: Database,
+    t: "Información estandarizada y en tiempo real",
+    d: "Tu información deja de vivir dispersa y de analizarse a destiempo. Te vuelves dueño en tiempo real.",
+    full: "Que tu información deje de vivir dispersa y de analizarse a mano y a destiempo. La dejamos estandarizada, automatizada y al día, y te vuelves dueño de ella en tiempo real: para explorarla desde muchos ángulos, compararte con tu pasado y anticiparte a lo que viene. La operación deja de mirar al retrovisor.",
+  },
+  {
+    icon: Workflow,
+    t: "Automatización de procesos",
+    d: "Devolvemos tiempo a tu equipo automatizando el trabajo repetitivo. Liberar, no reemplazar.",
+    full: "El trabajo repetitivo y manual consume las horas de tu equipo. Lo automatizamos para devolverle ese tiempo y enfocarlo donde de verdad aporta —liberando a tu gente, no reemplazándola.",
+  },
+  {
+    icon: Brain,
+    t: "Inteligencia artificial que trabaja contigo",
+    d: "IA entrenada y afinada para tus procesos. Un compañero más, no un sustituto.",
+    full: "IA entrenada y afinada para entender tus procesos, que ejecuta tareas reales y le quita carga a tu equipo. No trabaja aislada: trabaja para y con tu gente, como un integrante más que aporta en sinergia. Un compañero, no un sustituto.",
+  },
+  {
+    icon: Plug,
+    t: "Integración y flujo de información",
+    d: "Construimos lo que falta para que la información fluya. Que nada quede separado.",
+    full: "Cuando tus sistemas están aislados, o no hacen lo que necesitas y se vuelven un cuello de botella, construimos lo que falta para que la información fluya. Que nada quede separado.",
+  },
+  {
+    icon: Code2,
+    t: "Software a la medida",
+    d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita.",
+    full: "Cuando no existe nada en el mercado que encaje, diseñamos el software que tu empresa necesita —muchas veces, el puente que conecta tus otras herramientas y le da sinergia a todo el sistema.",
+  },
 ];
 
 function StepCard({
@@ -109,6 +134,36 @@ function StepCard({
         </div>
       </div>
     </li>
+  );
+}
+
+function PieceCard({
+  Icon, title, short, full,
+}: {
+  Icon: typeof Database;
+  title: string;
+  short: string;
+  full: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const isLong = full.length > short.length + 4;
+  return (
+    <article className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[oklch(0.78_0.12_162)] to-primary opacity-0 transition-opacity group-hover:opacity-100" />
+      <Icon size={26} className="text-[oklch(0.55_0.13_162)]" />
+      <h3 className="mt-5 text-lg font-bold text-primary">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-foreground/70">{open || !isLong ? full : short}</p>
+      {isLong && (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+        >
+          {open ? "Ver menos" : "Ver más"}
+          <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+      )}
+    </article>
   );
 }
 
@@ -169,16 +224,8 @@ function Servicios() {
         intro="Ningún proyecto es igual a otro. Según lo que pida tu modelo, combinamos:"
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {pieces.map(({ icon: Icon, t, d }) => (
-            <article
-              key={t}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1"
-            >
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[oklch(0.78_0.12_162)] to-primary opacity-0 transition-opacity group-hover:opacity-100" />
-              <Icon size={26} className="text-[oklch(0.55_0.13_162)]" />
-              <h3 className="mt-5 text-lg font-bold text-primary">{t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/70">{d}</p>
-            </article>
+          {pieces.map(({ icon: Icon, t, d, full }) => (
+            <PieceCard key={t} Icon={Icon} title={t} short={d} full={full} />
           ))}
         </div>
       </Section>
