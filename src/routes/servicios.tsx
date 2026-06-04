@@ -194,16 +194,8 @@ function Servicios() {
         intro="Ningún proyecto es igual a otro. Según lo que pida tu modelo, combinamos:"
       >
         <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {pieces.map(({ icon: Icon, t, d }) => (
-            <article
-              key={t}
-              className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1"
-            >
-              <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[oklch(0.78_0.12_162)] to-primary opacity-0 transition-opacity group-hover:opacity-100" />
-              <Icon size={26} className="text-[oklch(0.55_0.13_162)]" />
-              <h3 className="mt-5 text-lg font-bold text-primary">{t}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/70">{d}</p>
-            </article>
+          {pieces.map(({ icon: Icon, t, d, full }) => (
+            <PieceCard key={t} Icon={Icon} title={t} short={d} full={full} />
           ))}
         </div>
       </Section>
