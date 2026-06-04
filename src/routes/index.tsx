@@ -7,7 +7,7 @@ import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
   Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
 } from "lucide-react";
-import { OrchestrationPulse } from "@/components/site/OrchestrationPulse";
+import BpmBrainHero from "@/components/BpmBrainHero";
 
 
 export const Route = createFileRoute("/")({
@@ -111,8 +111,10 @@ function Home() {
             </div>
 
             {/* Núcleo pulsante: orquestación */}
-            <div className="relative animate-fade-up [animation-delay:120ms]">
-              <OrchestrationPulse />
+            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[560px] h-[560px] md:h-[640px] w-full">
+              <div className="h-full w-full">
+                <BpmBrainHero />
+              </div>
             </div>
           </div>
         </div>
