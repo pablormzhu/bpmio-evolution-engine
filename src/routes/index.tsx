@@ -332,12 +332,28 @@ function Home() {
           <p className="text-center text-sm font-semibold uppercase tracking-wider text-primary/60">
             Algunos de nuestros clientes
           </p>
-          <div className="mt-6 overflow-hidden">
-            <div className="flex animate-[shimmer_30s_linear_infinite] gap-12">
-              {[...logos, ...logos, ...logos].map((l, i) => (
-                <span key={i} className="shrink-0 text-2xl font-extrabold tracking-tight text-primary/40">
-                  {l}
-                </span>
+          <div
+            className="group relative mt-8 overflow-hidden"
+            style={{
+              maskImage:
+                "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+              WebkitMaskImage:
+                "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+            }}
+          >
+            <div className="flex w-max animate-marquee gap-16 group-hover:[animation-play-state:paused]">
+              {[...clientLogos, ...clientLogos].map((logo, i) => (
+                <div
+                  key={i}
+                  className="flex h-16 w-40 shrink-0 items-center justify-center"
+                >
+                  <img
+                    src={logo.src}
+                    alt={logo.name}
+                    loading="lazy"
+                    className="max-h-full max-w-full object-contain opacity-60 grayscale brightness-0 transition-all duration-300 hover:opacity-100"
+                  />
+                </div>
               ))}
             </div>
           </div>
