@@ -43,15 +43,25 @@ function Home() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -right-32 -top-32 -z-10 h-[600px] w-[600px] rounded-full bg-[oklch(0.85_0.1_162)] opacity-40 blur-3xl" />
-        <div className="pointer-events-none absolute -left-20 bottom-0 -z-10 h-[360px] w-[360px] rounded-full bg-[oklch(0.78_0.12_162)] opacity-25 blur-3xl" />
-        <div className="grain-lines pointer-events-none absolute inset-0 -z-10 opacity-30" />
+      <section className="relative overflow-hidden border-b border-border/60">
+        {/* Ambient backdrop */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,oklch(0.88_0.09_162/0.55),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,oklch(0.82_0.11_162/0.35),transparent_55%)]" />
+          <div
+            className="absolute inset-0 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "linear-gradient(oklch(0.25_0.05_162) 1px, transparent 1px), linear-gradient(90deg, oklch(0.25_0.05_162) 1px, transparent 1px)",
+              backgroundSize: "56px 56px",
+              maskImage: "radial-gradient(ellipse at center, black 40%, transparent 80%)",
+            }}
+          />
+        </div>
 
-        <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 pb-20 pt-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:px-10 lg:pb-28 lg:pt-20">
-          {/* LEFT — copy */}
-          <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80 backdrop-blur">
+        <div className="mx-auto w-full max-w-7xl px-6 pb-24 pt-16 lg:px-10 lg:pb-32 lg:pt-24">
+          <div className="animate-fade-up max-w-5xl">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
               <span className="relative flex h-1.5 w-1.5">
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.55_0.13_162)] opacity-75" />
                 <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
@@ -59,131 +69,44 @@ function Home() {
               Cimientos firmes · Transformación que perdura
             </span>
 
-            <h1 className="mt-7 text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-6xl lg:text-[5.25rem]">
-              Es momento <br className="hidden sm:block" />
-              de{" "}
-              <span className="relative inline-block whitespace-nowrap">
-                <span className="relative z-10">evolucionar</span>
-                <svg
-                  viewBox="0 0 300 14"
-                  className="absolute -bottom-2 left-0 z-0 h-3 w-full text-[oklch(0.78_0.12_162)]"
-                  preserveAspectRatio="none"
-                  aria-hidden
-                >
-                  <path
-                    d="M2 8 Q 75 1, 150 6 T 298 5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="4"
-                    strokeLinecap="round"
-                  />
-                </svg>
+            <h1 className="mt-8 text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[6.5rem]">
+              Es momento de{" "}
+              <span className="bg-gradient-to-br from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)] bg-clip-text text-transparent">
+                evolucionar.
               </span>
-              .
             </h1>
 
-            <p className="mt-7 max-w-xl text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
+            <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-foreground/70 md:text-xl">
               Ayudamos a empresas mexicanas a evolucionar en su transformación digital.
-              Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones construidas
-              desde cimientos sólidos.
+              Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones
+              construidas desde cimientos sólidos.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-3">
+            <div className="mt-10 flex flex-wrap items-center gap-3">
               <PrimaryCTA>Agenda una llamada</PrimaryCTA>
               <MintCTA>Hazte tu Check Up Digital</MintCTA>
             </div>
-
-            <div className="mt-10 flex items-center gap-5">
-              <div className="flex -space-x-2">
-                {["LT", "SG", "AC", "NV"].map((i, idx) => (
-                  <span
-                    key={i}
-                    className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-[oklch(0.78_0.12_162)] text-[11px] font-bold text-primary"
-                    style={{ zIndex: 10 - idx }}
-                  >
-                    {i}
-                  </span>
-                ))}
-              </div>
-              <p className="text-sm text-foreground/65">
-                <span className="font-bold text-primary">+30 empresas mexicanas</span> ya
-                evolucionaron con nosotros.
-              </p>
-            </div>
           </div>
 
-          {/* RIGHT — visual panel */}
-          <div className="relative hidden lg:block">
-            <div className="relative h-full">
-              {/* Main card */}
-              <div className="animate-float-slow absolute inset-0 rotate-[2deg]">
-                <div className="relative h-full overflow-hidden rounded-[2rem] border border-border bg-card p-7 shadow-glow">
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs font-bold uppercase tracking-wider text-primary/60">
-                      Tu transformación
-                    </span>
-                    <span className="flex h-2 w-2 rounded-full bg-[oklch(0.7_0.18_150)]" />
-                  </div>
-
-                  <div className="mt-6 space-y-3">
-                    {[
-                      { label: "Procesos", value: 92, tag: "Estandarizados" },
-                      { label: "Datos", value: 78, tag: "En tiempo real" },
-                      { label: "Automatización", value: 64, tag: "En crecimiento" },
-                      { label: "IA aplicada", value: 41, tag: "En adopción" },
-                    ].map((row, i) => (
-                      <div
-                        key={row.label}
-                        className="rounded-xl border border-border bg-surface px-4 py-3"
-                        style={{ animation: `fade-up 0.7s ${i * 0.12}s both` }}
-                      >
-                        <div className="flex items-baseline justify-between">
-                          <span className="text-sm font-semibold text-primary">{row.label}</span>
-                          <span className="text-xs font-bold text-[oklch(0.55_0.13_162)]">
-                            {row.value}%
-                          </span>
-                        </div>
-                        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-secondary">
-                          <div
-                            className="h-full rounded-full bg-gradient-to-r from-[oklch(0.55_0.13_162)] to-[oklch(0.78_0.12_162)]"
-                            style={{ width: `${row.value}%` }}
-                          />
-                        </div>
-                        <p className="mt-1.5 text-[11px] text-muted-foreground">{row.tag}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 flex items-center gap-3 rounded-xl bg-primary p-3 text-primary-foreground">
-                    <Sparkles size={16} className="text-[oklch(0.78_0.12_162)]" />
-                    <span className="text-xs font-semibold">
-                      Listo para sumar nuevas tecnologías de forma modular.
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Floating tag — top */}
-              <div className="absolute -left-6 -top-4 rotate-[-6deg] rounded-2xl border border-border bg-card px-4 py-3 shadow-soft">
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Maduración
+          {/* Stat strip */}
+          <div className="mt-16 grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-3">
+            {[
+              { k: "+30", l: "Empresas transformadas" },
+              { k: "7", l: "Disciplinas orquestadas" },
+              { k: "0", l: "Conflictos de interés" },
+            ].map((s) => (
+              <div key={s.l} className="bg-card/90 px-6 py-7 backdrop-blur">
+                <p className="text-4xl font-extrabold tracking-tight text-primary md:text-5xl">
+                  {s.k}
                 </p>
-                <p className="text-sm font-extrabold text-primary">Procesos → Datos → IA</p>
+                <p className="mt-2 text-sm font-medium text-foreground/65">{s.l}</p>
               </div>
-
-              {/* Floating tag — bottom */}
-              <div className="absolute -bottom-4 -right-2 rotate-[4deg] rounded-2xl bg-[oklch(0.78_0.12_162)] px-4 py-3 text-primary shadow-glow">
-                <p className="text-[10px] font-bold uppercase tracking-wider opacity-70">
-                  Sin conflictos de interés
-                </p>
-                <p className="text-sm font-extrabold">El camino correcto.</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
 
         {/* Roles strip — full width */}
-        <div className="border-y border-border/50 bg-surface/60 backdrop-blur">
+        <div className="border-t border-border/50 bg-surface/60 backdrop-blur">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-3 px-6 py-5 lg:px-10">
             <span className="text-xs font-bold uppercase tracking-[0.14em] text-primary/60">
               Te acompañamos como
@@ -201,6 +124,7 @@ function Home() {
           </div>
         </div>
       </section>
+
 
 
 
