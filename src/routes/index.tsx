@@ -420,24 +420,12 @@ function Home() {
             <Reveal direction="left">
               <div className="relative">
                 <div className="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/40 via-transparent to-[oklch(0.55_0.13_162)]/30 blur-xl" />
-                <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-                  <div className="flex items-center justify-between border-b border-border/60 bg-surface/60 px-5 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.78_0.12_162)]" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.55_0.13_162)]/40" />
-                      <span className="h-2.5 w-2.5 rounded-full bg-border" />
-                    </div>
-                    <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/60">
-                      Agenda · 30 min
-                    </span>
-                  </div>
-                  <iframe
-                    title="Agenda una llamada con BPM.io"
-                    src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1"
-                    className="h-[520px] w-full"
-                    loading="lazy"
-                  />
-                </div>
+                <iframe
+                  title="Agenda una llamada con BPM.io"
+                  src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1"
+                  className="block h-[1050px] w-full rounded-2xl border border-border bg-card shadow-soft"
+                  loading="lazy"
+                />
               </div>
             </Reveal>
 

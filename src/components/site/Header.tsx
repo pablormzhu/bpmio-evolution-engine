@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { CalendlyTrigger } from "./CalendlyPopup";
+
 import { Menu, X } from "lucide-react";
 
 const nav = [
@@ -56,9 +56,13 @@ export function Header() {
           </Link>
         </nav>
         <div className="hidden md:block">
-          <CalendlyTrigger className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5">
+          <Link
+            to="/"
+            hash="contacto"
+            className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+          >
             Agenda una llamada
-          </CalendlyTrigger>
+          </Link>
         </div>
         <button
           onClick={() => setOpen((o) => !o)}
@@ -87,9 +91,13 @@ export function Header() {
             >
               Contacto
             </Link>
-            <CalendlyTrigger className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground">
+            <Link
+              to="/"
+              hash="contacto"
+              className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
+            >
               Agenda una llamada
-            </CalendlyTrigger>
+            </Link>
           </div>
         </div>
       )}
