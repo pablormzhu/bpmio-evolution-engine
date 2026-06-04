@@ -7,7 +7,7 @@ import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
   Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
 } from "lucide-react";
-import heroVideo from "@/assets/hero-orchestration.mp4.asset.json";
+import { OrchestrationPulse } from "@/components/site/OrchestrationPulse";
 
 
 export const Route = createFileRoute("/")({
@@ -92,21 +92,9 @@ function Home() {
               </div>
             </div>
 
-            {/* Video: orquestación IA */}
+            {/* Núcleo pulsante: orquestación */}
             <div className="relative animate-fade-up [animation-delay:120ms]">
-              <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/40 via-transparent to-[oklch(0.55_0.13_162)]/20 blur-3xl" />
-              <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-primary/5 shadow-soft">
-                <video
-                  src={heroVideo.url}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  className="aspect-square w-full object-cover"
-                  aria-hidden="true"
-                />
-                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent mix-blend-multiply" />
-              </div>
+              <OrchestrationPulse />
             </div>
           </div>
         </div>
