@@ -22,7 +22,7 @@ import {
   Phone,
   Sparkles,
 } from "lucide-react";
-import { OrchestrationPulse } from "@/components/site/OrchestrationPulse";
+import BpmBrainHero from "@/components/BpmBrainHero";
 
 export const Route = createFileRoute("/")({
   head: () => ({
