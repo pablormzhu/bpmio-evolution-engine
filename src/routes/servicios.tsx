@@ -297,45 +297,32 @@ function Servicios() {
           </p>
         </div>
 
-        <ol className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {steps.map(({ icon: Icon, t, full }, i) => {
-            const isLast = i === steps.length - 1;
-            return (
-              <li
-                key={t}
-                className={`group relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-[oklch(0.55_0.13_162)]/40 ${
-                  isLast ? "md:col-span-2 lg:col-span-1 lg:col-start-3" : ""
-                }`}
-              >
-                <div className="flex items-center justify-between">
-                  <span className="inline-flex items-center gap-2 rounded-full bg-[oklch(0.55_0.13_162)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[oklch(0.45_0.13_162)]">
-                    Paso {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <span className="font-serif text-4xl font-bold leading-none text-[oklch(0.55_0.13_162)]/25 md:text-5xl">
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
+        <ol className="relative mx-auto max-w-4xl">
+          <span
+            className="pointer-events-none absolute left-[1.125rem] top-2 bottom-2 w-px bg-gradient-to-b from-[oklch(0.55_0.13_162)]/40 via-[oklch(0.55_0.13_162)]/20 to-transparent md:left-6"
+            aria-hidden
+          />
+          {steps.map(({ icon: Icon, t, full }, i) => (
+            <li key={t} className="relative grid grid-cols-[auto_1fr] gap-5 py-6 md:gap-8 md:py-8">
+              <div className="relative flex flex-col items-center">
+                <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[oklch(0.55_0.13_162)]/30 bg-background text-xs font-bold text-[oklch(0.45_0.13_162)] md:h-12 md:w-12 md:text-sm">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+              <div className="pt-1 md:pt-2">
+                <div className="flex items-center gap-2.5">
+                  <Icon size={16} className="text-[oklch(0.55_0.13_162)]" />
+                  <h3 className="text-lg font-bold text-primary md:text-2xl">{t}</h3>
                 </div>
-
-                <div className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.45_0.13_162)]">
-                  <Icon size={20} />
-                </div>
-
-                <h3 className="mt-5 text-lg font-bold text-primary md:text-xl">{t}</h3>
-                <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/70">
+                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/70 md:text-base">
                   {full}
                 </p>
-
-                {!isLast && (
-                  <span
-                    className="pointer-events-none absolute right-3 top-1/2 hidden h-px w-6 -translate-y-1/2 bg-gradient-to-r from-[oklch(0.55_0.13_162)]/40 to-transparent lg:block"
-                    aria-hidden
-                  />
-                )}
-              </li>
-            );
-          })}
+              </div>
+            </li>
+          ))}
         </ol>
       </section>
+
 
 
       {/* Componentes que ensamblamos — Bento */}
