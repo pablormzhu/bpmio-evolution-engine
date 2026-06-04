@@ -175,14 +175,14 @@ function Home() {
               { n: "02", t: "Diseñar", d: "Traducimos tu conocimiento en una solución a tu medida." },
               { n: "03", t: "Construir", d: "Implementamos con la tecnología correcta para tu reto." },
               { n: "04", t: "Acompañar", d: "Capacitamos a tu equipo hasta que sea dueño de la solución." },
-            ].map((step) => (
-              <li key={step.n} className="relative flex flex-col items-start">
-                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft">
+            ].map((step, i) => (
+              <Reveal key={step.n} delay={i * 140} direction="up" as="li" className="relative flex flex-col items-start">
+                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft transition-transform duration-300 hover:scale-110 hover:border-[oklch(0.55_0.13_162)]/40">
                   {step.n}
                 </div>
                 <h3 className="mt-5 text-xl font-bold text-primary">{step.t}</h3>
                 <p className="mt-2 text-foreground/70 leading-relaxed">{step.d}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
