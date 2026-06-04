@@ -1,7 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Logo } from "./Logo";
-import { CalendlyTrigger } from "./CalendlyPopup";
+
 import { Menu, X } from "lucide-react";
 
 const nav = [
