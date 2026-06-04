@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties, type ElementType } from "react";
 
 type Direction = "up" | "left" | "right" | "scale";
 
@@ -13,10 +13,11 @@ export function Reveal({
   delay?: number;
   direction?: Direction;
   className?: string;
-  as?: keyof JSX.IntrinsicElements;
+  as?: ElementType;
 }) {
   const ref = useRef<HTMLElement | null>(null);
   const [visible, setVisible] = useState(false);
+
 
   useEffect(() => {
     const el = ref.current;
