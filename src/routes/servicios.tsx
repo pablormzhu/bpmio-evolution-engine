@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA, MintCTA } from "@/components/site/CTA";
 import {
   ClipboardList, Stethoscope, Target, Scale, Wrench, GraduationCap, HeartHandshake,
-  Database, Workflow, Brain, Plug, Code2, Compass, Hammer, Rocket, Quote,
+  Database, Workflow, Brain, Plug, Code2, Compass, Hammer, Rocket, Quote, ChevronDown,
 } from "lucide-react";
 
 export const Route = createFileRoute("/servicios")({
@@ -20,13 +21,48 @@ export const Route = createFileRoute("/servicios")({
 });
 
 const steps = [
-  { icon: ClipboardList, t: "Levantamiento", d: "No solo mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos." },
-  { icon: Stethoscope, t: "Diagnóstico", d: "Leemos tu situación según tus necesidades, retos y objetivos. Encontramos dónde está el valor." },
-  { icon: Target, t: "Modelo de operación", d: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, por etapas." },
-  { icon: Scale, t: "El camino correcto", d: "Evaluamos todas las opciones con la misma vara. Definimos cuál y por qué —con objetividad." },
-  { icon: Wrench, t: "Ejecución", d: "Reingenieríamos, automatizamos, integramos y desarrollamos hasta que el modelo es operación." },
-  { icon: GraduationCap, t: "Adopción", d: "Transferimos el conocimiento a tu equipo hasta que la solución es suya." },
-  { icon: HeartHandshake, t: "Socio activo", d: "Nos quedamos: medimos contra el modelo y lo hacemos madurar contigo." },
+  {
+    icon: ClipboardList,
+    t: "Levantamiento de información y procesos",
+    d: "No solo los mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos.",
+    full: "No solo los mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos y no de suposiciones.",
+  },
+  {
+    icon: Stethoscope,
+    t: "Diagnóstico",
+    d: "Leemos tu situación según tus necesidades, retos y objetivos. Encontramos dónde está el valor.",
+    full: "Leemos tu situación según tus necesidades, tus retos y tus objetivos, y encontramos dónde está el verdadero valor.",
+  },
+  {
+    icon: Target,
+    t: "Modelo de operación objetivo",
+    d: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, por etapas.",
+    full: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, definida por tus objetivos y dividida en etapas —porque la madurez se construye paso a paso.",
+  },
+  {
+    icon: Scale,
+    t: "El camino correcto, con objetividad",
+    d: "Evaluamos todas las opciones con la misma vara. Definimos cuál y por qué —con objetividad.",
+    full: "Evaluamos todas las opciones con la misma vara: a veces lo mejor es una solución off-the-shelf que ya existe, a veces low-code, a veces desarrollar algo a la medida. Definimos cuál y por qué.",
+  },
+  {
+    icon: Wrench,
+    t: "Ejecución",
+    d: "Reingenieríamos, automatizamos, integramos y desarrollamos hasta que el modelo es operación.",
+    full: "Reingenieríamos, automatizamos, integramos y desarrollamos, ensamblando los componentes correctos hasta que el modelo deja de ser un plan y se vuelve operación.",
+  },
+  {
+    icon: GraduationCap,
+    t: "Adopción",
+    d: "Transferimos el conocimiento a tu equipo hasta que la solución es suya.",
+    full: "Transferimos el conocimiento a tu equipo hasta que la solución es suya.",
+  },
+  {
+    icon: HeartHandshake,
+    t: "Socio activo",
+    d: "Nos quedamos: medimos contra el modelo y lo hacemos madurar contigo.",
+    full: "Nos quedamos: medimos contra el modelo, cuidamos que todo funcione y lo hacemos madurar contigo.",
+  },
 ];
 
 const pieces = [
@@ -36,6 +72,45 @@ const pieces = [
   { icon: Plug, t: "Integración y flujo de información", d: "Construimos lo que falta para que la información fluya. Que nada quede separado." },
   { icon: Code2, t: "Software a la medida", d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita." },
 ];
+
+function StepCard({
+  Icon, index, title, short, full,
+}: {
+  Icon: typeof ClipboardList;
+  index: number;
+  title: string;
+  short: string;
+  full: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const isLong = full.length > short.length + 4;
+  return (
+    <li className="group relative ml-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-[oklch(0.78_0.12_162)] md:p-6">
+      <div className="flex gap-5">
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)] text-primary shadow-soft">
+          <Icon size={20} />
+          <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+            {index + 1}
+          </span>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-primary">{title}</h3>
+          <p className="mt-1 text-foreground/70">{open || !isLong ? full : short}</p>
+          {isLong && (
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+            >
+              {open ? "Ver menos" : "Ver más"}
+              <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
 
 const roles = [
   { icon: Compass, t: "Empezando desde cero", d: "Ponemos los cimientos: estandarización, levantamiento y definición del rumbo.", label: "Tus orientadores" },
@@ -81,22 +156,8 @@ function Servicios() {
       <Section eyebrow="Cómo trabajamos" title={<>Consultoría primero.</>}>
         <ol className="relative space-y-4">
           <span className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-[oklch(0.78_0.12_162)] via-border to-transparent md:left-7" />
-          {steps.map(({ icon: Icon, t, d }, i) => (
-            <li
-              key={t}
-              className="group relative ml-2 flex gap-5 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-[oklch(0.78_0.12_162)] md:p-6"
-            >
-              <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)] text-primary shadow-soft">
-                <Icon size={20} />
-                <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-primary">{t}</h3>
-                <p className="mt-1 text-foreground/70">{d}</p>
-              </div>
-            </li>
+          {steps.map(({ icon: Icon, t, d, full }, i) => (
+            <StepCard key={t} Icon={Icon} index={i} title={t} short={d} full={full} />
           ))}
         </ol>
       </Section>
