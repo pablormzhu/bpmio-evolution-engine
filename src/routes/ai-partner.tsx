@@ -3,7 +3,7 @@ import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA } from "@/components/site/CTA";
-import { Sparkles, Send, Bot, User, Zap, Eye, Compass } from "lucide-react";
+import { Sparkles, Send, Bot, User } from "lucide-react";
 
 export const Route = createFileRoute("/ai-partner")({
   head: () => ({
