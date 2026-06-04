@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA } from "@/components/site/CTA";
-import { Layers, Users, Scale, Award, Share2, Heart, MapPin } from "lucide-react";
+import { Layers, Users, Scale, Award, Share2, Heart, MapPin, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/filosofia")({
   head: () => ({
@@ -58,20 +58,18 @@ function Filosofia() {
             {/* Columna izquierda: manifiesto */}
             <div className="lg:col-span-7">
               <div className="inline-flex items-center gap-2 rounded-full border border-[oklch(0.55_0.13_162)]/25 bg-background/70 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary backdrop-blur">
-                <Heart size={12} className="text-[oklch(0.55_0.13_162)]" />
+                <Sparkles size={12} className="text-[oklch(0.55_0.13_162)]" />
                 Por qué hacemos esto
               </div>
 
               <h2 className="mt-7 text-balance text-4xl font-extrabold leading-[0.98] tracking-tight text-primary md:text-6xl lg:text-[4.25rem]">
-                La transformación digital de México
-                <span className="relative ml-2 inline-block">
-                  <span className="relative z-10 text-[oklch(0.45_0.13_162)] italic">
-                    no debería
-                  </span>
-                  <span className="absolute inset-x-0 bottom-1 -z-0 h-3 bg-[oklch(0.78_0.12_162)]/55" />
+                La transformación digital de México{" "}
+                <span className="font-serif italic font-bold text-[oklch(0.55_0.13_162)]">
+                  no debería
                 </span>{" "}
                 ser un lujo.
               </h2>
+
 
               <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2">
                 <div className="bg-card p-6">
