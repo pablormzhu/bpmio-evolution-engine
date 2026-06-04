@@ -271,28 +271,32 @@ function Home() {
         eyebrow="Conocimiento abierto"
         title={<>Lo que sabemos, <span className="text-[oklch(0.55_0.13_162)]">lo compartimos</span>.</>}
       >
-        <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-14">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[oklch(0.78_0.12_162)]/40 blur-3xl" />
-          <div className="grain-lines absolute inset-0 opacity-20" />
-          <div className="relative grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
-            <div>
-              <p className="text-lg leading-relaxed text-primary-foreground/85">
-                Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas
-                cliente o no, sin esperar nada a cambio. Empieza con un Check Up Digital gratuito:
-                nuestro AI Partner te da, en minutos, una lectura honesta de dónde estás.
-              </p>
-              <div className="mt-7">
-                <MintCTA>Hablar con el AI Partner</MintCTA>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6 backdrop-blur">
-              <Sparkles className="text-[oklch(0.78_0.12_162)]" />
-              <p className="mt-4 text-2xl font-extrabold leading-tight">
-                Una lectura honesta de dónde estás y qué te conviene priorizar.
-              </p>
+        <Reveal direction="scale">
+          <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-14">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/40 blur-3xl" />
+            <div className="grain-lines absolute inset-0 opacity-20" />
+            <div className="relative grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
+              <Reveal delay={150} direction="left">
+                <p className="text-lg leading-relaxed text-primary-foreground/85">
+                  Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas
+                  cliente o no, sin esperar nada a cambio. Empieza con un Check Up Digital gratuito:
+                  nuestro AI Partner te da, en minutos, una lectura honesta de dónde estás.
+                </p>
+                <div className="mt-7">
+                  <MintCTA>Hablar con el AI Partner</MintCTA>
+                </div>
+              </Reveal>
+              <Reveal delay={300} direction="right">
+                <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6 backdrop-blur">
+                  <Sparkles className="animate-float-slow text-[oklch(0.78_0.12_162)]" />
+                  <p className="mt-4 text-2xl font-extrabold leading-tight">
+                    Una lectura honesta de dónde estás y qué te conviene priorizar.
+                  </p>
+                </div>
+              </Reveal>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Logos carrusel */}
         <div className="mt-14">
