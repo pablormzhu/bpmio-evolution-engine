@@ -216,9 +216,14 @@ function Home() {
             </article>
           ))}
         </div>
-        <p className="mt-10 max-w-2xl text-lg italic text-primary/80">
-          Lo importante no es la tecnología que usamos, sino que todo encaje y de verdad te sirva.
-        </p>
+        <figure className="mt-14 border-t border-border/60 pt-8 text-center">
+          <span className="mx-auto mb-4 block h-px w-12 bg-[oklch(0.55_0.13_162)]/40" />
+          <blockquote className="mx-auto max-w-4xl whitespace-nowrap text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-xl">
+            <span className="mr-1 text-2xl font-serif text-[oklch(0.55_0.13_162)]/60">“</span>
+            Lo importante no es la tecnología que usamos, sino que todo encaje y de verdad te sirva.
+            <span className="ml-1 text-2xl font-serif text-[oklch(0.55_0.13_162)]/60">”</span>
+          </blockquote>
+        </figure>
       </Section>
 
       {/* TE ENCONTRAMOS DONDE ESTÉS */}
