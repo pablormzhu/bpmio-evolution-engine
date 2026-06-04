@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA } from "@/components/site/CTA";
-import { Layers, Users, Scale, Award, Share2, Heart, MapPin } from "lucide-react";
+import { Layers, Users, Scale, Award, Share2, Heart, MapPin, Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/filosofia")({
   head: () => ({
