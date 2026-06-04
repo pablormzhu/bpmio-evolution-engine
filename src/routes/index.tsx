@@ -47,6 +47,7 @@ import televisa from "@/assets/clients/televisa.png.asset.json";
 import cajasAgricolas from "@/assets/clients/cajas-agricolas.png.asset.json";
 import inra from "@/assets/clients/inra.png.asset.json";
 import laila from "@/assets/clients/laila.png.asset.json";
+import omnis from "@/assets/clients/omnis.png.asset.json";
 
 const clientLogos = [
   { name: "Logistic Trade", src: logisticTrade.url },
@@ -56,6 +57,7 @@ const clientLogos = [
   { name: "Cajas Agrícolas de México", src: cajasAgricolas.url },
   { name: "INRA", src: inra.url },
   { name: "Hotel Laila", src: laila.url },
+  { name: "Omnis", src: omnis.url },
 ];
 
 function Home() {
@@ -351,7 +353,7 @@ function Home() {
                     src={logo.src}
                     alt={logo.name}
                     loading="lazy"
-                    className="max-h-full max-w-full object-contain opacity-60 grayscale brightness-0 transition-all duration-300 hover:opacity-100"
+                    className="max-h-full max-w-full object-contain opacity-70 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
                   />
                 </div>
               ))}
