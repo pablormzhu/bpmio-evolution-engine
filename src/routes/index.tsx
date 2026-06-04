@@ -186,18 +186,14 @@ function Home() {
           </ol>
         </div>
 
-        {/* Pull quote */}
-        <div className="mt-14 rounded-3xl border border-border bg-gradient-to-br from-surface to-card p-8 shadow-soft md:p-10">
-          <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
-            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[oklch(0.78_0.12_162)]/40 text-[oklch(0.35_0.08_162)]">
-              <Ear size={26} />
-            </div>
-            <p className="text-pretty text-xl font-semibold leading-snug text-primary md:text-2xl">
-              Preguntamos antes de proponer. Entendemos antes de construir.
-              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
-            </p>
-          </div>
-        </div>
+        {/* Pull quote — limpio, sin caja */}
+        <figure className="mt-14 border-l-2 border-[oklch(0.55_0.13_162)] pl-6 md:mt-16 md:pl-8">
+          <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
+          <blockquote className="text-pretty text-xl font-semibold leading-snug text-primary md:text-2xl">
+            Preguntamos antes de proponer. Entendemos antes de construir.
+            <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
+          </blockquote>
+        </figure>
       </Section>
 
       {/* ORQUESTAMOS */}
