@@ -188,14 +188,20 @@ function Home() {
         </div>
 
         {/* Pull quote — en caja con texto más chico */}
-        <Reveal delay={200} direction="scale">
-          <figure className="mt-10 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-12">
-            <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
-            <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
-              Preguntamos antes de proponer. Entendemos antes de construir.
-              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
-            </blockquote>
-          </figure>
+        {/* Pull quote — minimalista con barra lateral */}
+        <Reveal delay={200} direction="up">
+          <div className="mt-10 flex items-stretch gap-5 md:mt-12 md:gap-7">
+            <div className="w-1 shrink-0 rounded-full bg-gradient-to-b from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)]" />
+            <div className="flex flex-1 items-center gap-5">
+              <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.55_0.13_162)] sm:flex">
+                <Ear size={22} />
+              </div>
+              <p className="text-pretty text-lg font-semibold leading-snug tracking-tight text-primary md:text-2xl">
+                Preguntamos antes de proponer. Entendemos antes de construir.{" "}
+                <span className="text-[oklch(0.55_0.13_162)]">Acompañamos antes de soltar.</span>
+              </p>
+            </div>
+          </div>
         </Reveal>
       </Section>
 
@@ -223,10 +229,8 @@ function Home() {
         </div>
         <figure className="mt-10 border-t border-border/60 pt-6 text-center">
           <span className="mx-auto mb-4 block h-px w-12 bg-[oklch(0.55_0.13_162)]/40" />
-          <blockquote className="mx-auto max-w-4xl whitespace-nowrap text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-xl">
-            <span className="mr-1 text-2xl font-serif text-[oklch(0.55_0.13_162)]/60">“</span>
+          <blockquote className="mx-auto max-w-4xl text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-xl">
             Lo importante no es la tecnología que usamos, sino que todo encaje y de verdad te sirva.
-            <span className="ml-1 text-2xl font-serif text-[oklch(0.55_0.13_162)]/60">”</span>
           </blockquote>
         </figure>
       </Section>
@@ -315,78 +319,121 @@ function Home() {
         </div>
       </Section>
 
-      {/* CONTACTO / PLATIQUEMOS */}
-      <Section
-        id="contacto"
-        eyebrow="Platiquemos"
-        title={<>Platiquemos.</>}
-        intro="Si estás pensando en una iniciativa, o simplemente necesitas orientación, te invitamos a una llamada para platicar y compartir experiencia. Sin compromiso: solo una conversación honesta sobre tu empresa."
-      >
-        <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <Reveal direction="left">
-            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-              <iframe
-                title="Agenda una llamada con BPM.io"
-                src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
-                className="h-[640px] w-full"
-                loading="lazy"
-              />
+      {/* CONTACTO / PLATIQUEMOS — rediseñado */}
+      <section id="contacto" className="relative overflow-hidden">
+        {/* fondo con relieve */}
+        <div className="pointer-events-none absolute inset-0 -z-10">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,oklch(0.88_0.09_162/0.5),transparent_55%)]" />
+          <div className="absolute right-[-10%] top-1/3 h-[28rem] w-[28rem] animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/30 blur-3xl" />
+        </div>
+
+        <div className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+          <Reveal direction="up">
+            <div className="flex flex-col items-start gap-4">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+                Platiquemos
+              </span>
+              <h2 className="max-w-3xl text-balance text-4xl font-extrabold leading-[0.95] tracking-tight text-primary md:text-6xl">
+                Una conversación{" "}
+                <span className="bg-gradient-to-br from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)] bg-clip-text text-transparent">
+                  honesta
+                </span>
+                , sin compromiso.
+              </h2>
+              <p className="max-w-2xl text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
+                ¿Tienes una iniciativa en mente o no sabes por dónde empezar? Agenda una llamada y compartimos experiencia contigo — sin venta, sin presión.
+              </p>
             </div>
           </Reveal>
-          <div className="flex flex-col gap-4">
-            <Reveal delay={120} direction="right">
-              <a
-                href="mailto:info@bpmio.com.mx"
-                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
-                  <Mail size={20} />
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
+            {/* Calendly */}
+            <Reveal direction="left">
+              <div className="relative">
+                <div className="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/40 via-transparent to-[oklch(0.55_0.13_162)]/30 blur-xl" />
+                <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
+                  <div className="flex items-center justify-between border-b border-border/60 bg-surface/60 px-5 py-3">
+                    <div className="flex items-center gap-2">
+                      <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.78_0.12_162)]" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-[oklch(0.55_0.13_162)]/40" />
+                      <span className="h-2.5 w-2.5 rounded-full bg-border" />
+                    </div>
+                    <span className="text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/60">
+                      Agenda · 30 min
+                    </span>
+                  </div>
+                  <iframe
+                    title="Agenda una llamada con BPM.io"
+                    src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
+                    className="h-[640px] w-full"
+                    loading="lazy"
+                  />
                 </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Escríbenos</p>
-                  <p className="font-semibold text-primary">info@bpmio.com.mx</p>
-                </div>
-              </a>
-            </Reveal>
-            <Reveal delay={220} direction="right">
-              <a
-                href="tel:+525580100974"
-                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
-                  <Phone size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Llámanos</p>
-                  <p className="font-semibold text-primary">+52 55 8010 0974</p>
-                </div>
-              </a>
-            </Reveal>
-            <Reveal delay={320} direction="right">
-              <a
-                href="https://www.linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
-              >
-                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
-                  <Linkedin size={20} />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">Síguenos</p>
-                  <p className="font-semibold text-primary">LinkedIn</p>
-                </div>
-              </a>
-            </Reveal>
-            <Reveal delay={420} direction="up">
-              <div className="rounded-2xl bg-[oklch(0.78_0.12_162)]/30 p-5 text-sm text-primary/80">
-                <Hammer className="mb-2" size={18} />
-                Sin compromiso: solo una conversación honesta sobre tu empresa.
               </div>
             </Reveal>
+
+            {/* Contact panel */}
+            <div className="flex flex-col gap-5">
+              <Reveal delay={120} direction="right">
+                <div className="rounded-2xl border border-border bg-card p-6 shadow-soft">
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary/60">
+                    Contáctanos directo
+                  </p>
+                  <ul className="mt-5 divide-y divide-border/70">
+                    {[
+                      { icon: Mail, label: "Escríbenos", value: "info@bpmio.com.mx", href: "mailto:info@bpmio.com.mx" },
+                      { icon: Phone, label: "Llámanos", value: "+52 55 8010 0974", href: "tel:+525580100974" },
+                      { icon: Linkedin, label: "Síguenos", value: "LinkedIn", href: "https://www.linkedin.com" },
+                    ].map(({ icon: Icon, label, value, href }) => (
+                      <li key={label}>
+                        <a
+                          href={href}
+                          target={href.startsWith("http") ? "_blank" : undefined}
+                          rel={href.startsWith("http") ? "noreferrer" : undefined}
+                          className="group flex items-center gap-4 py-4 transition-colors"
+                        >
+                          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                            <Icon size={18} />
+                          </div>
+                          <div className="min-w-0 flex-1">
+                            <p className="text-xs text-muted-foreground">{label}</p>
+                            <p className="truncate font-semibold text-primary transition-colors group-hover:text-[oklch(0.55_0.13_162)]">
+                              {value}
+                            </p>
+                          </div>
+                          <span className="text-primary/30 transition-all duration-300 group-hover:translate-x-1 group-hover:text-[oklch(0.55_0.13_162)]">
+                            →
+                          </span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+
+              <Reveal delay={260} direction="right">
+                <div className="relative overflow-hidden rounded-2xl bg-primary p-6 text-primary-foreground shadow-soft">
+                  <div className="pointer-events-none absolute -right-10 -top-10 h-40 w-40 animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/40 blur-2xl" />
+                  <div className="relative flex items-start gap-3">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)]/30 text-[oklch(0.78_0.12_162)]">
+                      <Hammer size={18} />
+                    </div>
+                    <div>
+                      <p className="text-sm font-bold uppercase tracking-[0.14em] text-[oklch(0.78_0.12_162)]">
+                        Sin compromiso
+                      </p>
+                      <p className="mt-1 text-base leading-relaxed text-primary-foreground/85">
+                        Solo una conversación honesta sobre tu empresa, sin venta de por medio.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
           </div>
         </div>
-      </Section>
+      </section>
     </SiteLayout>
   );
 }
