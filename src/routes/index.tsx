@@ -224,38 +224,35 @@ function Home() {
 
       {/* TE ENCONTRAMOS DONDE ESTÉS */}
       <section className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
-        <div className="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-20">
-          <div className="lg:sticky lg:top-28 lg:self-start">
-            <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
-              <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
-              Te encontramos donde estés
-            </span>
-            <h2 className="text-balance text-3xl font-extrabold leading-[1.1] text-primary md:text-4xl lg:text-[2.75rem]">
-              Cualquier industria,<br />
-              cualquier tamaño,<br />
-              <span className="text-[oklch(0.55_0.13_162)]">cualquier punto del camino.</span>
-            </h2>
-            <p className="mt-5 max-w-md text-pretty text-base leading-relaxed text-foreground/75">
-              Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar. Te acompañamos en cualquier nivel de madurez.
-            </p>
-          </div>
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
+            <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+            Te encontramos donde estés
+          </span>
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] text-primary md:text-4xl lg:text-5xl">
+            Cualquier industria, cualquier tamaño,{" "}
+            <span className="text-[oklch(0.55_0.13_162)]">cualquier punto del camino.</span>
+          </h2>
+          <p className="mx-auto mt-5 max-w-xl text-pretty text-base leading-relaxed text-foreground/75">
+            Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar. Te acompañamos en cualquier nivel de madurez.
+          </p>
+        </div>
 
-          <ul className="divide-y divide-border/70 border-y border-border/70">
-            {maturity.map(({ icon: Icon, label }, i) => (
-              <li
-                key={label}
-                className="group flex items-center gap-5 py-5 transition-colors hover:bg-surface/60"
-              >
-                <span className="w-8 font-mono text-xs text-primary/40">
-                  0{i + 1}
-                </span>
-                <Icon size={20} className="shrink-0 text-[oklch(0.55_0.13_162)]" />
-                <span className="text-lg font-semibold text-primary transition-transform group-hover:translate-x-1">
-                  {label}
-                </span>
-              </li>
-            ))}
-          </ul>
+        <div className="mt-12 flex flex-wrap justify-center gap-3 md:gap-4">
+          {maturity.map(({ icon: Icon, label }, i) => (
+            <div
+              key={label}
+              className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
+            >
+              <span className="font-mono text-[10px] text-primary/40">
+                0{i + 1}
+              </span>
+              <Icon size={18} className="text-[oklch(0.55_0.13_162)]" />
+              <span className="text-sm font-semibold text-primary md:text-base">
+                {label}
+              </span>
+            </div>
+          ))}
         </div>
       </section>
 
