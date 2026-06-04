@@ -417,13 +417,12 @@ function Home() {
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
             <Reveal direction="left">
-              <div id="calendario" className="h-[580px] scroll-mt-24 overflow-hidden">
+              <div id="calendario" className="scroll-mt-24">
                 <iframe
                   title="Agenda una llamada con BPM.io"
                   src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=DFF7ED&primary_color=00A86B&text_color=063F31"
-                  className="block h-[760px] w-full -translate-y-[120px] border-0 bg-transparent"
+                  className="block h-[1100px] w-full border-0 bg-transparent"
                   loading="lazy"
-                  scrolling="no"
                 />
               </div>
             </Reveal>
