@@ -307,7 +307,7 @@ export default function BpmBrainHero() {
         borderRadius: 28,
         overflow: "hidden",
         background: "#0b1f1a",
-        boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 30px 60px -34px rgba(8,30,26,0.6)",
+        boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 40px 80px -20px rgba(8,30,26,0.75), 0 20px 40px -10px rgba(8,30,26,0.5)",
         border: "1px solid rgba(170,224,232,0.06)",
       }}
     >
