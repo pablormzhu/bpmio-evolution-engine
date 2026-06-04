@@ -124,27 +124,32 @@ function AIPartner() {
             </form>
           </div>
 
-          {/* Features */}
-          <div className="space-y-4">
-            {[
-              { icon: Eye, t: "Diagnóstico honesto", d: "Te decimos lo que vemos, no lo que quieres oír." },
-              { icon: Compass, t: "Prioridades claras", d: "Qué resolver primero según tu madurez actual." },
-              { icon: Zap, t: "Sin ventas, sin presión", d: "Si no necesitas nada, te lo decimos también." },
-            ].map(({ icon: Icon, t, d }) => (
-              <div key={t} className="rounded-2xl border border-border bg-card p-6 shadow-soft">
-                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)] text-primary">
-                  <Icon size={20} />
-                </div>
-                <h3 className="mt-4 text-lg font-bold text-primary">{t}</h3>
-                <p className="mt-1 text-sm text-foreground/70">{d}</p>
-              </div>
-            ))}
-            <div className="rounded-2xl bg-primary p-6 text-primary-foreground shadow-soft">
-              <p className="text-sm text-primary-foreground/75">¿Prefieres una conversación humana?</p>
-              <div className="mt-4">
-                <PrimaryCTA>Agenda una llamada</PrimaryCTA>
-              </div>
+          {/* Prompts */}
+          <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch">
+            <div className="flex items-center gap-2 text-primary">
+              <Sparkles size={18} />
+              <h3 className="text-base font-bold">Prompts con los que te puedo ayudar</h3>
             </div>
+            <ul className="mt-5 space-y-4">
+              {[
+                { t: "CheckUp Digital", d: "Evalúa gratis el nivel de digitalización de tu empresa en 2 minutos." },
+                { t: "Agendar una llamada", d: "Reserva un espacio con nuestro equipo para hablar de tu proyecto." },
+                { t: "¿Qué hace BPM.io?", d: "Conoce nuestros servicios, tecnologías y enfoque." },
+                { t: "Casos de éxito", d: "Mira cómo hemos ayudado a otras empresas a escalar." },
+                { t: "Preguntas frecuentes", d: "Costos, tiempos, plataformas, tipos de procesos que automatizamos." },
+              ].map(({ t, d }) => (
+                <li key={t}>
+                  <button
+                    type="button"
+                    onClick={() => setInput(t)}
+                    className="group w-full rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft"
+                  >
+                    <p className="text-sm font-semibold text-primary">{t}</p>
+                    <p className="mt-1 text-xs leading-relaxed text-foreground/70">{d}</p>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Section>
