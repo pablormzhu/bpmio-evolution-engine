@@ -241,9 +241,7 @@ export default function BpmBrainHero() {
         if (rr2 > clampR2) { const s = clampR / Math.sqrt(rr2); d.x = CX + rx * s; d.y = CY + ry * s; }
       }
 
-      const bg = ctx!.createRadialGradient(CX, CY * 0.92, 0, CX, CY, min0 * 0.95);
-      bg.addColorStop(0, "#15392f"); bg.addColorStop(1, "#0b1f1a");
-      ctx!.fillStyle = bg; ctx!.fillRect(0, 0, W, H);
+      ctx!.clearRect(0, 0, W, H);
 
       ctx!.beginPath();
       for (const [a, b] of web) { ctx!.moveTo(a.x, a.y); ctx!.lineTo(b.x, b.y); }
