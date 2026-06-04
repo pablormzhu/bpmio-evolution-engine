@@ -136,17 +136,18 @@ function Home() {
               t: "Listo para lo que viene",
               d: "Lo que construyes hoy se suma de forma modular cuando llegan nuevas tecnologías. No empiezas de cero.",
             },
-          ].map(({ icon: Icon, t, d }) => (
-            <article
-              key={t}
-              className="group rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary">
-                <Icon size={20} />
-              </div>
-              <h3 className="text-xl font-bold text-primary">{t}</h3>
-              <p className="mt-3 text-foreground/70 leading-relaxed">{d}</p>
-            </article>
+          ].map(({ icon: Icon, t, d }, i) => (
+            <Reveal key={t} delay={i * 120} direction="up">
+              <article
+                className="group h-full rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-lg"
+              >
+                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <Icon size={20} />
+                </div>
+                <h3 className="text-xl font-bold text-primary">{t}</h3>
+                <p className="mt-3 text-foreground/70 leading-relaxed">{d}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </Section>
