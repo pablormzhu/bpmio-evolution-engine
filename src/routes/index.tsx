@@ -418,15 +418,12 @@ function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
             {/* Calendly */}
             <Reveal direction="left">
-              <div className="relative">
-                <div className="absolute -inset-3 -z-10 rounded-[1.75rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/40 via-transparent to-[oklch(0.55_0.13_162)]/30 blur-xl" />
-                <iframe
-                  title="Agenda una llamada con BPM.io"
-                  src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1"
-                  className="block h-[1050px] w-full rounded-2xl border border-border bg-card shadow-soft"
-                  loading="lazy"
-                />
-              </div>
+              <iframe
+                title="Agenda una llamada con BPM.io"
+                src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1"
+                className="block h-[1050px] w-full"
+                loading="lazy"
+              />
             </Reveal>
 
             {/* Contact panel */}
