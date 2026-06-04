@@ -1,6 +1,5 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
-import { CalendlyTrigger } from "./CalendlyPopup";
 import { Mail, Phone, Linkedin, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 
 const navLinks = [
@@ -13,7 +12,7 @@ const navLinks = [
 const contactLinks = [
   { icon: Mail, label: "info@bpmio.com.mx", href: "mailto:info@bpmio.com.mx" },
   { icon: Phone, label: "+52 55 8010 0974", href: "tel:+525580100974" },
-  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com", external: true },
+  { icon: Linkedin, label: "LinkedIn", href: "https://www.linkedin.com/company/bpm-io/about/", external: true },
 ];
 
 export function Footer() {
@@ -42,14 +41,20 @@ export function Footer() {
               ¿Listo para evolucionar?
             </p>
             <h3 className="mt-3 max-w-2xl text-balance text-3xl font-extrabold leading-[1.05] tracking-tight md:text-4xl">
-              Construyamos algo que perdure,{" "}
-              <span className="text-[oklch(0.78_0.12_162)]">juntos.</span>
+              Construyamos algo que perdure, <span className="text-[oklch(0.78_0.12_162)]">juntos.</span>
             </h3>
           </div>
-          <CalendlyTrigger className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.78_0.12_162)] px-6 py-3.5 text-sm font-semibold text-[oklch(0.28_0.07_168)] shadow-soft transition-transform hover:-translate-y-0.5">
+          <Link
+            to="/"
+            hash="contacto"
+            className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.78_0.12_162)] px-6 py-3.5 text-sm font-semibold text-[oklch(0.28_0.07_168)] shadow-soft transition-transform hover:-translate-y-0.5"
+          >
             Agenda una llamada
-            <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </CalendlyTrigger>
+            <ArrowUpRight
+              size={16}
+              className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
+          </Link>
         </div>
       </div>
 
@@ -61,7 +66,8 @@ export function Footer() {
             <Logo />
           </div>
           <p className="mt-6 max-w-sm text-base leading-relaxed text-primary-foreground/70">
-            Transformamos empresas mexicanas con cimientos firmes: procesos, datos, automatización e inteligencia artificial — orquestados como un solo sistema.
+            Transformamos empresas mexicanas con cimientos firmes: procesos, datos, automatización e inteligencia
+            artificial — orquestados como un solo sistema.
           </p>
           <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-primary-foreground/15 bg-primary-foreground/5 px-3.5 py-1.5 text-xs font-semibold text-primary-foreground/80 backdrop-blur">
             <MapPin size={14} className="text-[oklch(0.78_0.12_162)]" />
@@ -71,9 +77,7 @@ export function Footer() {
 
         {/* Navegar */}
         <div className="md:col-span-3">
-          <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[oklch(0.78_0.12_162)]">
-            Navegar
-          </h4>
+          <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[oklch(0.78_0.12_162)]">Navegar</h4>
           <ul className="mt-5 space-y-3">
             {navLinks.map((link) => (
               <li key={link.to}>
@@ -91,9 +95,7 @@ export function Footer() {
 
         {/* Contacto */}
         <div className="md:col-span-4">
-          <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[oklch(0.78_0.12_162)]">
-            Contacto
-          </h4>
+          <h4 className="text-[11px] font-bold uppercase tracking-[0.18em] text-[oklch(0.78_0.12_162)]">Contacto</h4>
           <ul className="mt-5 space-y-3">
             {contactLinks.map(({ icon: Icon, label, href, external }) => (
               <li key={label}>
