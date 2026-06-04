@@ -1,9 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 
-import { Sparkles, Send, Bot, User } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 export const Route = createFileRoute("/ai-partner")({
   head: () => ({
@@ -17,32 +16,7 @@ export const Route = createFileRoute("/ai-partner")({
   component: AIPartner,
 });
 
-type Msg = { role: "user" | "ai"; text: string };
-
 function AIPartner() {
-  const [messages, setMessages] = useState<Msg[]>([
-    {
-      role: "ai",
-      text: "Hola 👋 Soy el AI Partner de BPM.io. Cuéntame en una frase a qué se dedica tu empresa y dónde sientes el mayor cuello de botella hoy.",
-    },
-  ]);
-  const [input, setInput] = useState("");
-
-  const send = () => {
-    const text = input.trim();
-    if (!text) return;
-    setMessages((m) => [
-      ...m,
-      { role: "user", text },
-      {
-        role: "ai",
-        text:
-          "Gracias por compartirlo. Para darte una lectura más completa: ¿cómo manejan hoy su información clave (hojas de cálculo, sistemas, dispersa)? Esto me permite ubicar tu punto de partida en el Check Up.",
-      },
-    ]);
-    setInput("");
-  };
-
   return (
     <SiteLayout>
       {/* Hero */}
@@ -63,66 +37,12 @@ function AIPartner() {
       {/* Chat + features */}
       <Section className="!pt-2 lg:!pt-4">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
-          {/* Chat */}
-          <div className="flex h-[620px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft lg:h-auto lg:self-stretch">
-            <div className="flex items-center gap-3 border-b border-border bg-surface px-6 py-4">
-              <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
-                <Bot size={18} />
-                <span className="absolute -bottom-0.5 -right-0.5 h-3 w-3 rounded-full border-2 border-card bg-[oklch(0.7_0.18_150)]" />
-              </div>
-              <div>
-                <p className="font-bold text-primary">BPM.io · AI Partner</p>
-                <p className="text-xs text-muted-foreground">Disponible · responde en segundos</p>
-              </div>
-            </div>
-
-            <div className="flex-1 space-y-4 overflow-y-auto p-6">
-              {messages.map((m, i) => (
-                <div
-                  key={i}
-                  className={`flex gap-3 ${m.role === "user" ? "flex-row-reverse" : ""}`}
-                >
-                  <div
-                    className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${
-                      m.role === "ai"
-                        ? "bg-[oklch(0.78_0.12_162)] text-primary"
-                        : "bg-primary text-primary-foreground"
-                    }`}
-                  >
-                    {m.role === "ai" ? <Bot size={14} /> : <User size={14} />}
-                  </div>
-                  <div
-                    className={`max-w-[80%] rounded-2xl px-4 py-3 text-sm leading-relaxed ${
-                      m.role === "ai"
-                        ? "bg-secondary text-primary"
-                        : "bg-primary text-primary-foreground"
-                    }`}
-                  >
-                    {m.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            <form
-              onSubmit={(e) => { e.preventDefault(); send(); }}
-              className="flex items-center gap-2 border-t border-border bg-surface p-4"
-            >
-              <input
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Cuéntame sobre tu empresa…"
-                className="flex-1 rounded-full border border-border bg-card px-5 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-[oklch(0.55_0.13_162)] focus:outline-none"
-              />
-              <button
-                type="submit"
-                className="flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:-translate-y-0.5"
-                aria-label="Enviar"
-              >
-                <Send size={16} />
-              </button>
-            </form>
-          </div>
+          {/* AI Partner iframe */}
+          <iframe
+            src="https://creative-torrone-caf354.netlify.app/"
+            className="h-[650px] w-full rounded-3xl border border-border shadow-soft lg:h-auto lg:self-stretch"
+            style={{ border: "none" }}
+          />
 
           {/* Prompts */}
           <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch">
@@ -139,14 +59,10 @@ function AIPartner() {
                 { t: "Preguntas frecuentes", d: "Costos, tiempos, plataformas, tipos de procesos que automatizamos." },
               ].map(({ t, d }) => (
                 <li key={t}>
-                  <button
-                    type="button"
-                    onClick={() => setInput(t)}
-                    className="group w-full rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft"
-                  >
+                  <div className="group w-full rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft">
                     <p className="text-sm font-semibold text-primary">{t}</p>
                     <p className="mt-1 text-xs leading-relaxed text-foreground/70">{d}</p>
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>
