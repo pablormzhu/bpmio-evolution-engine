@@ -331,7 +331,7 @@ function Home() {
 
         {/* Logos carrusel */}
         <div className="mt-10">
-          <p className="text-center text-sm font-semibold uppercase tracking-wider text-primary/60">
+          <p className="text-center text-lg font-semibold uppercase tracking-wider text-primary/70 sm:text-xl md:text-2xl">
             Algunos de nuestros clientes
           </p>
           <div
