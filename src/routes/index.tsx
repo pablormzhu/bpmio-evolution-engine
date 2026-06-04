@@ -418,13 +418,15 @@ function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
             {/* Calendly */}
             <Reveal direction="left">
-              <iframe
-                title="Agenda una llamada con BPM.io"
-                src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1"
-                className="block h-[520px] w-full border-0 bg-transparent"
-                loading="lazy"
-                scrolling="no"
-              />
+              <div className="h-[520px] w-full overflow-hidden bg-transparent">
+                <iframe
+                  title="Agenda una llamada con BPM.io"
+                  src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=e5f9ef"
+                  className="block h-[520px] w-[calc(100%+18px)] border-0 bg-transparent"
+                  loading="lazy"
+                  scrolling="no"
+                />
+              </div>
             </Reveal>
 
             {/* Contact panel */}
