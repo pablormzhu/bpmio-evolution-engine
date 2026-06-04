@@ -347,7 +347,7 @@ function Home() {
               {[...clientLogos, ...clientLogos].map((logo, i) => (
                 <div
                   key={i}
-                  className="flex h-16 w-40 shrink-0 items-center justify-center"
+                  className="flex h-24 w-56 shrink-0 items-center justify-center"
                 >
                   <img
                     src={logo.src}
