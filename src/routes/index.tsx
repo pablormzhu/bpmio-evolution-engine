@@ -186,10 +186,10 @@ function Home() {
           </ol>
         </div>
 
-        {/* Pull quote — limpio, sin caja */}
-        <figure className="mt-14 border-l-2 border-[oklch(0.55_0.13_162)] pl-6 md:mt-16 md:pl-8">
+        {/* Pull quote — en caja con texto más chico */}
+        <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
           <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
-          <blockquote className="text-pretty text-xl font-semibold leading-snug text-primary md:text-2xl">
+          <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
             Preguntamos antes de proponer. Entendemos antes de construir.
             <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
           </blockquote>
