@@ -207,17 +207,18 @@ function Home() {
       >
         <div className="grid gap-6 md:grid-cols-3">
           {orchestration.map(({ icon: Icon, title, desc }, i) => (
-            <article
-              key={title}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1"
-            >
-              <span className="absolute right-5 top-5 text-5xl font-extrabold text-[oklch(0.78_0.12_162)]/40">
-                0{i + 1}
-              </span>
-              <Icon size={28} className="text-[oklch(0.55_0.13_162)]" />
-              <h3 className="mt-5 text-xl font-bold text-primary">{title}</h3>
-              <p className="mt-2 text-foreground/70">{desc}</p>
-            </article>
+            <Reveal key={title} delay={i * 130} direction="up">
+              <article
+                className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[oklch(0.78_0.12_162)]"
+              >
+                <span className="absolute right-5 top-5 text-5xl font-extrabold text-[oklch(0.78_0.12_162)]/40 transition-transform duration-500 group-hover:scale-110">
+                  0{i + 1}
+                </span>
+                <Icon size={28} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                <h3 className="mt-5 text-xl font-bold text-primary">{title}</h3>
+                <p className="mt-2 text-foreground/70">{desc}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
         <figure className="mt-14 border-t border-border/60 pt-8 text-center">
