@@ -40,7 +40,23 @@ const maturity = [
   { icon: GraduationCap, label: "Adopción y capacitación" },
 ];
 
-const logos = ["Logistic Trade", "Sigtronic", "Acme MX", "Norte Capital", "Veridia", "Cobre & Co"];
+import logisticTrade from "@/assets/clients/logistic-trade.png.asset.json";
+import sigtronic from "@/assets/clients/sigtronic.png.asset.json";
+import epcor from "@/assets/clients/epcor.png.asset.json";
+import televisa from "@/assets/clients/televisa.png.asset.json";
+import cajasAgricolas from "@/assets/clients/cajas-agricolas.png.asset.json";
+import inra from "@/assets/clients/inra.png.asset.json";
+import laila from "@/assets/clients/laila.png.asset.json";
+
+const clientLogos = [
+  { name: "Logistic Trade", src: logisticTrade.url },
+  { name: "Sigtronic", src: sigtronic.url },
+  { name: "EPCOR", src: epcor.url },
+  { name: "Televisa", src: televisa.url },
+  { name: "Cajas Agrícolas de México", src: cajasAgricolas.url },
+  { name: "INRA", src: inra.url },
+  { name: "Hotel Laila", src: laila.url },
+];
 
 function Home() {
   return (
