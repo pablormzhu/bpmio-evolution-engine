@@ -284,43 +284,45 @@ function Servicios() {
 
       {/* Proceso 7 pasos — recorrido */}
       <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        <div className="mb-12 max-w-2xl">
-          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
-            <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
-            Cómo trabajamos
-          </span>
-          <h2 className="text-balance text-3xl font-extrabold leading-[1.05] text-primary md:text-5xl">
-            Consultoría <span className="italic text-[oklch(0.55_0.13_162)]">primero</span>.
-          </h2>
-          <p className="mt-5 text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
-            Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
-          </p>
-        </div>
+        <div className="rounded-[2rem] bg-surface p-8 md:p-12 lg:p-16">
+          <div className="mb-12 max-w-2xl">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+              Cómo trabajamos
+            </span>
+            <h2 className="text-balance text-3xl font-extrabold leading-[1.05] text-primary md:text-5xl">
+              Consultoría <span className="italic text-[oklch(0.55_0.13_162)]">primero</span>.
+            </h2>
+            <p className="mt-5 text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
+              Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
+            </p>
+          </div>
 
-        <ol className="relative mx-auto max-w-4xl">
-          <span
-            className="pointer-events-none absolute left-[1.125rem] top-2 bottom-2 w-px bg-gradient-to-b from-[oklch(0.55_0.13_162)]/40 via-[oklch(0.55_0.13_162)]/20 to-transparent md:left-6"
-            aria-hidden
-          />
-          {steps.map(({ icon: Icon, t, full }, i) => (
-            <li key={t} className="relative grid grid-cols-[auto_1fr] gap-5 py-6 md:gap-8 md:py-8">
-              <div className="relative flex flex-col items-center">
-                <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[oklch(0.55_0.13_162)]/30 bg-background text-xs font-bold text-[oklch(0.45_0.13_162)] md:h-12 md:w-12 md:text-sm">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-              </div>
-              <div className="pt-1 md:pt-2">
-                <div className="flex items-center gap-2.5">
-                  <Icon size={16} className="text-[oklch(0.55_0.13_162)]" />
-                  <h3 className="text-lg font-bold text-primary md:text-2xl">{t}</h3>
+          <ol className="relative max-w-2xl">
+            <span
+              className="pointer-events-none absolute left-[1.125rem] top-2 bottom-2 w-px bg-gradient-to-b from-[oklch(0.55_0.13_162)]/40 via-[oklch(0.55_0.13_162)]/20 to-transparent md:left-6"
+              aria-hidden
+            />
+            {steps.map(({ icon: Icon, t, full }, i) => (
+              <li key={t} className="relative grid grid-cols-[auto_1fr] gap-5 py-6 md:gap-8 md:py-8">
+                <div className="relative flex flex-col items-center">
+                  <span className="relative z-10 flex h-9 w-9 items-center justify-center rounded-full border border-[oklch(0.55_0.13_162)]/30 bg-background text-xs font-bold text-[oklch(0.45_0.13_162)] md:h-12 md:w-12 md:text-sm">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
                 </div>
-                <p className="mt-2 max-w-2xl text-sm leading-relaxed text-foreground/70 md:text-base">
-                  {full}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
+                <div className="pt-1 md:pt-2">
+                  <div className="flex items-center gap-2.5">
+                    <Icon size={16} className="text-[oklch(0.55_0.13_162)]" />
+                    <h3 className="text-lg font-bold text-primary md:text-2xl">{t}</h3>
+                  </div>
+                  <p className="mt-2 max-w-xl text-sm leading-relaxed text-foreground/70 md:text-base">
+                    {full}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </section>
 
 
