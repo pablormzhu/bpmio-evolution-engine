@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
+import { Reveal } from "@/components/site/Reveal";
 import { PrimaryCTA, MintCTA } from "@/components/site/CTA";
 import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
@@ -135,17 +136,18 @@ function Home() {
               t: "Listo para lo que viene",
               d: "Lo que construyes hoy se suma de forma modular cuando llegan nuevas tecnologías. No empiezas de cero.",
             },
-          ].map(({ icon: Icon, t, d }) => (
-            <article
-              key={t}
-              className="group rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary">
-                <Icon size={20} />
-              </div>
-              <h3 className="text-xl font-bold text-primary">{t}</h3>
-              <p className="mt-3 text-foreground/70 leading-relaxed">{d}</p>
-            </article>
+          ].map(({ icon: Icon, t, d }, i) => (
+            <Reveal key={t} delay={i * 120} direction="up">
+              <article
+                className="group h-full rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-lg"
+              >
+                <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
+                  <Icon size={20} />
+                </div>
+                <h3 className="text-xl font-bold text-primary">{t}</h3>
+                <p className="mt-3 text-foreground/70 leading-relaxed">{d}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
       </Section>
@@ -173,26 +175,28 @@ function Home() {
               { n: "02", t: "Diseñar", d: "Traducimos tu conocimiento en una solución a tu medida." },
               { n: "03", t: "Construir", d: "Implementamos con la tecnología correcta para tu reto." },
               { n: "04", t: "Acompañar", d: "Capacitamos a tu equipo hasta que sea dueño de la solución." },
-            ].map((step) => (
-              <li key={step.n} className="relative flex flex-col items-start">
-                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft">
+            ].map((step, i) => (
+              <Reveal key={step.n} delay={i * 140} direction="up" as="li" className="relative flex flex-col items-start">
+                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft transition-transform duration-300 hover:scale-110 hover:border-[oklch(0.55_0.13_162)]/40">
                   {step.n}
                 </div>
                 <h3 className="mt-5 text-xl font-bold text-primary">{step.t}</h3>
                 <p className="mt-2 text-foreground/70 leading-relaxed">{step.d}</p>
-              </li>
+              </Reveal>
             ))}
           </ol>
         </div>
 
         {/* Pull quote — en caja con texto más chico */}
-        <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
-          <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
-          <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
-            Preguntamos antes de proponer. Entendemos antes de construir.
-            <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
-          </blockquote>
-        </figure>
+        <Reveal delay={200} direction="scale">
+          <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
+            <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
+            <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
+              Preguntamos antes de proponer. Entendemos antes de construir.
+              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
+            </blockquote>
+          </figure>
+        </Reveal>
       </Section>
 
       {/* ORQUESTAMOS */}
@@ -203,17 +207,18 @@ function Home() {
       >
         <div className="grid gap-6 md:grid-cols-3">
           {orchestration.map(({ icon: Icon, title, desc }, i) => (
-            <article
-              key={title}
-              className="relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1"
-            >
-              <span className="absolute right-5 top-5 text-5xl font-extrabold text-[oklch(0.78_0.12_162)]/40">
-                0{i + 1}
-              </span>
-              <Icon size={28} className="text-[oklch(0.55_0.13_162)]" />
-              <h3 className="mt-5 text-xl font-bold text-primary">{title}</h3>
-              <p className="mt-2 text-foreground/70">{desc}</p>
-            </article>
+            <Reveal key={title} delay={i * 130} direction="up">
+              <article
+                className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[oklch(0.78_0.12_162)]"
+              >
+                <span className="absolute right-5 top-5 text-5xl font-extrabold text-[oklch(0.78_0.12_162)]/40 transition-transform duration-500 group-hover:scale-110">
+                  0{i + 1}
+                </span>
+                <Icon size={28} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                <h3 className="mt-5 text-xl font-bold text-primary">{title}</h3>
+                <p className="mt-2 text-foreground/70">{desc}</p>
+              </article>
+            </Reveal>
           ))}
         </div>
         <figure className="mt-14 border-t border-border/60 pt-8 text-center">
@@ -244,18 +249,19 @@ function Home() {
 
         <div className="mt-12 flex flex-wrap justify-center gap-3 md:gap-4">
           {maturity.map(({ icon: Icon, label }, i) => (
-            <div
-              key={label}
-              className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
-            >
-              <span className="font-mono text-[10px] text-primary/40">
-                0{i + 1}
-              </span>
-              <Icon size={18} className="text-[oklch(0.55_0.13_162)]" />
-              <span className="text-sm font-semibold text-primary md:text-base">
-                {label}
-              </span>
-            </div>
+            <Reveal key={label} delay={i * 70} direction="up">
+              <div
+                className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
+              >
+                <span className="font-mono text-[10px] text-primary/40">
+                  0{i + 1}
+                </span>
+                <Icon size={18} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-semibold text-primary md:text-base">
+                  {label}
+                </span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
@@ -265,28 +271,32 @@ function Home() {
         eyebrow="Conocimiento abierto"
         title={<>Lo que sabemos, <span className="text-[oklch(0.55_0.13_162)]">lo compartimos</span>.</>}
       >
-        <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-14">
-          <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 rounded-full bg-[oklch(0.78_0.12_162)]/40 blur-3xl" />
-          <div className="grain-lines absolute inset-0 opacity-20" />
-          <div className="relative grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
-            <div>
-              <p className="text-lg leading-relaxed text-primary-foreground/85">
-                Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas
-                cliente o no, sin esperar nada a cambio. Empieza con un Check Up Digital gratuito:
-                nuestro AI Partner te da, en minutos, una lectura honesta de dónde estás.
-              </p>
-              <div className="mt-7">
-                <MintCTA>Hablar con el AI Partner</MintCTA>
-              </div>
-            </div>
-            <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6 backdrop-blur">
-              <Sparkles className="text-[oklch(0.78_0.12_162)]" />
-              <p className="mt-4 text-2xl font-extrabold leading-tight">
-                Una lectura honesta de dónde estás y qué te conviene priorizar.
-              </p>
+        <Reveal direction="scale">
+          <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-14">
+            <div className="pointer-events-none absolute -right-20 -top-20 h-80 w-80 animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/40 blur-3xl" />
+            <div className="grain-lines absolute inset-0 opacity-20" />
+            <div className="relative grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
+              <Reveal delay={150} direction="left">
+                <p className="text-lg leading-relaxed text-primary-foreground/85">
+                  Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas
+                  cliente o no, sin esperar nada a cambio. Empieza con un Check Up Digital gratuito:
+                  nuestro AI Partner te da, en minutos, una lectura honesta de dónde estás.
+                </p>
+                <div className="mt-7">
+                  <MintCTA>Hablar con el AI Partner</MintCTA>
+                </div>
+              </Reveal>
+              <Reveal delay={300} direction="right">
+                <div className="rounded-2xl border border-primary-foreground/15 bg-primary-foreground/5 p-6 backdrop-blur">
+                  <Sparkles className="animate-float-slow text-[oklch(0.78_0.12_162)]" />
+                  <p className="mt-4 text-2xl font-extrabold leading-tight">
+                    Una lectura honesta de dónde estás y qué te conviene priorizar.
+                  </p>
+                </div>
+              </Reveal>
             </div>
           </div>
-        </div>
+        </Reveal>
 
         {/* Logos carrusel */}
         <div className="mt-14">
@@ -313,57 +323,67 @@ function Home() {
         intro="Si estás pensando en una iniciativa, o simplemente necesitas orientación, te invitamos a una llamada para platicar y compartir experiencia. Sin compromiso: solo una conversación honesta sobre tu empresa."
       >
         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-            <iframe
-              title="Agenda una llamada con BPM.io"
-              src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
-              className="h-[640px] w-full"
-              loading="lazy"
-            />
-          </div>
-          <div className="flex flex-col gap-4">
-            <a
-              href="mailto:info@bpmio.com.mx"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Mail size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Escríbenos</p>
-                <p className="font-semibold text-primary">info@bpmio.com.mx</p>
-              </div>
-            </a>
-            <a
-              href="tel:+525580100974"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Phone size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Llámanos</p>
-                <p className="font-semibold text-primary">+52 55 8010 0974</p>
-              </div>
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Linkedin size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Síguenos</p>
-                <p className="font-semibold text-primary">LinkedIn</p>
-              </div>
-            </a>
-            <div className="mt-2 rounded-2xl bg-[oklch(0.78_0.12_162)]/30 p-5 text-sm text-primary/80">
-              <Hammer className="mb-2" size={18} />
-              Sin compromiso: solo una conversación honesta sobre tu empresa.
+          <Reveal direction="left">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
+              <iframe
+                title="Agenda una llamada con BPM.io"
+                src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
+                className="h-[640px] w-full"
+                loading="lazy"
+              />
             </div>
+          </Reveal>
+          <div className="flex flex-col gap-4">
+            <Reveal delay={120} direction="right">
+              <a
+                href="mailto:info@bpmio.com.mx"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Mail size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Escríbenos</p>
+                  <p className="font-semibold text-primary">info@bpmio.com.mx</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={220} direction="right">
+              <a
+                href="tel:+525580100974"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Phone size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Llámanos</p>
+                  <p className="font-semibold text-primary">+52 55 8010 0974</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={320} direction="right">
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Linkedin size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Síguenos</p>
+                  <p className="font-semibold text-primary">LinkedIn</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={420} direction="up">
+              <div className="rounded-2xl bg-[oklch(0.78_0.12_162)]/30 p-5 text-sm text-primary/80">
+                <Hammer className="mb-2" size={18} />
+                Sin compromiso: solo una conversación honesta sobre tu empresa.
+              </div>
+            </Reveal>
           </div>
         </div>
       </Section>
