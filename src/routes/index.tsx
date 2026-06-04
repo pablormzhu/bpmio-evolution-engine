@@ -224,16 +224,16 @@ function Home() {
 
       {/* TE ENCONTRAMOS DONDE ESTÉS */}
       <section className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
-        <div className="mx-auto max-w-3xl text-center">
+        <div className="mx-auto max-w-5xl text-center">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
             <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
             Te encontramos donde estés
           </span>
-          <h2 className="text-balance text-3xl font-extrabold leading-[1.1] text-primary md:text-4xl lg:text-5xl">
+          <h2 className="text-balance text-2xl font-extrabold leading-[1.15] tracking-tight text-primary md:text-3xl lg:text-[2.5rem]">
             Cualquier industria, cualquier tamaño,{" "}
             <span className="text-[oklch(0.55_0.13_162)]">cualquier punto del camino.</span>
           </h2>
-          <p className="mx-auto mt-5 max-w-xl text-pretty text-base leading-relaxed text-foreground/75">
+          <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-foreground/75">
             Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar. Te acompañamos en cualquier nivel de madurez.
           </p>
         </div>
