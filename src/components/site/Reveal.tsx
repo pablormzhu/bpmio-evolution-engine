@@ -59,9 +59,9 @@ export function Reveal({
   };
 
   return (
-    // @ts-expect-error dynamic tag
-    <As ref={ref} style={style} className={className}>
+    <As ref={ref as never} style={style} className={className}>
       {children}
     </As>
+
   );
 }
