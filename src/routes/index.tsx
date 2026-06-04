@@ -343,17 +343,16 @@ function Home() {
                 "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
             }}
           >
-            <div className="flex w-max animate-marquee gap-4 group-hover:[animation-play-state:paused]">
+            <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
               {[...clientLogos, ...clientLogos].map((logo, i) => (
                 <div
                   key={i}
-                  className="flex h-32 w-64 shrink-0 items-center justify-center"
+                  className="flex h-32 w-48 shrink-0 items-center justify-center"
                 >
                   <img
                     src={logo.src}
                     alt={logo.name}
                     loading="lazy"
-                    style={{ mixBlendMode: "multiply" }}
                     className="max-h-full max-w-full object-contain opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
                   />
                 </div>
