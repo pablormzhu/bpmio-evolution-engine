@@ -18,7 +18,7 @@ export function Section({
   return (
     <section id={id} className={`mx-auto w-full max-w-7xl px-6 py-10 lg:px-10 lg:py-14 ${className}`}>
       {(eyebrow || title || intro) && (
-        <div className="mb-8 max-w-3xl">
+        <div className="mb-6 max-w-3xl">
           {eyebrow && (
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
               <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
