@@ -168,9 +168,14 @@ function Filosofia() {
       <Section eyebrow="De dónde venimos" title={<>Nacimos de una convicción.</>}>
         <div className="grid gap-10 md:grid-cols-[1fr_1.5fr] md:items-start">
           <div className="rounded-3xl bg-primary p-8 text-primary-foreground shadow-soft">
-            <div className="flex h-24 w-24 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)] text-3xl font-extrabold text-primary">
-              PR
+            <div className="h-28 w-28 overflow-hidden rounded-full ring-4 ring-[oklch(0.78_0.12_162)]/40">
+              <img
+                src={pabloPhoto.url}
+                alt="Pablo Ramírez Huitrón"
+                className="h-full w-full object-cover"
+              />
             </div>
+
             <p className="mt-6 text-2xl font-extrabold">Pablo Ramírez Huitrón</p>
             <p className="mt-1 text-primary-foreground/70">Socio Fundador · BPM.io</p>
             <div className="mt-6 h-px bg-primary-foreground/15" />
