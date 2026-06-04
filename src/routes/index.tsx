@@ -4,19 +4,39 @@ import { Section } from "@/components/site/Section";
 import { Reveal } from "@/components/site/Reveal";
 import { PrimaryCTA, MintCTA } from "@/components/site/CTA";
 import {
-  Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
-  Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
+  Database,
+  Workflow,
+  Brain,
+  Boxes,
+  Code2,
+  BarChart3,
+  GraduationCap,
+  Compass,
+  Hammer,
+  Rocket,
+  Ear,
+  Layers,
+  Shield,
+  Mail,
+  Linkedin,
+  Phone,
+  Sparkles,
 } from "lucide-react";
-import BpmBrainHero from "@/components/BpmBrainHero";
-
+import { OrchestrationPulse } from "@/components/site/OrchestrationPulse";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "BPM.io — Es momento de evolucionar" },
-      { name: "description", content: "Ayudamos a empresas mexicanas a evolucionar en su transformación digital sobre cimientos firmes." },
+      {
+        name: "description",
+        content: "Ayudamos a empresas mexicanas a evolucionar en su transformación digital sobre cimientos firmes.",
+      },
       { property: "og:title", content: "BPM.io — Es momento de evolucionar" },
-      { property: "og:description", content: "Procesos, datos, automatización e IA, orquestados como un solo sistema." },
+      {
+        property: "og:description",
+        content: "Procesos, datos, automatización e IA, orquestados como un solo sistema.",
+      },
     ],
   }),
   component: Home,
@@ -80,7 +100,7 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 pb-10 pt-8 lg:px-10 lg:pb-12 lg:pt-10">
+        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-20 lg:pt-16">
           <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
             <div className="animate-fade-up text-left">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
@@ -99,9 +119,8 @@ function Home() {
               </h1>
 
               <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-foreground/70 md:text-xl">
-                Ayudamos a empresas mexicanas a evolucionar en su transformación digital.
-                Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones
-                construidas desde cimientos sólidos.
+                Ayudamos a empresas mexicanas a evolucionar en su transformación digital. Tu equipo pone el
+                conocimiento; nosotros lo transformamos en soluciones construidas desde cimientos sólidos.
               </p>
 
               <div className="mt-10 flex flex-wrap items-center gap-3">
@@ -111,28 +130,21 @@ function Home() {
             </div>
 
             {/* Núcleo pulsante: orquestación */}
-            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[480px] h-[480px] md:h-[520px] w-full">
-              <div className="h-full w-full">
-                <BpmBrainHero />
-              </div>
+            <div className="relative animate-fade-up [animation-delay:120ms]">
+              <OrchestrationPulse />
             </div>
           </div>
         </div>
 
-
         {/* Roles strip — full width */}
         <div className="border-t border-border/50 bg-surface/60 backdrop-blur">
           <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-3 px-6 py-5 lg:px-10">
-            <span className="text-xs font-bold uppercase tracking-[0.14em] text-primary/60">
-              Te acompañamos como
-            </span>
+            <span className="text-xs font-bold uppercase tracking-[0.14em] text-primary/60">Te acompañamos como</span>
             <div className="flex flex-1 flex-wrap items-center gap-x-6 gap-y-2">
               {roles.map((r, i) => (
                 <span key={r} className="flex items-center gap-3 text-sm font-semibold text-primary/85">
                   {r}
-                  {i < roles.length - 1 && (
-                    <span className="hidden text-[oklch(0.55_0.13_162)]/40 sm:inline">/</span>
-                  )}
+                  {i < roles.length - 1 && <span className="hidden text-[oklch(0.55_0.13_162)]/40 sm:inline">/</span>}
                 </span>
               ))}
             </div>
@@ -140,13 +152,14 @@ function Home() {
         </div>
       </section>
 
-
-
-
       {/* LO QUE CREEMOS */}
       <Section
         eyebrow="Lo que creemos"
-        title={<>Creemos en la transformación <em className="not-italic text-[oklch(0.55_0.13_162)]">que perdura</em>.</>}
+        title={
+          <>
+            Creemos en la transformación <em className="not-italic text-[oklch(0.55_0.13_162)]">que perdura</em>.
+          </>
+        }
       >
         <div className="grid gap-6 md:grid-cols-3">
           {[
@@ -167,9 +180,7 @@ function Home() {
             },
           ].map(({ icon: Icon, t, d }, i) => (
             <Reveal key={t} delay={i * 120} direction="up">
-              <article
-                className="group h-full rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-lg"
-              >
+              <article className="group h-full rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-lg">
                 <div className="mb-5 inline-flex h-11 w-11 items-center justify-center rounded-xl bg-secondary text-primary transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3">
                   <Icon size={20} />
                 </div>
@@ -184,13 +195,17 @@ function Home() {
       {/* ESCUCHAMOS PRIMERO */}
       <Section
         eyebrow="Escuchamos primero"
-        title={<>Tu equipo es el experto. <span className="text-[oklch(0.55_0.13_162)]">Nosotros escuchamos.</span></>}
+        title={
+          <>
+            Tu equipo es el experto. <span className="text-[oklch(0.55_0.13_162)]">Nosotros escuchamos.</span>
+          </>
+        }
         intro={
           <>
-            Nadie conoce tu operación como quienes la viven todos los días. Por eso empezamos por
-            escuchar: hacemos un levantamiento a fondo de tus procesos, datos y las necesidades
-            reales de tu gente. Tu equipo pone el conocimiento; nosotros lo traducimos en
-            soluciones —y los acompañamos hasta que se vuelven dueños de lo que construimos juntos.
+            Nadie conoce tu operación como quienes la viven todos los días. Por eso empezamos por escuchar: hacemos un
+            levantamiento a fondo de tus procesos, datos y las necesidades reales de tu gente. Tu equipo pone el
+            conocimiento; nosotros lo traducimos en soluciones —y los acompañamos hasta que se vuelven dueños de lo que
+            construimos juntos.
           </>
         }
       >
@@ -205,7 +220,13 @@ function Home() {
               { n: "03", t: "Construir", d: "Implementamos con la tecnología correcta para tu reto." },
               { n: "04", t: "Acompañar", d: "Capacitamos a tu equipo hasta que sea dueño de la solución." },
             ].map((step, i) => (
-              <Reveal key={step.n} delay={i * 140} direction="up" as="li" className="relative flex flex-col items-start">
+              <Reveal
+                key={step.n}
+                delay={i * 140}
+                direction="up"
+                as="li"
+                className="relative flex flex-col items-start"
+              >
                 <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft transition-transform duration-300 hover:scale-110 hover:border-[oklch(0.55_0.13_162)]/40">
                   {step.n}
                 </div>
@@ -243,13 +264,14 @@ function Home() {
         <div className="grid gap-6 md:grid-cols-3">
           {orchestration.map(({ icon: Icon, title, desc }, i) => (
             <Reveal key={title} delay={i * 130} direction="up">
-              <article
-                className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[oklch(0.78_0.12_162)]"
-              >
+              <article className="group relative h-full overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[oklch(0.78_0.12_162)]">
                 <span className="absolute right-5 top-5 text-5xl font-extrabold text-[oklch(0.78_0.12_162)]/40 transition-transform duration-500 group-hover:scale-110">
                   0{i + 1}
                 </span>
-                <Icon size={28} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3" />
+                <Icon
+                  size={28}
+                  className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-3"
+                />
                 <h3 className="mt-5 text-xl font-bold text-primary">{title}</h3>
                 <p className="mt-2 text-foreground/70">{desc}</p>
               </article>
@@ -276,23 +298,21 @@ function Home() {
             <span className="text-[oklch(0.55_0.13_162)]">cualquier punto del camino.</span>
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-foreground/75">
-            Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar. Te acompañamos en cualquier nivel de madurez.
+            Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar.
+            Te acompañamos en cualquier nivel de madurez.
           </p>
         </div>
 
         <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
           {maturity.map(({ icon: Icon, label }, i) => (
             <Reveal key={label} delay={i * 70} direction="up">
-              <div
-                className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
-              >
-                <span className="font-mono text-[10px] text-primary/40">
-                  0{i + 1}
-                </span>
-                <Icon size={18} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110" />
-                <span className="text-sm font-semibold text-primary md:text-base">
-                  {label}
-                </span>
+              <div className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft">
+                <span className="font-mono text-[10px] text-primary/40">0{i + 1}</span>
+                <Icon
+                  size={18}
+                  className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110"
+                />
+                <span className="text-sm font-semibold text-primary md:text-base">{label}</span>
               </div>
             </Reveal>
           ))}
@@ -302,7 +322,11 @@ function Home() {
       {/* CONOCIMIENTO ABIERTO */}
       <Section
         eyebrow="Conocimiento abierto"
-        title={<>Lo que sabemos, <span className="text-[oklch(0.55_0.13_162)]">lo compartimos</span>.</>}
+        title={
+          <>
+            Lo que sabemos, <span className="text-[oklch(0.55_0.13_162)]">lo compartimos</span>.
+          </>
+        }
       >
         <Reveal direction="scale">
           <div className="relative overflow-hidden rounded-3xl bg-primary p-10 text-primary-foreground md:p-14">
@@ -311,9 +335,9 @@ function Home() {
             <div className="relative grid gap-8 md:grid-cols-[1.5fr_1fr] md:items-center">
               <Reveal delay={150} direction="left">
                 <p className="text-lg leading-relaxed text-primary-foreground/85">
-                  Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas
-                  cliente o no, sin esperar nada a cambio. Empieza con un Check Up Digital gratuito:
-                  nuestro AI Partner te da, en minutos, una lectura honesta de dónde estás.
+                  Creemos en contribuir. Por eso orientamos y compartimos lo que sabemos —seas cliente o no, sin esperar
+                  nada a cambio. Empieza con un Check Up Digital gratuito: nuestro AI Partner te da, en minutos, una
+                  lectura honesta de dónde estás.
                 </p>
                 <div className="mt-7">
                   <MintCTA>Hablar con el AI Partner</MintCTA>
@@ -339,18 +363,13 @@ function Home() {
           <div
             className="group relative mt-8 overflow-hidden"
             style={{
-              maskImage:
-                "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-              WebkitMaskImage:
-                "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+              maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+              WebkitMaskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
             }}
           >
             <div className="flex w-max animate-marquee group-hover:[animation-play-state:paused]">
               {[...clientLogos, ...clientLogos].map((logo, i) => (
-                <div
-                  key={i}
-                  className="flex h-32 w-48 shrink-0 items-center justify-center px-6"
-                >
+                <div key={i} className="flex h-32 w-48 shrink-0 items-center justify-center px-6">
                   <img
                     src={logo.src}
                     alt={logo.name}
@@ -388,7 +407,8 @@ function Home() {
                 , sin compromiso.
               </h2>
               <p className="max-w-2xl text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
-                ¿Tienes una iniciativa en mente o no sabes por dónde empezar? Agenda una llamada y compartimos experiencia contigo — sin venta, sin presión.
+                ¿Tienes una iniciativa en mente o no sabes por dónde empezar? Agenda una llamada y compartimos
+                experiencia contigo — sin venta, sin presión.
               </p>
             </div>
           </Reveal>
@@ -411,8 +431,8 @@ function Home() {
                   </div>
                   <iframe
                     title="Agenda una llamada con BPM.io"
-                    src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_domain=bpmio.com.mx&embed_type=Inline&hide_gdpr_banner=1"
-                    className="h-[680px] w-full"
+                    src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
+                    className="h-[520px] w-full"
                     loading="lazy"
                   />
                 </div>
@@ -423,14 +443,17 @@ function Home() {
             <div className="flex flex-col gap-5">
               <Reveal delay={120} direction="right">
                 <div className="rounded-2xl border border-border bg-card p-6 shadow-soft">
-                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary/60">
-                    Contáctanos directo
-                  </p>
+                  <p className="text-xs font-bold uppercase tracking-[0.16em] text-primary/60">Contáctanos directo</p>
                   <ul className="mt-5 divide-y divide-border/70">
                     {[
                       { icon: Mail, label: "Escríbenos", value: "info@bpmio.com.mx", href: "mailto:info@bpmio.com.mx" },
                       { icon: Phone, label: "Llámanos", value: "+52 55 8010 0974", href: "tel:+525580100974" },
-                      { icon: Linkedin, label: "Síguenos", value: "LinkedIn", href: "https://www.linkedin.com" },
+                      {
+                        icon: Linkedin,
+                        label: "Síguenos",
+                        value: "LinkedIn",
+                        href: "https://www.linkedin.com/company/bpm-io/about/",
+                      },
                     ].map(({ icon: Icon, label, value, href }) => (
                       <li key={label}>
                         <a
