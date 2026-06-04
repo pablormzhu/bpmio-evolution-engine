@@ -56,9 +56,13 @@ export function Header() {
           </Link>
         </nav>
         <div className="hidden md:block">
-          <CalendlyTrigger className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5">
+          <Link
+            to="/"
+            hash="contacto"
+            className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
+          >
             Agenda una llamada
-          </CalendlyTrigger>
+          </Link>
         </div>
         <button
           onClick={() => setOpen((o) => !o)}
