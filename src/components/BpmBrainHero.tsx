@@ -304,7 +304,7 @@ export default function BpmBrainHero() {
         minHeight: 520,
         borderRadius: 28,
         overflow: "hidden",
-        background: "#0b1f1a",
+        background: "transparent",
         boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 30px 60px -34px rgba(8,30,26,0.6)",
         border: "1px solid rgba(170,224,232,0.06)",
       }}
