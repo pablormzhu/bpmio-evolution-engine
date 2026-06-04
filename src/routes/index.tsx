@@ -88,28 +88,6 @@ function Home() {
             </div>
           </div>
 
-          {/* Stat line — sin cajas */}
-          <div className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-10 md:gap-14">
-            {[
-              { k: "+30", l: "Empresas transformadas" },
-              { k: "7", l: "Disciplinas orquestadas" },
-              { k: "0", l: "Conflictos de interés" },
-            ].map((s, i) => (
-              <div key={s.l} className="flex items-end gap-5">
-                {i > 0 && (
-                  <span className="hidden h-14 w-px bg-gradient-to-b from-transparent via-primary/25 to-transparent sm:block" />
-                )}
-                <div>
-                  <p className="text-5xl font-extrabold leading-none tracking-tight text-primary md:text-6xl">
-                    {s.k}
-                  </p>
-                  <p className="mt-3 text-sm font-medium uppercase tracking-[0.14em] text-foreground/55">
-                    {s.l}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
 
         </div>
 
