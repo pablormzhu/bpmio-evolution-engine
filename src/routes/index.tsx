@@ -422,7 +422,7 @@ function Home() {
                 <iframe
                   title="Agenda una llamada con BPM.io"
                   src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=DFF7ED&primary_color=00A86B&text_color=063F31"
-                  className="block h-[520px] w-[calc(100%+18px)] border-0 bg-transparent"
+                  className="block h-[520px] w-[calc(100%+18px)] border-0 bg-transparent mix-blend-multiply"
                   loading="lazy"
                   scrolling="no"
                 />
