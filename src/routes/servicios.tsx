@@ -117,22 +117,8 @@ function Servicios() {
       <Section eyebrow="Cómo trabajamos" title={<>Consultoría primero.</>}>
         <ol className="relative space-y-4">
           <span className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-[oklch(0.78_0.12_162)] via-border to-transparent md:left-7" />
-          {steps.map(({ icon: Icon, t, d }, i) => (
-            <li
-              key={t}
-              className="group relative ml-2 flex gap-5 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-[oklch(0.78_0.12_162)] md:p-6"
-            >
-              <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)] text-primary shadow-soft">
-                <Icon size={20} />
-                <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
-                  {i + 1}
-                </span>
-              </div>
-              <div>
-                <h3 className="text-lg font-bold text-primary">{t}</h3>
-                <p className="mt-1 text-foreground/70">{d}</p>
-              </div>
-            </li>
+          {steps.map(({ icon: Icon, t, d, full }, i) => (
+            <StepCard key={t} Icon={Icon} index={i} title={t} short={d} full={full} />
           ))}
         </ol>
       </Section>
