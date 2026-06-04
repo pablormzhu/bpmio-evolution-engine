@@ -200,7 +200,7 @@ export default function BpmBrainHero() {
         a.ovy = (a.ovy + fy - a.oy * 0.02) * 0.85;
         a.ox += a.ovx; a.oy += a.ovy;
       }
-      const maxR = 0.46 * min0, minR = 0.20 * min0;
+      const maxR = 0.40 * min0, minR = 0.20 * min0;
       for (const h of hubs) {
         let hx = h.bx + h.ox, hy = h.by + h.oy;
         const rr = Math.hypot(hx - CX, hy - CY) || 1;
