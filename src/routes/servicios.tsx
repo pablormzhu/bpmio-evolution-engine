@@ -328,7 +328,7 @@ function Servicios() {
 
 
       {/* Componentes que ensamblamos — Bento */}
-      <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+      <section className="relative mx-auto w-full max-w-7xl px-6 py-8 lg:px-10 lg:py-12">
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
