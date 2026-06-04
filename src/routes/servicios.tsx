@@ -66,11 +66,36 @@ const steps = [
 ];
 
 const pieces = [
-  { icon: Database, t: "Información estandarizada y en tiempo real", d: "Tu información deja de vivir dispersa y de analizarse a destiempo. Te vuelves dueño en tiempo real." },
-  { icon: Workflow, t: "Automatización de procesos", d: "Devolvemos tiempo a tu equipo automatizando el trabajo repetitivo. Liberar, no reemplazar." },
-  { icon: Brain, t: "IA que trabaja contigo", d: "IA entrenada y afinada para tus procesos. Un compañero más, no un sustituto." },
-  { icon: Plug, t: "Integración y flujo de información", d: "Construimos lo que falta para que la información fluya. Que nada quede separado." },
-  { icon: Code2, t: "Software a la medida", d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita." },
+  {
+    icon: Database,
+    t: "Información estandarizada y en tiempo real",
+    d: "Tu información deja de vivir dispersa y de analizarse a destiempo. Te vuelves dueño en tiempo real.",
+    full: "Que tu información deje de vivir dispersa y de analizarse a mano y a destiempo. La dejamos estandarizada, automatizada y al día, y te vuelves dueño de ella en tiempo real: para explorarla desde muchos ángulos, compararte con tu pasado y anticiparte a lo que viene. La operación deja de mirar al retrovisor.",
+  },
+  {
+    icon: Workflow,
+    t: "Automatización de procesos",
+    d: "Devolvemos tiempo a tu equipo automatizando el trabajo repetitivo. Liberar, no reemplazar.",
+    full: "El trabajo repetitivo y manual consume las horas de tu equipo. Lo automatizamos para devolverle ese tiempo y enfocarlo donde de verdad aporta —liberando a tu gente, no reemplazándola.",
+  },
+  {
+    icon: Brain,
+    t: "Inteligencia artificial que trabaja contigo",
+    d: "IA entrenada y afinada para tus procesos. Un compañero más, no un sustituto.",
+    full: "IA entrenada y afinada para entender tus procesos, que ejecuta tareas reales y le quita carga a tu equipo. No trabaja aislada: trabaja para y con tu gente, como un integrante más que aporta en sinergia. Un compañero, no un sustituto.",
+  },
+  {
+    icon: Plug,
+    t: "Integración y flujo de información",
+    d: "Construimos lo que falta para que la información fluya. Que nada quede separado.",
+    full: "Cuando tus sistemas están aislados, o no hacen lo que necesitas y se vuelven un cuello de botella, construimos lo que falta para que la información fluya. Que nada quede separado.",
+  },
+  {
+    icon: Code2,
+    t: "Software a la medida",
+    d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita.",
+    full: "Cuando no existe nada en el mercado que encaje, diseñamos el software que tu empresa necesita —muchas veces, el puente que conecta tus otras herramientas y le da sinergia a todo el sistema.",
+  },
 ];
 
 function StepCard({
