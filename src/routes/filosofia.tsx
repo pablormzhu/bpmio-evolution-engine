@@ -48,23 +48,100 @@ function Filosofia() {
   return (
     <SiteLayout>
       {/* Por qué hacemos esto */}
-      <Section
-        eyebrow="Por qué hacemos esto"
-        title={<>La transformación digital de México <span className="text-[oklch(0.55_0.13_162)]">no debería ser un lujo.</span></>}
-      >
-        <div className="grid gap-8 text-lg leading-relaxed text-foreground/75 md:grid-cols-2">
-          <p>
-            En BPM.io creemos que cualquier empresa —sin importar su tamaño— merece transformarse
-            bien: sobre bases sólidas, a su ritmo, y de una forma que se disfrute en lugar de
-            sufrirse.
-          </p>
-          <p>
-            Por eso trabajamos. No solo para entregar proyectos, sino para acompañar a las empresas
-            mexicanas a madurar, y para compartir lo que sabemos con quien lo necesite —sea
-            cliente o no. Es, sencillamente, en lo que creemos.
-          </p>
+      <section className="relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[oklch(0.97_0.02_162)] via-background to-background" />
+        <div className="absolute -right-32 top-20 -z-10 h-[28rem] w-[28rem] rounded-full bg-[oklch(0.78_0.12_162)]/25 blur-[120px]" />
+        <div className="absolute -left-24 bottom-0 -z-10 h-72 w-72 rounded-full bg-[oklch(0.55_0.13_162)]/15 blur-[100px]" />
+
+        <div className="mx-auto w-full max-w-7xl px-6 py-20 lg:px-10 lg:py-28">
+          <div className="grid items-center gap-14 lg:grid-cols-12 lg:gap-20">
+            {/* Columna izquierda: manifiesto */}
+            <div className="lg:col-span-7">
+              <div className="inline-flex items-center gap-2 rounded-full border border-[oklch(0.55_0.13_162)]/25 bg-background/70 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.18em] text-primary backdrop-blur">
+                <Heart size={12} className="text-[oklch(0.55_0.13_162)]" />
+                Por qué hacemos esto
+              </div>
+
+              <h2 className="mt-7 text-balance text-4xl font-extrabold leading-[0.98] tracking-tight text-primary md:text-6xl lg:text-[4.25rem]">
+                La transformación digital de México
+                <span className="relative ml-2 inline-block">
+                  <span className="relative z-10 text-[oklch(0.45_0.13_162)] italic">
+                    no debería
+                  </span>
+                  <span className="absolute inset-x-0 bottom-1 -z-0 h-3 bg-[oklch(0.78_0.12_162)]/55" />
+                </span>{" "}
+                ser un lujo.
+              </h2>
+
+              <div className="mt-10 grid gap-px overflow-hidden rounded-2xl border border-border bg-border/60 sm:grid-cols-2">
+                <div className="bg-card p-6">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[oklch(0.55_0.13_162)]">
+                    Lo que creemos
+                  </p>
+                  <p className="mt-3 leading-relaxed text-foreground/80">
+                    Cualquier empresa —sin importar su tamaño— merece transformarse{" "}
+                    <span className="font-semibold text-primary">bien</span>: sobre bases sólidas, a
+                    su ritmo, y de una forma que se disfrute en lugar de sufrirse.
+                  </p>
+                </div>
+                <div className="bg-card p-6">
+                  <p className="text-[11px] font-bold uppercase tracking-wider text-[oklch(0.55_0.13_162)]">
+                    Por eso trabajamos
+                  </p>
+                  <p className="mt-3 leading-relaxed text-foreground/80">
+                    No solo para entregar proyectos, sino para acompañar a las empresas mexicanas a
+                    madurar —y para compartir lo que sabemos con quien lo necesite, sea cliente o
+                    no.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* Columna derecha: tarjeta sello */}
+            <div className="lg:col-span-5">
+              <div className="relative">
+                <div className="absolute -inset-3 -z-10 rounded-[2rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/50 to-transparent blur-2xl" />
+                <article className="relative overflow-hidden rounded-[2rem] border border-primary/10 bg-primary p-10 text-primary-foreground shadow-soft">
+                  <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-[oklch(0.78_0.12_162)]/30 blur-2xl" />
+                  <div className="absolute -bottom-12 -left-8 h-44 w-44 rounded-full bg-[oklch(0.55_0.13_162)]/40 blur-2xl" />
+
+                  <div className="relative">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-primary-foreground/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[oklch(0.85_0.10_162)] backdrop-blur">
+                      <MapPin size={11} />
+                      Hecho en México
+                    </div>
+
+                    <p className="mt-6 font-serif text-[5.5rem] leading-none text-[oklch(0.78_0.12_162)]">
+                      “
+                    </p>
+                    <blockquote className="-mt-10 text-2xl font-semibold leading-snug tracking-tight text-primary-foreground md:text-[1.75rem]">
+                      Madurar en lugar de improvisar.{" "}
+                      <span className="text-[oklch(0.85_0.10_162)]">
+                        Acompañar en lugar de entregar.
+                      </span>{" "}
+                      Compartir en lugar de guardarnos lo que sabemos.
+                    </blockquote>
+
+                    <div className="mt-10 flex items-center gap-4 border-t border-primary-foreground/15 pt-6">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)] text-primary">
+                        <Heart size={16} />
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-wider text-primary-foreground/60">
+                          Nuestra convicción
+                        </p>
+                        <p className="text-sm font-bold text-primary-foreground">
+                          Es, sencillamente, en lo que creemos.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
         </div>
-      </Section>
+      </section>
 
       {/* Creencias */}
       <Section eyebrow="Lo que creemos">
