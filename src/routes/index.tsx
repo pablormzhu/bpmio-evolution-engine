@@ -189,7 +189,7 @@ function Home() {
 
         {/* Pull quote — en caja con texto más chico */}
         <Reveal delay={200} direction="scale">
-          <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
+          <figure className="mt-10 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-12">
             <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
             <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
               Preguntamos antes de proponer. Entendemos antes de construir.
@@ -221,7 +221,7 @@ function Home() {
             </Reveal>
           ))}
         </div>
-        <figure className="mt-14 border-t border-border/60 pt-8 text-center">
+        <figure className="mt-10 border-t border-border/60 pt-6 text-center">
           <span className="mx-auto mb-4 block h-px w-12 bg-[oklch(0.55_0.13_162)]/40" />
           <blockquote className="mx-auto max-w-4xl whitespace-nowrap text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-xl">
             <span className="mr-1 text-2xl font-serif text-[oklch(0.55_0.13_162)]/60">“</span>
@@ -232,7 +232,7 @@ function Home() {
       </Section>
 
       {/* TE ENCONTRAMOS DONDE ESTÉS */}
-      <section className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+      <section className="mx-auto w-full max-w-7xl px-6 py-10 lg:px-10 lg:py-14">
         <div className="mx-auto max-w-5xl text-center">
           <span className="mb-5 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
             <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
@@ -247,7 +247,7 @@ function Home() {
           </p>
         </div>
 
-        <div className="mt-12 flex flex-wrap justify-center gap-3 md:gap-4">
+        <div className="mt-8 flex flex-wrap justify-center gap-3 md:gap-4">
           {maturity.map(({ icon: Icon, label }, i) => (
             <Reveal key={label} delay={i * 70} direction="up">
               <div
@@ -299,7 +299,7 @@ function Home() {
         </Reveal>
 
         {/* Logos carrusel */}
-        <div className="mt-14">
+        <div className="mt-10">
           <p className="text-center text-sm font-semibold uppercase tracking-wider text-primary/60">
             Algunos de nuestros clientes
           </p>
