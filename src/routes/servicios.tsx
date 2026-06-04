@@ -111,28 +111,28 @@ function StepCard({
   const [open, setOpen] = useState(false);
   const isLong = full.length > short.length + 4;
   return (
-    <li className="group relative grid grid-cols-[auto_1fr] gap-6 border-b border-primary-foreground/10 py-7 last:border-b-0 md:gap-10 md:py-9">
+    <li className="group relative grid grid-cols-[auto_1fr] gap-6 border-b border-border py-7 last:border-b-0 md:gap-10 md:py-9">
       <div className="flex flex-col items-center gap-2">
-        <span className="font-serif text-5xl font-bold leading-none text-[oklch(0.78_0.12_162)] md:text-6xl">
+        <span className="font-serif text-5xl font-bold leading-none text-[oklch(0.55_0.13_162)] md:text-6xl">
           {String(index + 1).padStart(2, "0")}
         </span>
-        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground/40">
+        <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/40">
           {String(index + 1).padStart(2, "0")}/{String(total).padStart(2, "0")}
         </span>
       </div>
       <div className="flex-1 pt-1">
         <div className="flex items-center gap-3">
-          <Icon size={18} className="text-[oklch(0.78_0.12_162)]" />
-          <h3 className="text-xl font-bold text-primary-foreground md:text-2xl">{title}</h3>
+          <Icon size={18} className="text-[oklch(0.55_0.13_162)]" />
+          <h3 className="text-xl font-bold text-primary md:text-2xl">{title}</h3>
         </div>
-        <p className="mt-3 max-w-2xl text-primary-foreground/70 md:text-lg">
+        <p className="mt-3 max-w-2xl text-foreground/70 md:text-lg">
           {open || !isLong ? full : short}
         </p>
         {isLong && (
           <button
             type="button"
             onClick={() => setOpen((o) => !o)}
-            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.78_0.12_162)] transition-colors hover:text-primary-foreground"
+            className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
           >
             {open ? "Ver menos" : "Ver más"}
             <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
@@ -283,24 +283,24 @@ function Servicios() {
       </section>
 
       {/* Timeline 7 pasos */}
-      <section className="relative overflow-hidden bg-primary py-16 text-primary-foreground lg:py-24">
-        <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[oklch(0.78_0.12_162)]/10 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-[oklch(0.55_0.13_162)]/20 blur-3xl" />
+      <section className="relative overflow-hidden py-16 lg:py-24">
+        <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[oklch(0.78_0.12_162)]/15 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-[oklch(0.55_0.13_162)]/15 blur-3xl" />
         <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-10">
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
             <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-foreground/15 bg-primary-foreground/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[oklch(0.78_0.12_162)]">
-                <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.78_0.12_162)]" />
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
+                <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
                 Cómo trabajamos
               </span>
-              <h2 className="text-balance text-4xl font-extrabold leading-[1.05] md:text-5xl">
-                Consultoría <span className="italic text-[oklch(0.78_0.12_162)]">primero</span>.
+              <h2 className="text-balance text-4xl font-extrabold leading-[1.05] text-primary md:text-5xl">
+                Consultoría <span className="italic text-[oklch(0.55_0.13_162)]">primero</span>.
               </h2>
-              <p className="mt-5 max-w-md text-primary-foreground/65">
+              <p className="mt-5 max-w-md text-foreground/70">
                 Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
               </p>
-              <div className="mt-8 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground/40">
-                <span className="h-px w-10 bg-[oklch(0.78_0.12_162)]" />
+              <div className="mt-8 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/40">
+                <span className="h-px w-10 bg-[oklch(0.55_0.13_162)]" />
                 {steps.length} etapas
               </div>
             </div>
