@@ -235,7 +235,7 @@ export default function BpmBrainHero() {
         }
       }
 
-      const clampR = 0.47 * min0, clampR2 = clampR * clampR;
+      const clampR = 0.42 * min0, clampR2 = clampR * clampR;
       for (const d of dots) {
         const rx = d.x - CX, ry = d.y - CY, rr2 = rx * rx + ry * ry;
         if (rr2 > clampR2) { const s = clampR / Math.sqrt(rr2); d.x = CX + rx * s; d.y = CY + ry * s; }
