@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
+import { CalendlyTrigger } from "./CalendlyPopup";
 import { Mail, Phone, Linkedin, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 
 const navLinks = [
