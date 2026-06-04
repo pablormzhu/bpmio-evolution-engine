@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
+import { Reveal } from "@/components/site/Reveal";
 import { PrimaryCTA, MintCTA } from "@/components/site/CTA";
 import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
