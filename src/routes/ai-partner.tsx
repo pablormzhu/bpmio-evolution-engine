@@ -61,7 +61,7 @@ function AIPartner() {
       </section>
 
       {/* Chat + features */}
-      <Section>
+      <Section className="!pt-2 lg:!pt-4">
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           {/* Chat */}
           <div className="flex h-[620px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft lg:h-auto lg:self-stretch">
