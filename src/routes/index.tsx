@@ -43,44 +43,166 @@ function Home() {
   return (
     <SiteLayout>
       {/* HERO */}
-      <section className="relative mx-auto w-full max-w-7xl px-6 pb-16 pt-10 lg:px-10 lg:pb-24 lg:pt-16">
-        <div className="pointer-events-none absolute right-0 top-10 -z-10 h-[520px] w-[520px] rounded-full bg-[oklch(0.85_0.1_162)] opacity-30 blur-3xl" />
-        <div className="pointer-events-none absolute -left-10 bottom-0 -z-10 h-[300px] w-[300px] rounded-full bg-[oklch(0.78_0.12_162)] opacity-25 blur-3xl" />
+      <section className="relative overflow-hidden">
+        <div className="pointer-events-none absolute -right-32 -top-32 -z-10 h-[600px] w-[600px] rounded-full bg-[oklch(0.85_0.1_162)] opacity-40 blur-3xl" />
+        <div className="pointer-events-none absolute -left-20 bottom-0 -z-10 h-[360px] w-[360px] rounded-full bg-[oklch(0.78_0.12_162)] opacity-25 blur-3xl" />
+        <div className="grain-lines pointer-events-none absolute inset-0 -z-10 opacity-30" />
 
-        <div className="animate-fade-up">
-          <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface/80 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80 backdrop-blur">
-            <Sparkles size={12} /> Transformación digital con cimientos firmes
-          </span>
-          <h1 className="mt-6 text-balance text-5xl font-extrabold leading-[0.95] text-primary md:text-7xl lg:text-8xl">
-            Es momento de <span className="relative inline-block">
-              evolucionar
-              <span className="absolute -bottom-1 left-0 h-[10px] w-full rounded-full bg-[oklch(0.78_0.12_162)]/60" />
-            </span>.
-          </h1>
-          <p className="mt-7 max-w-3xl text-pretty text-lg leading-relaxed text-foreground/75 md:text-xl">
-            En BPM.io ayudamos a empresas mexicanas de todas las industrias y tamaños a evolucionar
-            en su transformación digital. Junto a nuestros clientes formamos un equipo: ellos ponen
-            el conocimiento y la visión, y nosotros los transformamos en soluciones construidas
-            desde cimientos sólidos.
-          </p>
-
-          <div className="mt-7 flex flex-wrap gap-2">
-            {roles.map((r) => (
-              <span
-                key={r}
-                className="rounded-full border border-border bg-surface px-3.5 py-1.5 text-sm font-medium text-primary/80"
-              >
-                {r}
+        <div className="mx-auto grid w-full max-w-7xl gap-12 px-6 pb-20 pt-12 lg:grid-cols-[1.15fr_1fr] lg:gap-16 lg:px-10 lg:pb-28 lg:pt-20">
+          {/* LEFT — copy */}
+          <div className="animate-fade-up">
+            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary/80 backdrop-blur">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.55_0.13_162)] opacity-75" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
               </span>
-            ))}
+              Cimientos firmes · Transformación que perdura
+            </span>
+
+            <h1 className="mt-7 text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-6xl lg:text-[5.25rem]">
+              Es momento <br className="hidden sm:block" />
+              de{" "}
+              <span className="relative inline-block whitespace-nowrap">
+                <span className="relative z-10">evolucionar</span>
+                <svg
+                  viewBox="0 0 300 14"
+                  className="absolute -bottom-2 left-0 z-0 h-3 w-full text-[oklch(0.78_0.12_162)]"
+                  preserveAspectRatio="none"
+                  aria-hidden
+                >
+                  <path
+                    d="M2 8 Q 75 1, 150 6 T 298 5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                    strokeLinecap="round"
+                  />
+                </svg>
+              </span>
+              .
+            </h1>
+
+            <p className="mt-7 max-w-xl text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
+              Ayudamos a empresas mexicanas a evolucionar en su transformación digital.
+              Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones construidas
+              desde cimientos sólidos.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-3">
+              <PrimaryCTA>Agenda una llamada</PrimaryCTA>
+              <MintCTA>Hazte tu Check Up Digital</MintCTA>
+            </div>
+
+            <div className="mt-10 flex items-center gap-5">
+              <div className="flex -space-x-2">
+                {["LT", "SG", "AC", "NV"].map((i, idx) => (
+                  <span
+                    key={i}
+                    className="flex h-9 w-9 items-center justify-center rounded-full border-2 border-background bg-[oklch(0.78_0.12_162)] text-[11px] font-bold text-primary"
+                    style={{ zIndex: 10 - idx }}
+                  >
+                    {i}
+                  </span>
+                ))}
+              </div>
+              <p className="text-sm text-foreground/65">
+                <span className="font-bold text-primary">+30 empresas mexicanas</span> ya
+                evolucionaron con nosotros.
+              </p>
+            </div>
           </div>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <PrimaryCTA>Agenda una llamada</PrimaryCTA>
-            <MintCTA>Hazte tu Check Up Digital</MintCTA>
+          {/* RIGHT — visual panel */}
+          <div className="relative hidden lg:block">
+            <div className="relative h-full">
+              {/* Main card */}
+              <div className="animate-float-slow absolute inset-0 rotate-[2deg]">
+                <div className="relative h-full overflow-hidden rounded-[2rem] border border-border bg-card p-7 shadow-glow">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold uppercase tracking-wider text-primary/60">
+                      Tu transformación
+                    </span>
+                    <span className="flex h-2 w-2 rounded-full bg-[oklch(0.7_0.18_150)]" />
+                  </div>
+
+                  <div className="mt-6 space-y-3">
+                    {[
+                      { label: "Procesos", value: 92, tag: "Estandarizados" },
+                      { label: "Datos", value: 78, tag: "En tiempo real" },
+                      { label: "Automatización", value: 64, tag: "En crecimiento" },
+                      { label: "IA aplicada", value: 41, tag: "En adopción" },
+                    ].map((row, i) => (
+                      <div
+                        key={row.label}
+                        className="rounded-xl border border-border bg-surface px-4 py-3"
+                        style={{ animation: `fade-up 0.7s ${i * 0.12}s both` }}
+                      >
+                        <div className="flex items-baseline justify-between">
+                          <span className="text-sm font-semibold text-primary">{row.label}</span>
+                          <span className="text-xs font-bold text-[oklch(0.55_0.13_162)]">
+                            {row.value}%
+                          </span>
+                        </div>
+                        <div className="mt-2 h-1.5 overflow-hidden rounded-full bg-secondary">
+                          <div
+                            className="h-full rounded-full bg-gradient-to-r from-[oklch(0.55_0.13_162)] to-[oklch(0.78_0.12_162)]"
+                            style={{ width: `${row.value}%` }}
+                          />
+                        </div>
+                        <p className="mt-1.5 text-[11px] text-muted-foreground">{row.tag}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="mt-5 flex items-center gap-3 rounded-xl bg-primary p-3 text-primary-foreground">
+                    <Sparkles size={16} className="text-[oklch(0.78_0.12_162)]" />
+                    <span className="text-xs font-semibold">
+                      Listo para sumar nuevas tecnologías de forma modular.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Floating tag — top */}
+              <div className="absolute -left-6 -top-4 rotate-[-6deg] rounded-2xl border border-border bg-card px-4 py-3 shadow-soft">
+                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                  Maduración
+                </p>
+                <p className="text-sm font-extrabold text-primary">Procesos → Datos → IA</p>
+              </div>
+
+              {/* Floating tag — bottom */}
+              <div className="absolute -bottom-4 -right-2 rotate-[4deg] rounded-2xl bg-[oklch(0.78_0.12_162)] px-4 py-3 text-primary shadow-glow">
+                <p className="text-[10px] font-bold uppercase tracking-wider opacity-70">
+                  Sin conflictos de interés
+                </p>
+                <p className="text-sm font-extrabold">El camino correcto.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Roles strip — full width */}
+        <div className="border-y border-border/50 bg-surface/60 backdrop-blur">
+          <div className="mx-auto flex max-w-7xl flex-wrap items-center gap-x-8 gap-y-3 px-6 py-5 lg:px-10">
+            <span className="text-xs font-bold uppercase tracking-[0.14em] text-primary/60">
+              Te acompañamos como
+            </span>
+            <div className="flex flex-1 flex-wrap items-center gap-x-6 gap-y-2">
+              {roles.map((r, i) => (
+                <span key={r} className="flex items-center gap-3 text-sm font-semibold text-primary/85">
+                  {r}
+                  {i < roles.length - 1 && (
+                    <span className="hidden text-[oklch(0.55_0.13_162)]/40 sm:inline">/</span>
+                  )}
+                </span>
+              ))}
+            </div>
           </div>
         </div>
       </section>
+
+
 
       {/* LO QUE CREEMOS */}
       <Section
