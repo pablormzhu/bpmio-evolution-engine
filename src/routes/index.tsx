@@ -330,7 +330,7 @@ function Home() {
         </Reveal>
 
         {/* Logos carrusel */}
-        <div className="mt-10">
+        <div className="mt-16 pb-16">
           <h3 className="text-center text-2xl font-extrabold tracking-tight text-primary sm:text-3xl md:text-4xl">
             Algunos de nuestros clientes
           </h3>
