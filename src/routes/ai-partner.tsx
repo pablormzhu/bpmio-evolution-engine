@@ -16,32 +16,7 @@ export const Route = createFileRoute("/ai-partner")({
   component: AIPartner,
 });
 
-type Msg = { role: "user" | "ai"; text: string };
-
 function AIPartner() {
-  const [messages, setMessages] = useState<Msg[]>([
-    {
-      role: "ai",
-      text: "Hola 👋 Soy el AI Partner de BPM.io. Cuéntame en una frase a qué se dedica tu empresa y dónde sientes el mayor cuello de botella hoy.",
-    },
-  ]);
-  const [input, setInput] = useState("");
-
-  const send = () => {
-    const text = input.trim();
-    if (!text) return;
-    setMessages((m) => [
-      ...m,
-      { role: "user", text },
-      {
-        role: "ai",
-        text:
-          "Gracias por compartirlo. Para darte una lectura más completa: ¿cómo manejan hoy su información clave (hojas de cálculo, sistemas, dispersa)? Esto me permite ubicar tu punto de partida en el Check Up.",
-      },
-    ]);
-    setInput("");
-  };
-
   return (
     <SiteLayout>
       {/* Hero */}
