@@ -161,9 +161,6 @@ function PieceCard({
         featured ? "lg:p-10" : ""
       }`}
     >
-      {featured && (
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[oklch(0.78_0.12_162)]/25 blur-3xl" />
-      )}
       <div className="relative flex items-start justify-between">
         <div className={`flex items-center justify-center rounded-2xl ${featured ? "h-14 w-14 bg-primary text-[oklch(0.78_0.12_162)]" : "h-11 w-11 bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.45_0.13_162)]"}`}>
           <Icon size={featured ? 28 : 22} />
@@ -334,25 +331,12 @@ function Servicios() {
           </p>
         </div>
 
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
-          {/* Featured — primera pieza grande */}
-          <div className="lg:col-span-2 lg:row-span-2">
-            <PieceCard
-              Icon={pieces[0].icon}
-              index={0}
-              title={pieces[0].t}
-              short={pieces[0].d}
-              full={pieces[0].full}
-              featured
-            />
-          </div>
-
-          {/* 4 piezas restantes */}
-          {pieces.slice(1).map((p, i) => (
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {pieces.map((p, i) => (
             <PieceCard
               key={p.t}
               Icon={p.icon}
-              index={i + 1}
+              index={i}
               title={p.t}
               short={p.d}
               full={p.full}
@@ -361,8 +345,7 @@ function Servicios() {
 
           {/* 6ª tarjeta — CTA / combinación */}
           <article className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-primary p-7 text-primary-foreground shadow-soft">
-            <div className="pointer-events-none absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-[oklch(0.78_0.12_162)]/20 blur-3xl" />
-            <div className="relative">
+            <div>
               <Sparkles size={22} className="text-[oklch(0.78_0.12_162)]" />
               <h3 className="mt-6 text-xl font-bold leading-tight">
                 Tu mezcla, no un menú fijo.
@@ -373,7 +356,7 @@ function Servicios() {
             </div>
             <a
               href="#cierre"
-              className="relative mt-6 inline-flex items-center gap-2 self-start rounded-full bg-[oklch(0.78_0.12_162)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary transition-transform group-hover:translate-x-1"
+              className="mt-6 inline-flex items-center gap-2 self-start rounded-full bg-[oklch(0.78_0.12_162)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary transition-transform group-hover:translate-x-1"
             >
               Diseña la tuya
               <ChevronDown size={14} className="-rotate-90" />
@@ -381,6 +364,7 @@ function Servicios() {
           </article>
         </div>
       </section>
+
 
 
       {/* El rol que tomamos */}
