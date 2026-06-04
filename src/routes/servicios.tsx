@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA, MintCTA } from "@/components/site/CTA";
 import {
   ClipboardList, Stethoscope, Target, Scale, Wrench, GraduationCap, HeartHandshake,
-  Database, Workflow, Brain, Plug, Code2, Compass, Hammer, Rocket, Quote,
+  Database, Workflow, Brain, Plug, Code2, Compass, Hammer, Rocket, Quote, ChevronDown,
 } from "lucide-react";
 
 export const Route = createFileRoute("/servicios")({
