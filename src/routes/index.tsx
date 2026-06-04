@@ -188,13 +188,15 @@ function Home() {
         </div>
 
         {/* Pull quote — en caja con texto más chico */}
-        <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
-          <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
-          <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
-            Preguntamos antes de proponer. Entendemos antes de construir.
-            <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
-          </blockquote>
-        </figure>
+        <Reveal delay={200} direction="scale">
+          <figure className="mt-14 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-16">
+            <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
+            <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
+              Preguntamos antes de proponer. Entendemos antes de construir.
+              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
+            </blockquote>
+          </figure>
+        </Reveal>
       </Section>
 
       {/* ORQUESTAMOS */}
