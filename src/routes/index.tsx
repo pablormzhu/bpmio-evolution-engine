@@ -387,9 +387,9 @@ function Home() {
       </Section>
 
       {/* CONTACTO / PLATIQUEMOS — rediseñado */}
-      <section id="contacto" className="relative overflow-hidden">
+      <section id="contacto" className="relative overflow-hidden bg-surface">
         {/* fondo con relieve */}
-        <div className="pointer-events-none absolute inset-0 -z-10">
+        <div className="pointer-events-none absolute inset-0 -z-10 hidden">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,oklch(0.88_0.09_162/0.5),transparent_55%)]" />
           <div className="absolute right-[-10%] top-1/3 h-[28rem] w-[28rem] animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/30 blur-3xl" />
         </div>
@@ -418,12 +418,15 @@ function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
             {/* Calendly */}
             <Reveal direction="left">
-              <iframe
-                title="Agenda una llamada con BPM.io"
-                src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1"
-                className="block h-[1050px] w-full"
-                loading="lazy"
-              />
+              <div id="calendario" className="h-[520px] w-full scroll-mt-24 overflow-hidden bg-transparent">
+                <iframe
+                  title="Agenda una llamada con BPM.io"
+                  src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=DFF7ED&primary_color=00A86B&text_color=063F31"
+                  className="block h-[520px] w-[calc(100%+18px)] border-0 bg-transparent mix-blend-multiply"
+                  loading="lazy"
+                  scrolling="no"
+                />
+              </div>
             </Reveal>
 
             {/* Contact panel */}
