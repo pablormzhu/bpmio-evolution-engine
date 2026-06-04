@@ -282,36 +282,61 @@ function Servicios() {
         </div>
       </section>
 
-      {/* Timeline 7 pasos */}
-      <section className="relative overflow-hidden py-16 lg:py-24">
-        <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[oklch(0.78_0.12_162)]/15 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-[oklch(0.55_0.13_162)]/15 blur-3xl" />
-        <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-10">
-          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
-            <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
-              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
-                <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
-                Cómo trabajamos
-              </span>
-              <h2 className="text-balance text-4xl font-extrabold leading-[1.05] text-primary md:text-5xl">
-                Consultoría <span className="italic text-[oklch(0.55_0.13_162)]">primero</span>.
-              </h2>
-              <p className="mt-5 max-w-md text-foreground/70">
-                Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
-              </p>
-              <div className="mt-8 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-foreground/40">
-                <span className="h-px w-10 bg-[oklch(0.55_0.13_162)]" />
-                {steps.length} etapas
-              </div>
-            </div>
-            <ol className="lg:col-span-8">
-              {steps.map(({ icon: Icon, t, d, full }, i) => (
-                <StepCard key={t} Icon={Icon} index={i} title={t} short={d} full={full} total={steps.length} />
-              ))}
-            </ol>
-          </div>
+      {/* Proceso 7 pasos — recorrido */}
+      <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="mb-12 max-w-2xl">
+          <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
+            <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+            Cómo trabajamos
+          </span>
+          <h2 className="text-balance text-3xl font-extrabold leading-[1.05] text-primary md:text-5xl">
+            Consultoría <span className="italic text-[oklch(0.55_0.13_162)]">primero</span>.
+          </h2>
+          <p className="mt-5 text-pretty text-base leading-relaxed text-foreground/70 md:text-lg">
+            Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
+          </p>
         </div>
+
+        <ol className="relative grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+          {steps.map(({ icon: Icon, t, full }, i) => {
+            const isLast = i === steps.length - 1;
+            return (
+              <li
+                key={t}
+                className={`group relative flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:border-[oklch(0.55_0.13_162)]/40 ${
+                  isLast ? "md:col-span-2 lg:col-span-1 lg:col-start-3" : ""
+                }`}
+              >
+                <div className="flex items-center justify-between">
+                  <span className="inline-flex items-center gap-2 rounded-full bg-[oklch(0.55_0.13_162)]/10 px-3 py-1 text-[10px] font-bold uppercase tracking-[0.18em] text-[oklch(0.45_0.13_162)]">
+                    Paso {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <span className="font-serif text-4xl font-bold leading-none text-[oklch(0.55_0.13_162)]/25 md:text-5xl">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                </div>
+
+                <div className="mt-6 flex h-11 w-11 items-center justify-center rounded-2xl bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.45_0.13_162)]">
+                  <Icon size={20} />
+                </div>
+
+                <h3 className="mt-5 text-lg font-bold text-primary md:text-xl">{t}</h3>
+                <p className="mt-3 flex-1 text-sm leading-relaxed text-foreground/70">
+                  {full}
+                </p>
+
+                {!isLast && (
+                  <span
+                    className="pointer-events-none absolute right-3 top-1/2 hidden h-px w-6 -translate-y-1/2 bg-gradient-to-r from-[oklch(0.55_0.13_162)]/40 to-transparent lg:block"
+                    aria-hidden
+                  />
+                )}
+              </li>
+            );
+          })}
+        </ol>
       </section>
+
 
       {/* Componentes que ensamblamos — Bento */}
       <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
