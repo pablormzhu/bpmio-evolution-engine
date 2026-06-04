@@ -256,7 +256,7 @@ function Home() {
         </div>
         <figure className="mt-10 border-t border-border/60 pt-6 text-center">
           <span className="mx-auto mb-4 block h-px w-12 bg-[oklch(0.55_0.13_162)]/40" />
-          <blockquote className="mx-auto max-w-4xl text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-xl">
+          <blockquote className="mx-auto max-w-4xl text-balance text-base font-medium italic tracking-tight text-primary/85 sm:text-lg md:text-lg">
             Lo importante no es la tecnología que usamos, sino que todo encaje y de verdad te sirva.
           </blockquote>
         </figure>
