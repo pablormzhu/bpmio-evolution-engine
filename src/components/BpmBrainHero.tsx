@@ -84,7 +84,7 @@ export default function BpmBrainHero() {
         ? (li++ / N_LABEL) * Math.PI * 2 + rnd(-0.14, 0.14)
         : Math.random() * Math.PI * 2;
       const r = (labeled ? rnd(6.5, 9) : big ? rnd(7, 10.5) : rnd(4.5, 7.5)) * sizeScale;
-      const homeRF = labeled ? rnd(0.40, 0.45) : rnd(0.33, 0.45);
+      const homeRF = labeled ? rnd(0.32, 0.38) : rnd(0.26, 0.38);
       const h: any = {
         labeled, label, r,
         col: labeled ? WHITE : (Math.random() < 0.5 ? WHITE : LGRAY),
@@ -200,7 +200,7 @@ export default function BpmBrainHero() {
         a.ovy = (a.ovy + fy - a.oy * 0.02) * 0.85;
         a.ox += a.ovx; a.oy += a.ovy;
       }
-      const maxR = 0.46 * min0, minR = 0.20 * min0;
+      const maxR = 0.40 * min0, minR = 0.20 * min0;
       for (const h of hubs) {
         let hx = h.bx + h.ox, hy = h.by + h.oy;
         const rr = Math.hypot(hx - CX, hy - CY) || 1;
@@ -235,7 +235,7 @@ export default function BpmBrainHero() {
         }
       }
 
-      const clampR = 0.47 * min0, clampR2 = clampR * clampR;
+      const clampR = 0.42 * min0, clampR2 = clampR * clampR;
       for (const d of dots) {
         const rx = d.x - CX, ry = d.y - CY, rr2 = rx * rx + ry * ry;
         if (rr2 > clampR2) { const s = clampR / Math.sqrt(rr2); d.x = CX + rx * s; d.y = CY + ry * s; }
@@ -307,7 +307,7 @@ export default function BpmBrainHero() {
         borderRadius: 28,
         overflow: "hidden",
         background: "#0b1f1a",
-        boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 30px 60px -34px rgba(8,30,26,0.6)",
+        boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 40px 80px -20px rgba(8,30,26,0.75), 0 20px 40px -10px rgba(8,30,26,0.5)",
         border: "1px solid rgba(170,224,232,0.06)",
       }}
     >
