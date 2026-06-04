@@ -64,7 +64,7 @@ function AIPartner() {
       <Section>
         <div className="grid gap-8 lg:grid-cols-[1.4fr_1fr]">
           {/* Chat */}
-          <div className="flex h-[620px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
+          <div className="flex h-[620px] flex-col overflow-hidden rounded-3xl border border-border bg-card shadow-soft lg:h-auto lg:self-stretch">
             <div className="flex items-center gap-3 border-b border-border bg-surface px-6 py-4">
               <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-primary text-primary-foreground">
                 <Bot size={18} />
