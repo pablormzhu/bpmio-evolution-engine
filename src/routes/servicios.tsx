@@ -20,13 +20,48 @@ export const Route = createFileRoute("/servicios")({
 });
 
 const steps = [
-  { icon: ClipboardList, t: "Levantamiento", d: "No solo mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos." },
-  { icon: Stethoscope, t: "Diagnóstico", d: "Leemos tu situación según tus necesidades, retos y objetivos. Encontramos dónde está el valor." },
-  { icon: Target, t: "Modelo de operación", d: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, por etapas." },
-  { icon: Scale, t: "El camino correcto", d: "Evaluamos todas las opciones con la misma vara. Definimos cuál y por qué —con objetividad." },
-  { icon: Wrench, t: "Ejecución", d: "Reingenieríamos, automatizamos, integramos y desarrollamos hasta que el modelo es operación." },
-  { icon: GraduationCap, t: "Adopción", d: "Transferimos el conocimiento a tu equipo hasta que la solución es suya." },
-  { icon: HeartHandshake, t: "Socio activo", d: "Nos quedamos: medimos contra el modelo y lo hacemos madurar contigo." },
+  {
+    icon: ClipboardList,
+    t: "Levantamiento de información y procesos",
+    d: "No solo los mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos.",
+    full: "No solo los mapeamos: levantamos cómo funciona tu empresa en la realidad, para partir de hechos y no de suposiciones.",
+  },
+  {
+    icon: Stethoscope,
+    t: "Diagnóstico",
+    d: "Leemos tu situación según tus necesidades, retos y objetivos. Encontramos dónde está el valor.",
+    full: "Leemos tu situación según tus necesidades, tus retos y tus objetivos, y encontramos dónde está el verdadero valor.",
+  },
+  {
+    icon: Target,
+    t: "Modelo de operación objetivo",
+    d: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, por etapas.",
+    full: "Diseñamos una forma clara y medible de cómo debe operar tu empresa, definida por tus objetivos y dividida en etapas —porque la madurez se construye paso a paso.",
+  },
+  {
+    icon: Scale,
+    t: "El camino correcto, con objetividad",
+    d: "Evaluamos todas las opciones con la misma vara. Definimos cuál y por qué —con objetividad.",
+    full: "Evaluamos todas las opciones con la misma vara: a veces lo mejor es una solución off-the-shelf que ya existe, a veces low-code, a veces desarrollar algo a la medida. Definimos cuál y por qué.",
+  },
+  {
+    icon: Wrench,
+    t: "Ejecución",
+    d: "Reingenieríamos, automatizamos, integramos y desarrollamos hasta que el modelo es operación.",
+    full: "Reingenieríamos, automatizamos, integramos y desarrollamos, ensamblando los componentes correctos hasta que el modelo deja de ser un plan y se vuelve operación.",
+  },
+  {
+    icon: GraduationCap,
+    t: "Adopción",
+    d: "Transferimos el conocimiento a tu equipo hasta que la solución es suya.",
+    full: "Transferimos el conocimiento a tu equipo hasta que la solución es suya.",
+  },
+  {
+    icon: HeartHandshake,
+    t: "Socio activo",
+    d: "Nos quedamos: medimos contra el modelo y lo hacemos madurar contigo.",
+    full: "Nos quedamos: medimos contra el modelo, cuidamos que todo funcione y lo hacemos madurar contigo.",
+  },
 ];
 
 const pieces = [
