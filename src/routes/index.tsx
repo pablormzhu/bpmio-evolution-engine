@@ -409,8 +409,8 @@ function Home() {
                   </div>
                   <iframe
                     title="Agenda una llamada con BPM.io"
-                    src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
-                    className="h-[520px] w-full"
+                    src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_domain=bpmio.com.mx&embed_type=Inline&hide_gdpr_banner=1"
+                    className="h-[680px] w-full"
                     loading="lazy"
                   />
                 </div>

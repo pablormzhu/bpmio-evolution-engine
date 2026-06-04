@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Logo } from "./Logo";
+import { CalendlyTrigger } from "./CalendlyPopup";
 import { Mail, Phone, Linkedin, ArrowUpRight, MapPin, Sparkles } from "lucide-react";
 
 const navLinks = [
@@ -45,14 +46,10 @@ export function Footer() {
               <span className="text-[oklch(0.78_0.12_162)]">juntos.</span>
             </h3>
           </div>
-          <Link
-            to="/"
-            hash="contacto"
-            className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.78_0.12_162)] px-6 py-3.5 text-sm font-semibold text-[oklch(0.28_0.07_168)] shadow-soft transition-transform hover:-translate-y-0.5"
-          >
+          <CalendlyTrigger className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.78_0.12_162)] px-6 py-3.5 text-sm font-semibold text-[oklch(0.28_0.07_168)] shadow-soft transition-transform hover:-translate-y-0.5">
             Agenda una llamada
             <ArrowUpRight size={16} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
-          </Link>
+          </CalendlyTrigger>
         </div>
       </div>
 
