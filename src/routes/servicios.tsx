@@ -283,9 +283,9 @@ function Servicios() {
       </section>
 
       {/* Proceso 7 pasos — recorrido */}
-      <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-        <div className="rounded-[2rem] bg-surface p-8 md:p-12 lg:p-16">
-          <div className="mb-12 max-w-2xl">
+      <section className="relative mx-auto w-full max-w-7xl px-6 py-8 lg:px-10 lg:py-12">
+        <div className="rounded-[2rem] bg-surface p-8 md:p-10 lg:p-12">
+          <div className="mb-8 max-w-2xl">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-background px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
               <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
               Cómo trabajamos
@@ -328,7 +328,7 @@ function Servicios() {
 
 
       {/* Componentes que ensamblamos — Bento */}
-      <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+      <section className="relative mx-auto w-full max-w-7xl px-6 py-8 lg:px-10 lg:py-12">
         <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
