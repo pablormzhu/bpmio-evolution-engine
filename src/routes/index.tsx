@@ -426,6 +426,9 @@ function Home() {
                   scrolling="no"
                 />
               </div>
+            </Reveal>
+
+
 
             {/* Contact panel */}
             <div className="flex flex-col gap-5">
