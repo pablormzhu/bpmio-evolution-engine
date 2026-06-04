@@ -331,9 +331,9 @@ function Home() {
 
         {/* Logos carrusel */}
         <div className="mt-10">
-          <p className="text-center text-lg font-semibold uppercase tracking-wider text-primary/70 sm:text-xl md:text-2xl">
+          <h3 className="text-center text-2xl font-extrabold tracking-tight text-primary sm:text-3xl md:text-4xl">
             Algunos de nuestros clientes
-          </p>
+          </h3>
           <div
             className="group relative mt-8 overflow-hidden"
             style={{
@@ -347,7 +347,7 @@ function Home() {
               {[...clientLogos, ...clientLogos].map((logo, i) => (
                 <div
                   key={i}
-                  className="flex h-32 w-48 shrink-0 items-center justify-center"
+                  className="flex h-32 w-48 shrink-0 items-center justify-center px-6"
                 >
                   <img
                     src={logo.src}
