@@ -420,7 +420,7 @@ function Home() {
             <Reveal direction="left">
               <iframe
                 title="Agenda una llamada con BPM.io"
-                src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1"
+                src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1"
                 className="block h-[1050px] w-full"
                 loading="lazy"
               />
