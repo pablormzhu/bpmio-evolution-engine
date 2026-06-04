@@ -137,6 +137,36 @@ function StepCard({
   );
 }
 
+function PieceCard({
+  Icon, title, short, full,
+}: {
+  Icon: typeof Database;
+  title: string;
+  short: string;
+  full: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const isLong = full.length > short.length + 4;
+  return (
+    <article className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1">
+      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[oklch(0.78_0.12_162)] to-primary opacity-0 transition-opacity group-hover:opacity-100" />
+      <Icon size={26} className="text-[oklch(0.55_0.13_162)]" />
+      <h3 className="mt-5 text-lg font-bold text-primary">{title}</h3>
+      <p className="mt-2 text-sm leading-relaxed text-foreground/70">{open || !isLong ? full : short}</p>
+      {isLong && (
+        <button
+          type="button"
+          onClick={() => setOpen((o) => !o)}
+          className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+        >
+          {open ? "Ver menos" : "Ver más"}
+          <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+        </button>
+      )}
+    </article>
+  );
+}
+
 const roles = [
   { icon: Compass, t: "Empezando desde cero", d: "Ponemos los cimientos: estandarización, levantamiento y definición del rumbo.", label: "Tus orientadores" },
   { icon: Hammer, t: "Con base, listos para avanzar", d: "Diseñamos y construimos el siguiente nivel, o destrabamos cuellos de botella.", label: "Consultores y ejecutores" },
