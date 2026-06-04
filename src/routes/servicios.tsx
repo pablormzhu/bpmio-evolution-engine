@@ -362,17 +362,17 @@ function Servicios() {
             <div>
               <Sparkles size={22} className="text-[oklch(0.78_0.12_162)]" />
               <h3 className="mt-6 text-xl font-bold leading-tight">
-                Tu mezcla, no un menú fijo.
+                Soluciones diseñadas a la medida
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">
-                Combinamos solo las piezas que tu modelo necesita —en el orden y la dosis correctos.
+                Combinamos únicamente los elementos que tu proyecto necesita, con la estructura y el enfoque adecuados.
               </p>
             </div>
             <a
               href="#cierre"
               className="mt-6 inline-flex items-center gap-2 self-start rounded-full bg-[oklch(0.78_0.12_162)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary transition-transform group-hover:translate-x-1"
             >
-              Diseña la tuya
+              Diseñar mi solución
               <ChevronDown size={14} className="-rotate-90" />
             </a>
           </article>
