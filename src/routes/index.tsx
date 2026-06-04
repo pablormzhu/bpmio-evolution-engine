@@ -80,7 +80,7 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-20 lg:pt-16">
+        <div className="mx-auto w-full max-w-7xl px-6 pb-10 pt-8 lg:px-10 lg:pb-12 lg:pt-10">
           <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
             <div className="animate-fade-up text-left">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
@@ -111,7 +111,7 @@ function Home() {
             </div>
 
             {/* Núcleo pulsante: orquestación */}
-            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[560px] h-[560px] md:h-[640px] w-full">
+            <div className="relative animate-fade-up [animation-delay:120ms] min-h-[480px] h-[480px] md:h-[520px] w-full">
               <div className="h-full w-full">
                 <BpmBrainHero />
               </div>
