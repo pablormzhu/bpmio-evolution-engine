@@ -255,7 +255,7 @@ function Servicios() {
           {testimonios.map((t) => (
             <figure
               key={t.author}
-              className="relative rounded-2xl border border-border bg-card p-8 shadow-soft"
+              className="relative rounded-2xl border border-border bg-card p-8 pt-16 shadow-soft"
             >
               <Quote className="absolute right-6 top-6 text-[oklch(0.78_0.12_162)]" size={36} />
               <blockquote className="text-lg leading-relaxed text-foreground/85">
