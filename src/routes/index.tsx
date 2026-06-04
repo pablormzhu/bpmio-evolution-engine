@@ -353,6 +353,7 @@ function Home() {
                     src={logo.src}
                     alt={logo.name}
                     loading="lazy"
+                    style={{ transform: `scale(${logo.scale ?? 1})` }}
                     className="max-h-full max-w-full object-contain opacity-80 grayscale transition-all duration-300 hover:opacity-100 hover:grayscale-0"
                   />
                 </div>
