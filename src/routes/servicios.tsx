@@ -144,26 +144,45 @@ function StepCard({
 }
 
 function PieceCard({
-  Icon, title, short, full,
+  Icon, index, title, short, full, featured = false,
 }: {
   Icon: typeof Database;
+  index: number;
   title: string;
   short: string;
   full: string;
+  featured?: boolean;
 }) {
   const [open, setOpen] = useState(false);
   const isLong = full.length > short.length + 4;
   return (
-    <article className="group relative overflow-hidden rounded-2xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1">
-      <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-[oklch(0.78_0.12_162)] to-primary opacity-0 transition-opacity group-hover:opacity-100" />
-      <Icon size={26} className="text-[oklch(0.55_0.13_162)]" />
-      <h3 className="mt-5 text-lg font-bold text-primary">{title}</h3>
-      <p className="mt-2 text-sm leading-relaxed text-foreground/70">{open || !isLong ? full : short}</p>
+    <article
+      className={`group relative flex h-full flex-col overflow-hidden rounded-3xl border border-border bg-card p-7 shadow-soft transition-all hover:-translate-y-1 hover:border-[oklch(0.55_0.13_162)]/40 ${
+        featured ? "lg:p-10" : ""
+      }`}
+    >
+      {featured && (
+        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[oklch(0.78_0.12_162)]/25 blur-3xl" />
+      )}
+      <div className="relative flex items-start justify-between">
+        <div className={`flex items-center justify-center rounded-2xl ${featured ? "h-14 w-14 bg-primary text-[oklch(0.78_0.12_162)]" : "h-11 w-11 bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.45_0.13_162)]"}`}>
+          <Icon size={featured ? 28 : 22} />
+        </div>
+        <span className="font-serif text-3xl font-bold text-[oklch(0.55_0.13_162)]/30">
+          {String(index + 1).padStart(2, "0")}
+        </span>
+      </div>
+      <h3 className={`relative mt-6 font-bold text-primary ${featured ? "text-2xl md:text-3xl" : "text-lg"}`}>
+        {title}
+      </h3>
+      <p className={`relative mt-3 flex-1 leading-relaxed text-foreground/70 ${featured ? "text-base md:text-lg" : "text-sm"}`}>
+        {open || !isLong ? full : short}
+      </p>
       {isLong && (
         <button
           type="button"
           onClick={() => setOpen((o) => !o)}
-          className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+          className="relative mt-4 inline-flex items-center gap-1 self-start text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
         >
           {open ? "Ver menos" : "Ver más"}
           <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
@@ -172,6 +191,7 @@ function PieceCard({
     </article>
   );
 }
+
 
 const roles = [
   { icon: Compass, t: "Empezando desde cero", d: "Ponemos los cimientos: estandarización, levantamiento y definición del rumbo.", label: "Tus orientadores" },
