@@ -418,7 +418,7 @@ function Home() {
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
             {/* Calendly */}
             <Reveal direction="left">
-              <div className="h-[520px] w-full overflow-hidden bg-transparent">
+              <div id="calendario" className="h-[520px] w-full scroll-mt-24 overflow-hidden bg-transparent">
                 <iframe
                   title="Agenda una llamada con BPM.io"
                   src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=DFF7ED&primary_color=00A86B&text_color=063F31"
