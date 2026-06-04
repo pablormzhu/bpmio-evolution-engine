@@ -316,18 +316,72 @@ function Servicios() {
         </div>
       </section>
 
-      {/* Componentes que ensamblamos */}
-      <Section
-        eyebrow="Los componentes que ensamblamos"
-        title={<>Las piezas que orquestamos a tu medida.</>}
-        intro="Ningún proyecto es igual a otro. Según lo que pida tu modelo, combinamos:"
-      >
-        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-          {pieces.map(({ icon: Icon, t, d, full }) => (
-            <PieceCard key={t} Icon={Icon} title={t} short={d} full={full} />
-          ))}
+      {/* Componentes que ensamblamos — Bento */}
+      <section className="relative mx-auto w-full max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+        <div className="mb-10 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
+          <div className="max-w-2xl">
+            <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-surface px-3 py-1 text-xs font-semibold uppercase tracking-wider text-primary/80">
+              <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+              Los componentes que ensamblamos
+            </span>
+            <h2 className="text-balance text-3xl font-extrabold leading-[1.05] text-primary md:text-5xl">
+              Las piezas que orquestamos{" "}
+              <span className="italic text-[oklch(0.55_0.13_162)]">a tu medida</span>.
+            </h2>
+          </div>
+          <p className="max-w-sm text-base leading-relaxed text-foreground/70 md:text-right">
+            Ningún proyecto es igual a otro. Según lo que pida tu modelo, combinamos:
+          </p>
         </div>
-      </Section>
+
+        <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4 lg:grid-rows-2">
+          {/* Featured — primera pieza grande */}
+          <div className="lg:col-span-2 lg:row-span-2">
+            <PieceCard
+              Icon={pieces[0].icon}
+              index={0}
+              title={pieces[0].t}
+              short={pieces[0].d}
+              full={pieces[0].full}
+              featured
+            />
+          </div>
+
+          {/* 4 piezas restantes */}
+          {pieces.slice(1).map((p, i) => (
+            <PieceCard
+              key={p.t}
+              Icon={p.icon}
+              index={i + 1}
+              title={p.t}
+              short={p.d}
+              full={p.full}
+            />
+          ))}
+
+          {/* 6ª tarjeta — CTA / combinación */}
+          <article className="group relative flex h-full flex-col justify-between overflow-hidden rounded-3xl bg-primary p-7 text-primary-foreground shadow-soft">
+            <div className="pointer-events-none absolute -bottom-12 -left-12 h-48 w-48 rounded-full bg-[oklch(0.78_0.12_162)]/20 blur-3xl" />
+            <div className="relative">
+              <Sparkles size={22} className="text-[oklch(0.78_0.12_162)]" />
+              <h3 className="mt-6 text-xl font-bold leading-tight">
+                Tu mezcla, no un menú fijo.
+              </h3>
+              <p className="mt-3 text-sm leading-relaxed text-primary-foreground/75">
+                Combinamos solo las piezas que tu modelo necesita —en el orden y la dosis correctos.
+              </p>
+            </div>
+            <a
+              href="#cierre"
+              className="relative mt-6 inline-flex items-center gap-2 self-start rounded-full bg-[oklch(0.78_0.12_162)] px-4 py-2 text-xs font-bold uppercase tracking-wider text-primary transition-transform group-hover:translate-x-1"
+            >
+              Diseña la tuya
+              <ChevronDown size={14} className="-rotate-90" />
+            </a>
+          </article>
+        </div>
+      </section>
+
 
       {/* El rol que tomamos */}
       <Section eyebrow="El rol que tomamos" title={<>Dónde entramos depende de dónde estás.</>}>
