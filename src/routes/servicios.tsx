@@ -161,9 +161,6 @@ function PieceCard({
         featured ? "lg:p-10" : ""
       }`}
     >
-      {featured && (
-        <div className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full bg-[oklch(0.78_0.12_162)]/25 blur-3xl" />
-      )}
       <div className="relative flex items-start justify-between">
         <div className={`flex items-center justify-center rounded-2xl ${featured ? "h-14 w-14 bg-primary text-[oklch(0.78_0.12_162)]" : "h-11 w-11 bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.45_0.13_162)]"}`}>
           <Icon size={featured ? 28 : 22} />
