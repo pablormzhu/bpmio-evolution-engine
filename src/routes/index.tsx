@@ -50,14 +50,14 @@ import laila from "@/assets/clients/laila.png.asset.json";
 import omnis from "@/assets/clients/omnis.png.asset.json";
 
 const clientLogos = [
-  { name: "Logistic Trade", src: logisticTrade.url },
-  { name: "Sigtronic", src: sigtronic.url },
-  { name: "EPCOR", src: epcor.url },
-  { name: "Televisa", src: televisa.url },
-  { name: "Cajas Agrícolas de México", src: cajasAgricolas.url },
-  { name: "INRA", src: inra.url },
-  { name: "Hotel Laila", src: laila.url },
-  { name: "Omnis", src: omnis.url },
+  { name: "Logistic Trade", src: logisticTrade.url, scale: 1.6 },
+  { name: "Sigtronic", src: sigtronic.url, scale: 1 },
+  { name: "EPCOR", src: epcor.url, scale: 1.6 },
+  { name: "Televisa", src: televisa.url, scale: 1 },
+  { name: "Cajas Agrícolas de México", src: cajasAgricolas.url, scale: 1 },
+  { name: "INRA", src: inra.url, scale: 1 },
+  { name: "Hotel Laila", src: laila.url, scale: 1.6 },
+  { name: "Omnis", src: omnis.url, scale: 1 },
 ];
 
 function Home() {
