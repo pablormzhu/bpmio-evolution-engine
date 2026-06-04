@@ -73,6 +73,45 @@ const pieces = [
   { icon: Code2, t: "Software a la medida", d: "Cuando no existe nada en el mercado, diseñamos el software que tu empresa necesita." },
 ];
 
+function StepCard({
+  Icon, index, title, short, full,
+}: {
+  Icon: typeof ClipboardList;
+  index: number;
+  title: string;
+  short: string;
+  full: string;
+}) {
+  const [open, setOpen] = useState(false);
+  const isLong = full.length > short.length + 4;
+  return (
+    <li className="group relative ml-2 rounded-2xl border border-border bg-card p-5 shadow-soft transition-all hover:-translate-y-0.5 hover:border-[oklch(0.78_0.12_162)] md:p-6">
+      <div className="flex gap-5">
+        <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)] text-primary shadow-soft">
+          <Icon size={20} />
+          <span className="absolute -right-1.5 -top-1.5 flex h-6 w-6 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground">
+            {index + 1}
+          </span>
+        </div>
+        <div className="flex-1">
+          <h3 className="text-lg font-bold text-primary">{title}</h3>
+          <p className="mt-1 text-foreground/70">{open || !isLong ? full : short}</p>
+          {isLong && (
+            <button
+              type="button"
+              onClick={() => setOpen((o) => !o)}
+              className="mt-3 inline-flex items-center gap-1 text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+            >
+              {open ? "Ver menos" : "Ver más"}
+              <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+            </button>
+          )}
+        </div>
+      </div>
+    </li>
+  );
+}
+
 const roles = [
   { icon: Compass, t: "Empezando desde cero", d: "Ponemos los cimientos: estandarización, levantamiento y definición del rumbo.", label: "Tus orientadores" },
   { icon: Hammer, t: "Con base, listos para avanzar", d: "Diseñamos y construimos el siguiente nivel, o destrabamos cuellos de botella.", label: "Consultores y ejecutores" },
