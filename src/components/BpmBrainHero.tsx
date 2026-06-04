@@ -84,7 +84,7 @@ export default function BpmBrainHero() {
         ? (li++ / N_LABEL) * Math.PI * 2 + rnd(-0.14, 0.14)
         : Math.random() * Math.PI * 2;
       const r = (labeled ? rnd(6.5, 9) : big ? rnd(7, 10.5) : rnd(4.5, 7.5)) * sizeScale;
-      const homeRF = labeled ? rnd(0.40, 0.45) : rnd(0.33, 0.45);
+      const homeRF = labeled ? rnd(0.32, 0.38) : rnd(0.26, 0.38);
       const h: any = {
         labeled, label, r,
         col: labeled ? WHITE : (Math.random() < 0.5 ? WHITE : LGRAY),
