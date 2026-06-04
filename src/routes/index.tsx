@@ -249,18 +249,19 @@ function Home() {
 
         <div className="mt-12 flex flex-wrap justify-center gap-3 md:gap-4">
           {maturity.map(({ icon: Icon, label }, i) => (
-            <div
-              key={label}
-              className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
-            >
-              <span className="font-mono text-[10px] text-primary/40">
-                0{i + 1}
-              </span>
-              <Icon size={18} className="text-[oklch(0.55_0.13_162)]" />
-              <span className="text-sm font-semibold text-primary md:text-base">
-                {label}
-              </span>
-            </div>
+            <Reveal key={label} delay={i * 70} direction="up">
+              <div
+                className="group inline-flex items-center gap-3 rounded-full border border-border bg-card/70 px-5 py-3 backdrop-blur transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.03] hover:border-[oklch(0.55_0.13_162)]/50 hover:bg-card hover:shadow-soft"
+              >
+                <span className="font-mono text-[10px] text-primary/40">
+                  0{i + 1}
+                </span>
+                <Icon size={18} className="text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110" />
+                <span className="text-sm font-semibold text-primary md:text-base">
+                  {label}
+                </span>
+              </div>
+            </Reveal>
           ))}
         </div>
       </section>
