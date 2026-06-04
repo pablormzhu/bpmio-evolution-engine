@@ -188,14 +188,20 @@ function Home() {
         </div>
 
         {/* Pull quote — en caja con texto más chico */}
-        <Reveal delay={200} direction="scale">
-          <figure className="mt-10 rounded-2xl border border-border bg-card p-7 shadow-soft md:mt-12">
-            <Ear size={22} className="mb-4 text-[oklch(0.55_0.13_162)]" />
-            <blockquote className="text-pretty text-base font-semibold leading-snug text-primary md:text-lg">
-              Preguntamos antes de proponer. Entendemos antes de construir.
-              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
-            </blockquote>
-          </figure>
+        {/* Pull quote — minimalista con barra lateral */}
+        <Reveal delay={200} direction="up">
+          <div className="mt-10 flex items-stretch gap-5 md:mt-12 md:gap-7">
+            <div className="w-1 shrink-0 rounded-full bg-gradient-to-b from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)]" />
+            <div className="flex flex-1 items-center gap-5">
+              <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.55_0.13_162)] sm:flex">
+                <Ear size={22} />
+              </div>
+              <p className="text-pretty text-lg font-semibold leading-snug tracking-tight text-primary md:text-2xl">
+                Preguntamos antes de proponer. Entendemos antes de construir.{" "}
+                <span className="text-[oklch(0.55_0.13_162)]">Acompañamos antes de soltar.</span>
+              </p>
+            </div>
+          </div>
         </Reveal>
       </Section>
 
