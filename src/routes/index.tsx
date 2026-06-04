@@ -169,26 +169,47 @@ function Home() {
       <Section
         eyebrow="Escuchamos primero"
         title={<>Tu equipo es el experto. <span className="text-[oklch(0.55_0.13_162)]">Nosotros escuchamos.</span></>}
+        intro={
+          <>
+            Nadie conoce tu operación como quienes la viven todos los días. Por eso empezamos por
+            escuchar: hacemos un levantamiento a fondo de tus procesos, datos y las necesidades
+            reales de tu gente. Tu equipo pone el conocimiento; nosotros lo traducimos en
+            soluciones —y los acompañamos hasta que se vuelven dueños de lo que construimos juntos.
+          </>
+        }
       >
-        <div className="grid gap-10 md:grid-cols-[1.2fr_1fr] md:items-center">
-          <div className="space-y-5 text-lg leading-relaxed text-foreground/75">
-            <p>
-              Nadie conoce tu operación como quienes la viven todos los días. Por eso empezamos por
-              escuchar: hacemos un levantamiento a fondo de tus procesos, tus datos y las
-              necesidades reales de tu gente.
-            </p>
-            <p>
-              Tu equipo pone el conocimiento y la experiencia; nosotros los traducimos en soluciones.
-              Y a lo largo del camino los acompañamos y los capacitamos, hasta que se vuelven dueños
-              de lo que construimos juntos.
-            </p>
-          </div>
-          <div className="relative aspect-square rounded-3xl border border-border bg-surface p-8 shadow-soft">
-            <div className="grain-lines absolute inset-0 rounded-3xl opacity-40" />
-            <div className="relative flex h-full flex-col items-center justify-center text-center">
-              <Ear size={56} className="text-[oklch(0.55_0.13_162)]" />
-              <p className="mt-6 text-2xl font-extrabold text-primary">Escuchar → Diseñar → Construir → Acompañar</p>
+        {/* Process flow — 4 steps */}
+        <div className="relative">
+          <div className="pointer-events-none absolute left-0 right-0 top-7 hidden h-px bg-gradient-to-r from-transparent via-[oklch(0.78_0.12_162)]/60 to-transparent md:block" />
+
+          <ol className="grid gap-8 md:grid-cols-4 md:gap-6">
+            {[
+              { n: "01", t: "Escuchar", d: "Levantamiento profundo de procesos, datos y personas." },
+              { n: "02", t: "Diseñar", d: "Traducimos tu conocimiento en una solución a tu medida." },
+              { n: "03", t: "Construir", d: "Implementamos con la tecnología correcta para tu reto." },
+              { n: "04", t: "Acompañar", d: "Capacitamos a tu equipo hasta que sea dueño de la solución." },
+            ].map((step) => (
+              <li key={step.n} className="relative flex flex-col items-start">
+                <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-2xl border border-border bg-card text-sm font-extrabold text-[oklch(0.55_0.13_162)] shadow-soft">
+                  {step.n}
+                </div>
+                <h3 className="mt-5 text-xl font-bold text-primary">{step.t}</h3>
+                <p className="mt-2 text-foreground/70 leading-relaxed">{step.d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+
+        {/* Pull quote */}
+        <div className="mt-14 rounded-3xl border border-border bg-gradient-to-br from-surface to-card p-8 shadow-soft md:p-10">
+          <div className="flex flex-col gap-6 md:flex-row md:items-center md:gap-8">
+            <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-[oklch(0.78_0.12_162)]/40 text-[oklch(0.35_0.08_162)]">
+              <Ear size={26} />
             </div>
+            <p className="text-pretty text-xl font-semibold leading-snug text-primary md:text-2xl">
+              Preguntamos antes de proponer. Entendemos antes de construir.
+              <span className="text-[oklch(0.55_0.13_162)]"> Acompañamos antes de soltar.</span>
+            </p>
           </div>
         </div>
       </Section>
