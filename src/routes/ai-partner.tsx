@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
-import { PrimaryCTA } from "@/components/site/CTA";
+
 import { Sparkles, Send, Bot, User } from "lucide-react";
 
 export const Route = createFileRoute("/ai-partner")({
