@@ -3,6 +3,7 @@ import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { PrimaryCTA } from "@/components/site/CTA";
 import { Layers, Users, Scale, Award, Share2, Heart, MapPin, Sparkles } from "lucide-react";
+import pabloPhoto from "@/assets/pablo-ramirez.png.asset.json";
 
 export const Route = createFileRoute("/filosofia")({
   head: () => ({
