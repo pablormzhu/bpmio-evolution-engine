@@ -7,6 +7,7 @@ import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
   Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
 } from "lucide-react";
+import heroVideo from "@/assets/hero-orchestration.mp4.asset.json";
 
 
 export const Route = createFileRoute("/")({
