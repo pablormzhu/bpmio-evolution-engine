@@ -241,7 +241,9 @@ export default function BpmBrainHero() {
         if (rr2 > clampR2) { const s = clampR / Math.sqrt(rr2); d.x = CX + rx * s; d.y = CY + ry * s; }
       }
 
-      ctx!.clearRect(0, 0, W, H);
+      const bg = ctx!.createRadialGradient(CX, CY * 0.92, 0, CX, CY, min0 * 0.95);
+      bg.addColorStop(0, "#15392f"); bg.addColorStop(1, "#0b1f1a");
+      ctx!.fillStyle = bg; ctx!.fillRect(0, 0, W, H);
 
       ctx!.beginPath();
       for (const [a, b] of web) { ctx!.moveTo(a.x, a.y); ctx!.lineTo(b.x, b.y); }
@@ -304,7 +306,7 @@ export default function BpmBrainHero() {
         minHeight: 520,
         borderRadius: 28,
         overflow: "hidden",
-        background: "transparent",
+        background: "#0b1f1a",
         boxShadow: "inset 0 0 70px rgba(0,0,0,0.35), 0 30px 60px -34px rgba(8,30,26,0.6)",
         border: "1px solid rgba(170,224,232,0.06)",
       }}

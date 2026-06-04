@@ -112,31 +112,8 @@ function Home() {
 
             {/* Núcleo pulsante: orquestación */}
             <div className="relative animate-fade-up [animation-delay:120ms] min-h-[560px] h-[560px] md:h-[640px] w-full">
-              {/* Glow exterior */}
-              <div
-                aria-hidden
-                className="pointer-events-none absolute -inset-6 rounded-[2rem] blur-2xl opacity-60"
-                style={{
-                  background:
-                    "radial-gradient(60% 60% at 50% 50%, color-mix(in oklch, var(--primary) 35%, transparent), transparent 70%)",
-                }}
-              />
-              <div
-                className="relative h-full w-full overflow-hidden rounded-2xl border border-border/60 bg-surface/40 p-10 md:p-16 backdrop-blur-sm transition-transform duration-500 hover:-translate-y-1"
-                style={{
-                  boxShadow:
-                    "0 30px 80px -30px color-mix(in oklch, var(--primary) 45%, transparent), 0 10px 30px -15px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04)",
-                }}
-              >
-                <div
-                  className="h-full w-full rounded-xl border border-border/40"
-                  style={{
-                    boxShadow:
-                      "inset 0 0 40px -10px color-mix(in oklch, var(--primary) 25%, transparent), inset 0 2px 8px rgba(0,0,0,0.25)",
-                  }}
-                >
-                  <BpmBrainHero />
-                </div>
+              <div className="h-full w-full">
+                <BpmBrainHero />
               </div>
             </div>
           </div>
