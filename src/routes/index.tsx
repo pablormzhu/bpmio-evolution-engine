@@ -122,13 +122,19 @@ function Home() {
                 }}
               />
               <div
-                className="relative h-full w-full overflow-hidden rounded-2xl border border-border/60 bg-surface/40 p-6 md:p-10 backdrop-blur-sm transition-transform duration-500 hover:-translate-y-1"
+                className="relative h-full w-full overflow-hidden rounded-2xl border border-border/60 bg-surface/40 p-10 md:p-16 backdrop-blur-sm transition-transform duration-500 hover:-translate-y-1"
                 style={{
                   boxShadow:
                     "0 30px 80px -30px color-mix(in oklch, var(--primary) 45%, transparent), 0 10px 30px -15px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04)",
                 }}
               >
-                <div className="h-full w-full">
+                <div
+                  className="h-full w-full rounded-xl border border-border/40"
+                  style={{
+                    boxShadow:
+                      "inset 0 0 40px -10px color-mix(in oklch, var(--primary) 25%, transparent), inset 0 2px 8px rgba(0,0,0,0.25)",
+                  }}
+                >
                   <BpmBrainHero />
                 </div>
               </div>
