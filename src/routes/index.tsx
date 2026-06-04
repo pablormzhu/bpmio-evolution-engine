@@ -237,8 +237,6 @@ function Home() {
             Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar. Te acompañamos en cualquier nivel de madurez.
           </p>
         </div>
-          </p>
-        </div>
 
         <div className="mt-12 flex flex-wrap justify-center gap-3 md:gap-4">
           {maturity.map(({ icon: Icon, label }, i) => (
