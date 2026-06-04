@@ -7,6 +7,7 @@ import {
   Database, Workflow, Brain, Boxes, Code2, BarChart3, GraduationCap,
   Compass, Hammer, Rocket, Ear, Layers, Shield, Mail, Linkedin, Phone, Sparkles,
 } from "lucide-react";
+import heroVideo from "@/assets/hero-orchestration.mp4.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -61,35 +62,55 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 text-left lg:px-10 lg:pb-20 lg:pt-16">
-          <div className="animate-fade-up">
-            <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
-              <span className="relative flex h-1.5 w-1.5">
-                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.55_0.13_162)] opacity-75" />
-                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-20 lg:pt-16">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.15fr_1fr] lg:gap-14">
+            <div className="animate-fade-up text-left">
+              <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
+                <span className="relative flex h-1.5 w-1.5">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[oklch(0.55_0.13_162)] opacity-75" />
+                  <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-[oklch(0.55_0.13_162)]" />
+                </span>
+                Cimientos firmes · Transformación que perdura
               </span>
-              Cimientos firmes · Transformación que perdura
-            </span>
 
-            <h1 className="mt-8 max-w-4xl text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[5.5rem]">
-              Es momento de{" "}
-              <span className="bg-gradient-to-br from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)] bg-clip-text text-transparent">
-                evolucionar.
-              </span>
-            </h1>
+              <h1 className="mt-8 max-w-4xl text-balance text-[2.75rem] font-extrabold leading-[0.95] tracking-tight text-primary sm:text-7xl lg:text-[5rem]">
+                Es momento de{" "}
+                <span className="bg-gradient-to-br from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)] bg-clip-text text-transparent">
+                  evolucionar.
+                </span>
+              </h1>
 
-            <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-foreground/70 md:text-xl">
-              Ayudamos a empresas mexicanas a evolucionar en su transformación digital.
-              Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones
-              construidas desde cimientos sólidos.
-            </p>
+              <p className="mt-8 max-w-2xl text-pretty text-lg leading-relaxed text-foreground/70 md:text-xl">
+                Ayudamos a empresas mexicanas a evolucionar en su transformación digital.
+                Tu equipo pone el conocimiento; nosotros lo transformamos en soluciones
+                construidas desde cimientos sólidos.
+              </p>
 
-            <div className="mt-10 flex flex-wrap items-center gap-3">
-              <PrimaryCTA>Agenda una llamada</PrimaryCTA>
-              <MintCTA>Hazte tu Check Up Digital</MintCTA>
+              <div className="mt-10 flex flex-wrap items-center gap-3">
+                <PrimaryCTA>Agenda una llamada</PrimaryCTA>
+                <MintCTA>Hazte tu Check Up Digital</MintCTA>
+              </div>
+            </div>
+
+            {/* Video: orquestación IA */}
+            <div className="relative animate-fade-up [animation-delay:120ms]">
+              <div className="pointer-events-none absolute -inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-br from-[oklch(0.78_0.12_162)]/40 via-transparent to-[oklch(0.55_0.13_162)]/20 blur-3xl" />
+              <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-primary/5 shadow-soft">
+                <video
+                  src={heroVideo.url}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="aspect-square w-full object-cover"
+                  aria-hidden="true"
+                />
+                <div className="pointer-events-none absolute inset-0 bg-gradient-to-tr from-primary/10 via-transparent to-transparent mix-blend-multiply" />
+              </div>
             </div>
           </div>
         </div>
+
 
         {/* Roles strip — full width */}
         <div className="border-t border-border/50 bg-surface/60 backdrop-blur">
