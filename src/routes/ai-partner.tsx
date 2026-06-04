@@ -59,14 +59,10 @@ function AIPartner() {
                 { t: "Preguntas frecuentes", d: "Costos, tiempos, plataformas, tipos de procesos que automatizamos." },
               ].map(({ t, d }) => (
                 <li key={t}>
-                  <button
-                    type="button"
-                    onClick={() => setInput(t)}
-                    className="group w-full rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft"
-                  >
+                  <div className="group w-full rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft">
                     <p className="text-sm font-semibold text-primary">{t}</p>
                     <p className="mt-1 text-xs leading-relaxed text-foreground/70">{d}</p>
-                  </button>
+                  </div>
                 </li>
               ))}
             </ul>
