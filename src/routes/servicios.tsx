@@ -266,14 +266,35 @@ function Servicios() {
       </section>
 
       {/* Timeline 7 pasos */}
-      <Section eyebrow="Cómo trabajamos" title={<>Consultoría primero.</>}>
-        <ol className="relative space-y-4">
-          <span className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-[oklch(0.78_0.12_162)] via-border to-transparent md:left-7" />
-          {steps.map(({ icon: Icon, t, d, full }, i) => (
-            <StepCard key={t} Icon={Icon} index={i} title={t} short={d} full={full} />
-          ))}
-        </ol>
-      </Section>
+      <section className="relative overflow-hidden bg-primary py-16 text-primary-foreground lg:py-24">
+        <div className="pointer-events-none absolute -left-32 top-20 h-96 w-96 rounded-full bg-[oklch(0.78_0.12_162)]/10 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 bottom-10 h-96 w-96 rounded-full bg-[oklch(0.55_0.13_162)]/20 blur-3xl" />
+        <div className="relative mx-auto w-full max-w-7xl px-6 lg:px-10">
+          <div className="grid gap-10 lg:grid-cols-12 lg:gap-16">
+            <div className="lg:col-span-4 lg:sticky lg:top-24 lg:self-start">
+              <span className="mb-4 inline-flex items-center gap-2 rounded-full border border-primary-foreground/15 bg-primary-foreground/5 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-[oklch(0.78_0.12_162)]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[oklch(0.78_0.12_162)]" />
+                Cómo trabajamos
+              </span>
+              <h2 className="text-balance text-4xl font-extrabold leading-[1.05] md:text-5xl">
+                Consultoría <span className="italic text-[oklch(0.78_0.12_162)]">primero</span>.
+              </h2>
+              <p className="mt-5 max-w-md text-primary-foreground/65">
+                Siete pasos. Una secuencia disciplinada para pasar del diagnóstico a la operación —y quedarnos a cuidarla.
+              </p>
+              <div className="mt-8 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-primary-foreground/40">
+                <span className="h-px w-10 bg-[oklch(0.78_0.12_162)]" />
+                {steps.length} etapas
+              </div>
+            </div>
+            <ol className="lg:col-span-8">
+              {steps.map(({ icon: Icon, t, d, full }, i) => (
+                <StepCard key={t} Icon={Icon} index={i} title={t} short={d} full={full} total={steps.length} />
+              ))}
+            </ol>
+          </div>
+        </div>
+      </section>
 
       {/* Componentes que ensamblamos */}
       <Section
