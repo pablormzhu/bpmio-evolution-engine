@@ -60,7 +60,7 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-5xl px-6 pb-16 pt-12 text-left lg:px-10 lg:pb-20 lg:pt-16">
+        <div className="w-full px-6 pb-16 pt-12 text-left lg:px-10 lg:pb-20 lg:pt-16">
           <div className="animate-fade-up">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
               <span className="relative flex h-1.5 w-1.5">
