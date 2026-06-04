@@ -89,7 +89,7 @@ function Home() {
           </div>
 
           {/* Stat line — sin cajas */}
-          <div className="mt-20 flex flex-col gap-8 sm:flex-row sm:items-end sm:gap-12 md:gap-16">
+          <div className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-10 md:gap-14">
             {[
               { k: "+30", l: "Empresas transformadas" },
               { k: "7", l: "Disciplinas orquestadas" },
