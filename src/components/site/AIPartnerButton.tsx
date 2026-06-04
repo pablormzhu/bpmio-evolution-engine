@@ -12,7 +12,7 @@ export function AIPartnerButton() {
         <Sparkles size={14} />
         <span className="absolute inset-0 animate-ping rounded-full bg-[oklch(0.78_0.12_162)] opacity-40" />
       </span>
-      <span className="hidden sm:inline">Check Up Digital</span>
+      <span className="hidden sm:inline">AI Partner</span>
       <span className="sm:hidden">AI</span>
     </Link>
   );
