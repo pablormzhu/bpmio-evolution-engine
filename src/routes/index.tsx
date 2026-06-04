@@ -323,57 +323,67 @@ function Home() {
         intro="Si estás pensando en una iniciativa, o simplemente necesitas orientación, te invitamos a una llamada para platicar y compartir experiencia. Sin compromiso: solo una conversación honesta sobre tu empresa."
       >
         <div className="grid gap-6 lg:grid-cols-[1.4fr_1fr]">
-          <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
-            <iframe
-              title="Agenda una llamada con BPM.io"
-              src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
-              className="h-[640px] w-full"
-              loading="lazy"
-            />
-          </div>
-          <div className="flex flex-col gap-4">
-            <a
-              href="mailto:info@bpmio.com.mx"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Mail size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Escríbenos</p>
-                <p className="font-semibold text-primary">info@bpmio.com.mx</p>
-              </div>
-            </a>
-            <a
-              href="tel:+525580100974"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Phone size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Llámanos</p>
-                <p className="font-semibold text-primary">+52 55 8010 0974</p>
-              </div>
-            </a>
-            <a
-              href="https://www.linkedin.com"
-              target="_blank"
-              rel="noreferrer"
-              className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)]"
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)]">
-                <Linkedin size={20} />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">Síguenos</p>
-                <p className="font-semibold text-primary">LinkedIn</p>
-              </div>
-            </a>
-            <div className="mt-2 rounded-2xl bg-[oklch(0.78_0.12_162)]/30 p-5 text-sm text-primary/80">
-              <Hammer className="mb-2" size={18} />
-              Sin compromiso: solo una conversación honesta sobre tu empresa.
+          <Reveal direction="left">
+            <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-soft">
+              <iframe
+                title="Agenda una llamada con BPM.io"
+                src="https://calendly.com/d/cm74-mh3-jzf?embed_domain=bpmio.com.mx&embed_type=Inline"
+                className="h-[640px] w-full"
+                loading="lazy"
+              />
             </div>
+          </Reveal>
+          <div className="flex flex-col gap-4">
+            <Reveal delay={120} direction="right">
+              <a
+                href="mailto:info@bpmio.com.mx"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Mail size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Escríbenos</p>
+                  <p className="font-semibold text-primary">info@bpmio.com.mx</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={220} direction="right">
+              <a
+                href="tel:+525580100974"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Phone size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Llámanos</p>
+                  <p className="font-semibold text-primary">+52 55 8010 0974</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={320} direction="right">
+              <a
+                href="https://www.linkedin.com"
+                target="_blank"
+                rel="noreferrer"
+                className="group flex items-center gap-4 rounded-2xl border border-border bg-card p-5 transition-all duration-300 hover:-translate-y-1 hover:border-[oklch(0.78_0.12_162)] hover:shadow-soft"
+              >
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-secondary text-[oklch(0.55_0.13_162)] transition-transform duration-300 group-hover:scale-110 group-hover:-rotate-6">
+                  <Linkedin size={20} />
+                </div>
+                <div>
+                  <p className="text-sm text-muted-foreground">Síguenos</p>
+                  <p className="font-semibold text-primary">LinkedIn</p>
+                </div>
+              </a>
+            </Reveal>
+            <Reveal delay={420} direction="up">
+              <div className="rounded-2xl bg-[oklch(0.78_0.12_162)]/30 p-5 text-sm text-primary/80">
+                <Hammer className="mb-2" size={18} />
+                Sin compromiso: solo una conversación honesta sobre tu empresa.
+              </div>
+            </Reveal>
           </div>
         </div>
       </Section>
