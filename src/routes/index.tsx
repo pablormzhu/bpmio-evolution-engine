@@ -59,7 +59,7 @@ function Home() {
           />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 pb-24 pt-16 lg:px-10 lg:pb-32 lg:pt-24">
+        <div className="mx-auto w-full max-w-7xl px-6 pb-16 pt-12 lg:px-10 lg:pb-20 lg:pt-16">
           <div className="animate-fade-up max-w-5xl">
             <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
               <span className="relative flex h-1.5 w-1.5">
@@ -89,7 +89,7 @@ function Home() {
           </div>
 
           {/* Stat line — sin cajas */}
-          <div className="mt-20 flex flex-col gap-8 sm:flex-row sm:items-end sm:gap-12 md:gap-16">
+          <div className="mt-14 flex flex-col gap-6 sm:flex-row sm:items-end sm:gap-10 md:gap-14">
             {[
               { k: "+30", l: "Empresas transformadas" },
               { k: "7", l: "Disciplinas orquestadas" },
