@@ -61,15 +61,15 @@ const maturity = [
   { icon: GraduationCap, label: "Adopción y capacitación" },
 ];
 
-import logisticTrade from "@/assets/clients/logistic-trade.png.asset.json";
-import sigtronic from "@/assets/clients/sigtronic.png.asset.json";
-import epcor from "@/assets/clients/epcor.png.asset.json";
-import televisa from "@/assets/clients/televisa.png.asset.json";
-import cajasAgricolas from "@/assets/clients/cajas-agricolas.png.asset.json";
-import inra from "@/assets/clients/inra.png.asset.json";
-import laila from "@/assets/clients/laila.png.asset.json";
-import omnis from "@/assets/clients/omnis.png.asset.json";
-import grupoEmmda from "@/assets/clients/grupo-emmda.png.asset.json";
+import logisticTrade from "@/assets/clients/logistic-trade.png";
+import sigtronic from "@/assets/clients/sigtronic.png";
+import epcor from "@/assets/clients/epcor.png";
+import televisa from "@/assets/clients/televisa.png";
+import cajasAgricolas from "@/assets/clients/cajas-agricolas.png";
+import inra from "@/assets/clients/inra.png";
+import laila from "@/assets/clients/laila.png";
+import omnis from "@/assets/clients/omnis.png";
+import grupoEmmda from "@/assets/clients/grupo-emmda.png";
 
 const clientLogos = [
   { name: "Logistic Trade", src: logisticTrade.url, scale: 1.6 },
