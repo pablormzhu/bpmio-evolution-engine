@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://bpmio.com.mx/sitemap.xml
+Sitemap: https://www.bpmio.com.mx/sitemap.xml
