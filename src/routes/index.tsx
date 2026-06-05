@@ -419,7 +419,7 @@ function Home() {
           </Reveal>
 
           <div className="mt-10 grid items-start gap-6 lg:grid-cols-[1.35fr_1fr]">
-            <div id="calendario" className="scroll-mt-24 lg:-mt-20 [&_iframe]:!min-w-0">といいたいけど英語不要
+            <div id="calendario" className="scroll-mt-24 lg:-mt-20 [&_iframe]:!min-w-0">
               <InlineWidget
                 url="https://calendly.com/pablormzhu/bpm-io-30-min?hide_event_type_details=1&hide_gdpr_banner=1&hide_landing_page_details=1&background_color=ffffff&text_color=1b1c1d&primary_color=1f888d"
                 styles={{ height: "720px", width: "100%", minWidth: "320px" }}
