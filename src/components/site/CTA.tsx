@@ -5,7 +5,7 @@ export function PrimaryCTA({ children = "Agenda una llamada" }: { children?: Rea
   return (
     <Link
       to="/"
-      hash="contacto"
+      hash="calendario"
       className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
     >
       {children}

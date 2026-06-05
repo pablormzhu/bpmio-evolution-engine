@@ -46,7 +46,7 @@ export function Footer() {
           </div>
           <Link
             to="/"
-            hash="contacto"
+            hash="calendario"
             className="group inline-flex items-center gap-2 rounded-full bg-[oklch(0.78_0.12_162)] px-6 py-3.5 text-sm font-semibold text-[oklch(0.28_0.07_168)] shadow-soft transition-transform hover:-translate-y-0.5"
           >
             Agenda una llamada
