@@ -169,7 +169,7 @@ function Home() {
             {
               icon: Shield,
               t: "No es comprar tecnología",
-              d: "Transformarse es un proceso de maduración: se aprende, se disfruta y se mejora con el tiempo.",
+              d: "Transformarse es un proceso de maduración: se aprende, se ejecuta y se mejora con el tiempo.",
             },
             {
               icon: Layers,
