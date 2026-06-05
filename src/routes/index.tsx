@@ -420,7 +420,7 @@ function Home() {
             <div id="calendario" className="scroll-mt-24 -mt-20 [&_iframe]:!min-w-0">
               <InlineWidget
                 url="https://calendly.com/pablormzhu/bpm-io-30-min?hide_event_type_details=1&hide_gdpr_banner=1&hide_landing_page_details=1&background_color=ffffff&text_color=1b1c1d&primary_color=1f888d"
-                styles={{ height: "1000px", width: "100%", minWidth: "320px" }}
+                styles={{ height: "720px", width: "100%", minWidth: "320px" }}
                 pageSettings={{ hideGdprBanner: true, hideEventTypeDetails: true, hideLandingPageDetails: true }}
               />
             </div>
