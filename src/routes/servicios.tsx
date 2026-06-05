@@ -48,8 +48,8 @@ const steps = [
   {
     icon: Wrench,
     t: "Ejecución",
-    d: "Reingenieríamos, automatizamos, integramos y desarrollamos hasta que el modelo es operación.",
-    full: "Reingenieríamos, automatizamos, integramos y desarrollamos, ensamblando los componentes correctos hasta que el modelo deja de ser un plan y se vuelve operación.",
+    d: "Hacemos una reingeniería, automatizamos, integramos y desarrollamos hasta que el modelo es operación.",
+    full: "Hacemos una reingeniería, automatizamos, integramos y desarrollamos, ensamblando los componentes correctos hasta que el modelo deja de ser un plan y se vuelve operación.",
   },
   {
     icon: GraduationCap,
