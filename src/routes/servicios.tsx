@@ -359,6 +359,8 @@ function Servicios() {
               title={p.t}
               short={p.d}
               full={p.full}
+              open={piecesOpen}
+              onToggle={() => setPiecesOpen((o) => !o)}
             />
           ))}
 
