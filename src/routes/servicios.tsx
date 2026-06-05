@@ -212,6 +212,7 @@ const testimonios = [
 ];
 
 function Servicios() {
+  const [piecesOpen, setPiecesOpen] = useState(false);
   return (
     <SiteLayout>
       {/* La visión */}
