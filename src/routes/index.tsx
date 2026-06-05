@@ -72,15 +72,15 @@ import omnis from "@/assets/clients/omnis.png";
 import grupoEmmda from "@/assets/clients/grupo-emmda.png";
 
 const clientLogos = [
-  { name: "Logistic Trade", src: logisticTrade.url, scale: 1.6 },
-  { name: "Sigtronic", src: sigtronic.url, scale: 1 },
-  { name: "EPCOR", src: epcor.url, scale: 1.6 },
-  { name: "Televisa", src: televisa.url, scale: 1 },
-  { name: "Cajas Agrícolas de México", src: cajasAgricolas.url, scale: 1 },
-  { name: "INRA", src: inra.url, scale: 1 },
-  { name: "Hotel Laila", src: laila.url, scale: 1.6 },
-  { name: "Omnis", src: omnis.url, scale: 1 },
-  { name: "Grupo EMMDA", src: grupoEmmda.url, scale: 1.1 },
+  { name: "Logistic Trade", src: logisticTrade, scale: 1.6 },
+  { name: "Sigtronic", src: sigtronic, scale: 1 },
+  { name: "EPCOR", src: epcor, scale: 1.6 },
+  { name: "Televisa", src: televisa, scale: 1 },
+  { name: "Cajas Agrícolas de México", src: cajasAgricolas, scale: 1 },
+  { name: "INRA", src: inra, scale: 1 },
+  { name: "Hotel Laila", src: laila, scale: 1.6 },
+  { name: "Omnis", src: omnis, scale: 1 },
+  { name: "Grupo EMMDA", src: grupoEmmda, scale: 1.1 },
 ];
 
 function Home() {
