@@ -299,7 +299,7 @@ function Home() {
           </h2>
           <p className="mx-auto mt-5 max-w-2xl text-pretty text-base leading-relaxed text-foreground/75">
             Algunas empresas llegan con un proceso específico que resolver; otras con la pregunta de por dónde empezar.
-            Te acompañamos en cualquier nivel de madurez.
+            Te acompañamos en cualquier nivel de madurez y lo mejor de todo, no necesitas un presupuesto grande para iniciar.
           </p>
         </div>
 
