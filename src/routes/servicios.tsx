@@ -178,16 +178,14 @@ function PieceCard({
         </p>
       )}
       {!open && <div className="flex-1" />}
-      {isLong && (
-        <button
-          type="button"
-          onClick={() => setOpen((o) => !o)}
-          className="relative mt-4 inline-flex items-center gap-1 self-start text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
-        >
-          {open ? "Ver menos" : "Ver más"}
-          <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
-        </button>
-      )}
+      <button
+        type="button"
+        onClick={() => setOpen((o) => !o)}
+        className="relative mt-4 inline-flex items-center gap-1 self-start text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
+      >
+        {open ? "Ver menos" : "Ver más"}
+        <ChevronDown size={14} className={`transition-transform ${open ? "rotate-180" : ""}`} />
+      </button>
     </article>
   );
 }
