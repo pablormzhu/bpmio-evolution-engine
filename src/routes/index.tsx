@@ -69,6 +69,7 @@ import cajasAgricolas from "@/assets/clients/cajas-agricolas.png.asset.json";
 import inra from "@/assets/clients/inra.png.asset.json";
 import laila from "@/assets/clients/laila.png.asset.json";
 import omnis from "@/assets/clients/omnis.png.asset.json";
+import grupoEmmda from "@/assets/clients/grupo-emmda.png.asset.json";
 
 const clientLogos = [
   { name: "Logistic Trade", src: logisticTrade.url, scale: 1.6 },
@@ -79,6 +80,7 @@ const clientLogos = [
   { name: "INRA", src: inra.url, scale: 1 },
   { name: "Hotel Laila", src: laila.url, scale: 1.6 },
   { name: "Omnis", src: omnis.url, scale: 1 },
+  { name: "Grupo EMMDA", src: grupoEmmda.url, scale: 1.6 },
 ];
 
 function Home() {
