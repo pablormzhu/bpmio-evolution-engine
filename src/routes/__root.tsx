@@ -104,9 +104,10 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="es">
       <head>
         <HeadContent />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({"@context":"https://schema.org","@type":"ProfessionalService","name":"BPM.io","url":"https://bpmio.com.mx","description":"Consultoría de transformación digital para empresas mexicanas: procesos, datos, automatización e inteligencia artificial.","areaServed":"MX","founder":{"@type":"Person","name":"Pablo Ramírez Huitrón"},"address":{"@type":"PostalAddress","addressRegion":"Querétaro","addressCountry":"MX"},"knowsAbout":["Transformación digital","Automatización","Inteligencia artificial","Business intelligence","Desarrollo de software a medida"]}) }} />
       </head>
       <body>
         {children}
