@@ -49,7 +49,7 @@ export function Header() {
           ))}
           <Link
             to="/"
-            hash="contacto"
+            hash="calendario"
             className="rounded-full px-4 py-2 text-sm font-medium text-foreground/75 transition-colors hover:bg-secondary hover:text-primary"
           >
             Contacto
@@ -58,7 +58,7 @@ export function Header() {
         <div className="hidden md:block">
           <Link
             to="/"
-            hash="contacto"
+            hash="calendario"
             className="inline-flex items-center rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5"
           >
             Agenda una llamada
@@ -86,14 +86,14 @@ export function Header() {
             ))}
             <Link
               to="/"
-              hash="contacto"
+              hash="calendario"
               className="rounded-lg px-3 py-2.5 text-base font-medium text-foreground/80 hover:bg-secondary"
             >
               Contacto
             </Link>
             <Link
               to="/"
-              hash="contacto"
+              hash="calendario"
               className="mt-2 inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground"
             >
               Agenda una llamada
