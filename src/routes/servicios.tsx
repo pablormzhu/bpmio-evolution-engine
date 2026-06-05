@@ -236,7 +236,7 @@ function Servicios() {
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground/75">
               Como cada empresa es un mundo, no hay receta única. Empezamos como consultores:
               entendemos tu caso a fondo y diseñamos, contigo, el modelo de operación objetivo que tu
-              empresa necesita para llegar a donde quiere.
+              empresa necesita para llegar a donde quieres.
             </p>
           </div>
 
