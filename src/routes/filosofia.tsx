@@ -170,7 +170,7 @@ function Filosofia() {
           <div className="rounded-3xl bg-primary p-8 text-primary-foreground shadow-soft">
             <div className="h-28 w-28 overflow-hidden rounded-full ring-4 ring-[oklch(0.78_0.12_162)]/40">
               <img
-                src={pabloPhoto.url}
+                src={pabloPhoto}
                 alt="Pablo Ramírez Huitrón"
                 className="h-full w-full object-cover"
               />
