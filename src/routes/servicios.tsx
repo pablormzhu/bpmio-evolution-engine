@@ -197,7 +197,7 @@ function PieceCard({
 const roles = [
   { icon: Compass, t: "Empezando desde cero", d: "Ponemos los cimientos: estandarización, levantamiento y definición del rumbo.", label: "Tus orientadores" },
   { icon: Hammer, t: "Con base, listos para avanzar", d: "Diseñamos y construimos el siguiente nivel, o destrabamos cuellos de botella.", label: "Consultores y ejecutores" },
-  { icon: Rocket, t: "Con equipo propio pero rebasado", d: "Sumamos manos y velocidad, trabajando a su lado.", label: "Tu acelerador" },
+  { icon: Rocket, t: "Con equipo propio", d: "Sumamos manos y velocidad, trabajando a su lado.", label: "Tu acelerador" },
 ];
 
 const testimonios = [
