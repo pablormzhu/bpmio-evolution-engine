@@ -74,7 +74,7 @@ import grupoEmmda from "@/assets/clients/grupo-emmda.png";
 const clientLogos = [
   { name: "Logistic Trade", src: logisticTrade, scale: 1.6 },
   { name: "Sigtronic", src: sigtronic, scale: 1 },
-  { name: "EPCOR", src: epcor, scale: 1.6 },
+  { name: "EPCCOR", src: epcor, scale: 1.1 },
   { name: "Televisa", src: televisa, scale: 1 },
   { name: "Cajas Agrícolas de México", src: cajasAgricolas, scale: 1 },
   { name: "INRA", src: inra, scale: 1 },
