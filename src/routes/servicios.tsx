@@ -144,7 +144,7 @@ function StepCard({
 }
 
 function PieceCard({
-  Icon, index, title, short, full, featured = false,
+  Icon, index, title, short, full, featured = false, open, onToggle,
 }: {
   Icon: typeof Database;
   index: number;
@@ -152,8 +152,9 @@ function PieceCard({
   short: string;
   full: string;
   featured?: boolean;
+  open: boolean;
+  onToggle: () => void;
 }) {
-  const [open, setOpen] = useState(false);
   const isLong = full.length > short.length + 4;
   return (
     <article
@@ -181,7 +182,7 @@ function PieceCard({
       {isLong && (
         <button
           type="button"
-          onClick={() => setOpen((o) => !o)}
+          onClick={onToggle}
           className="relative mt-4 inline-flex items-center gap-1 self-start text-sm font-semibold text-[oklch(0.45_0.13_162)] transition-colors hover:text-primary"
         >
           {open ? "Ver menos" : "Ver más"}
