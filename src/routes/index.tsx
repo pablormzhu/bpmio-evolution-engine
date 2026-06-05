@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { InlineWidget } from "react-calendly";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 import { Reveal } from "@/components/site/Reveal";
@@ -419,17 +420,13 @@ function Home() {
           </Reveal>
 
           <div className="mt-10 grid gap-6 lg:grid-cols-[1.35fr_1fr]">
-            <Reveal direction="left">
-              <div id="calendario" className="scroll-mt-24">
-                <iframe
-                  title="Agenda una llamada con BPM.io"
-                  src="https://calendly.com/pablormzhu/bpm-io-30-min?embed_type=Inline&hide_gdpr_banner=1&hide_event_type_details=1&hide_landing_page_details=1&background_color=DFF7ED&primary_color=00A86B&text_color=063F31&background_color=ffffff&text_color=1b1c1d&primary_color=1f888d"
-                  className="block h-[1000px] w-full border-0 bg-transparent"
-                  style={{ border: "none", width: "100%", height: "1000px", minHeight: "1000px" }}
-                  loading="lazy"
-                />
-              </div>
-            </Reveal>
+            <div id="calendario" className="scroll-mt-24">
+              <InlineWidget
+                url="https://calendly.com/pablormzhu/bpm-io-30-min?hide_event_type_details=1&hide_gdpr_banner=1&hide_landing_page_details=1&background_color=ffffff&text_color=1b1c1d&primary_color=1f888d"
+                styles={{ height: "1000px", width: "100%", minWidth: "320px" }}
+                pageSettings={{ hideGdprBanner: true, hideEventTypeDetails: true, hideLandingPageDetails: true }}
+              />
+            </div>
 
 
 
