@@ -395,7 +395,7 @@ function Home() {
           <div className="absolute right-[-10%] top-1/3 h-[28rem] w-[28rem] animate-float-slow rounded-full bg-[oklch(0.78_0.12_162)]/30 blur-3xl" />
         </div>
 
-        <div className="mx-auto w-full max-w-7xl px-6 py-14 lg:px-10 lg:py-20">
+        <div className="mx-auto w-full max-w-7xl px-6 pt-14 pb-6 lg:px-10 lg:pt-20 lg:pb-8">
           <Reveal direction="up">
             <div className="flex flex-col items-start gap-4">
               <span className="inline-flex items-center gap-2 rounded-full border border-primary/15 bg-surface/80 px-3.5 py-1.5 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary/75 backdrop-blur">
@@ -420,7 +420,7 @@ function Home() {
             <div id="calendario" className="scroll-mt-24 -mt-20 [&_iframe]:!min-w-0">
               <InlineWidget
                 url="https://calendly.com/pablormzhu/bpm-io-30-min?hide_event_type_details=1&hide_gdpr_banner=1&hide_landing_page_details=1&background_color=ffffff&text_color=1b1c1d&primary_color=1f888d"
-                styles={{ height: "1000px", width: "100%", minWidth: "320px" }}
+                styles={{ height: "720px", width: "100%", minWidth: "320px" }}
                 pageSettings={{ hideGdprBanner: true, hideEventTypeDetails: true, hideLandingPageDetails: true }}
               />
             </div>
