@@ -218,7 +218,7 @@ function Home() {
 
           <ol className="grid gap-8 md:grid-cols-4 md:gap-6">
             {[
-              { n: "01", t: "Escuchar", d: "Levantamiento profundo de procesos, datos y personas." },
+              { n: "01", t: "Diagnosticar", d: "Levantamiento profundo de procesos, datos y personas." },
               { n: "02", t: "Diseñar", d: "Traducimos tu conocimiento en una solución a tu medida." },
               { n: "03", t: "Construir", d: "Implementamos con la tecnología correcta para tu reto." },
               { n: "04", t: "Acompañar", d: "Capacitamos a tu equipo hasta que sea dueño de la solución." },
@@ -246,9 +246,6 @@ function Home() {
           <div className="mt-10 flex items-stretch gap-5 md:mt-12 md:gap-7">
             <div className="w-1 shrink-0 rounded-full bg-gradient-to-b from-[oklch(0.55_0.13_162)] via-[oklch(0.65_0.15_160)] to-[oklch(0.78_0.12_162)]" />
             <div className="flex flex-1 items-center gap-5">
-              <div className="hidden h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)]/15 text-[oklch(0.55_0.13_162)] sm:flex">
-                <Ear size={22} />
-              </div>
               <p className="text-pretty text-lg font-semibold leading-snug tracking-tight text-primary md:text-2xl">
                 Preguntamos antes de proponer. Entendemos antes de construir.{" "}
                 <span className="text-[oklch(0.55_0.13_162)]">Acompañamos antes de soltar.</span>
