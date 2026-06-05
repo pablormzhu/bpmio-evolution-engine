@@ -80,7 +80,7 @@ const clientLogos = [
   { name: "INRA", src: inra.url, scale: 1 },
   { name: "Hotel Laila", src: laila.url, scale: 1.6 },
   { name: "Omnis", src: omnis.url, scale: 1 },
-  { name: "Grupo EMMDA", src: grupoEmmda.url, scale: 1.6 },
+  { name: "Grupo EMMDA", src: grupoEmmda.url, scale: 1.1 },
 ];
 
 function Home() {
