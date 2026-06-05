@@ -172,9 +172,12 @@ function PieceCard({
       <h3 className={`relative mt-6 font-bold text-primary ${featured ? "text-2xl md:text-3xl" : "text-lg"}`}>
         {title}
       </h3>
-      <p className={`relative mt-3 flex-1 leading-relaxed text-foreground/70 ${featured ? "text-base md:text-lg" : "text-sm"}`}>
-        {open || !isLong ? full : short}
-      </p>
+      {open && (
+        <p className={`relative mt-3 flex-1 leading-relaxed text-foreground/70 ${featured ? "text-base md:text-lg" : "text-sm"}`}>
+          {full}
+        </p>
+      )}
+      {!open && <div className="flex-1" />}
       {isLong && (
         <button
           type="button"
