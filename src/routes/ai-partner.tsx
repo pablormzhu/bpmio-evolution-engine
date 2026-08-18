@@ -125,15 +125,6 @@ function AIPartner() {
           <div className="relative">
             <div className="absolute -inset-3 rounded-[2rem] bg-[oklch(0.78_0.12_162)]/15 blur-2xl" aria-hidden />
             <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-              <div className="flex items-center justify-between border-b border-border bg-surface px-5 py-3.5">
-                <div className="flex items-center gap-2.5">
-                  <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)] text-primary">
-                    <Sparkles size={14} />
-                  </span>
-                  <span className="text-sm font-bold text-primary">BPM AI Partner</span>
-                </div>
-                <span className="flex h-2.5 w-2.5 rounded-full bg-[oklch(0.55_0.13_162)]" aria-hidden />
-              </div>
               <iframe
                 src="https://creative-torrone-caf354.netlify.app/"
                 className="h-[650px] w-full bg-card lg:h-auto lg:min-h-[700px]"
