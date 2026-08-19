@@ -1,4 +1,7 @@
+import { useRef } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { AIPartnerChat } from "@/components/ai-partner/AIPartnerChat";
+import type { AIPartnerChatHandle } from "@/components/ai-partner/types";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Section } from "@/components/site/Section";
 
@@ -20,9 +23,15 @@ export const Route = createFileRoute("/ai-partner")({
   head: () => ({
     meta: [
       { title: "AI Partner — Check Up Digital · BPM.io" },
-      { name: "description", content: "Una lectura honesta de dónde estás y qué te conviene priorizar. En minutos." },
+      {
+        name: "description",
+        content: "Una lectura honesta de dónde estás y qué te conviene priorizar. En minutos.",
+      },
       { property: "og:title", content: "AI Partner — Check Up Digital · BPM.io" },
-      { property: "og:description", content: "Habla con nuestro AI Partner y obtén tu Check Up Digital." },
+      {
+        property: "og:description",
+        content: "Habla con nuestro AI Partner y obtén tu Check Up Digital.",
+      },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
@@ -35,26 +44,31 @@ const prompts = [
     icon: ClipboardCheck,
     t: "CheckUp Digital",
     d: "Evalúa gratis el nivel de digitalización de tu empresa en 2 minutos.",
+    message: "Quiero hacer el Check Up Digital",
   },
   {
     icon: CalendarClock,
     t: "Agendar una llamada",
     d: "Reserva un espacio con nuestro equipo para hablar de tu proyecto.",
+    message: "Quiero agendar una llamada",
   },
   {
     icon: Building2,
     t: "¿Qué hace BPM.io?",
     d: "Conoce nuestros servicios, tecnologías y enfoque.",
+    message: "¿Qué hace BPM.io?",
   },
   {
     icon: TrendingUp,
     t: "Casos de éxito",
     d: "Mira cómo hemos ayudado a otras empresas a escalar.",
+    message: "Cuéntame casos de éxito de BPM.io",
   },
   {
     icon: HelpCircle,
     t: "Preguntas frecuentes",
     d: "Costos, tiempos, plataformas, tipos de procesos que automatizamos.",
+    message: "¿Qué dudas frecuentes puedes resolverme?",
   },
 ];
 
@@ -95,8 +109,26 @@ const benefits = [
 ];
 
 function AIPartner() {
+  const chatRef = useRef<AIPartnerChatHandle>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+
+  const handlePromptClick = (message: string) => {
+    const messageAccepted = chatRef.current?.sendMessage(message) ?? false;
+    if (!messageAccepted) return;
+
+    const chatContainer = chatContainerRef.current;
+    if (!chatContainer) return;
+
+    const rect = chatContainer.getBoundingClientRect();
+    const isChatVisible = rect.bottom > 0 && rect.top < window.innerHeight;
+
+    if (!isChatVisible) {
+      chatContainer.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
-    <SiteLayout>
+    <SiteLayout showAIPartnerButton={false}>
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-0 -z-10">
@@ -112,30 +144,28 @@ function AIPartner() {
             Conoce a tu <span className="text-[oklch(0.55_0.13_162)]">AI Partner</span>.
           </h1>
           <p className="mt-6 max-w-2xl text-lg leading-relaxed text-foreground/75 md:text-xl">
-            En minutos, una lectura honesta de dónde está tu empresa en su transformación digital,
-            y qué te conviene priorizar. Sin compromiso. Sin ventas.
+            En minutos, una lectura honesta de dónde está tu empresa en su transformación digital, y
+            qué te conviene priorizar. Sin compromiso. Sin ventas.
           </p>
         </div>
       </section>
 
       {/* Chat + prompts */}
-      <Section className="!pt-2 lg:!pt-4">
+      <Section className="!pb-0 !pt-10 lg:!pt-14">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr]">
-          {/* AI Partner iframe — app mockup */}
-          <div className="relative">
-            <div className="absolute -inset-3 rounded-[2rem] bg-[oklch(0.78_0.12_162)]/15 blur-2xl" aria-hidden />
-            <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft">
-              <iframe
-                src="https://creative-torrone-caf354.netlify.app/"
-                className="h-[650px] w-full bg-card lg:h-auto lg:min-h-[700px]"
-                style={{ border: "none" }}
-                title="BPM AI Partner"
-              />
+          {/* AI Partner chat */}
+          <div ref={chatContainerRef} className="relative scroll-mt-24 lg:h-full lg:min-h-[640px]">
+            <div
+              className="absolute -inset-3 rounded-[2rem] bg-[oklch(0.78_0.12_162)]/15 blur-2xl"
+              aria-hidden
+            />
+            <div className="relative overflow-hidden rounded-3xl border border-border bg-card shadow-soft lg:h-full">
+              <AIPartnerChat ref={chatRef} />
             </div>
           </div>
 
           {/* Prompts panel */}
-          <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch lg:p-8">
+          <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch">
             <div className="flex items-center gap-2 text-primary">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)]/20 text-primary">
                 <MessageSquare size={14} />
@@ -146,14 +176,15 @@ function AIPartner() {
               Toca cualquiera para inspirar tu conversación con el AI Partner.
             </p>
 
-            <ul className="mt-6 space-y-3">
-              {prompts.map(({ icon: Icon, t, d }) => (
+            <ul className="mt-6 space-y-3 lg:mt-4 lg:space-y-2">
+              {prompts.map(({ icon: Icon, t, d, message }) => (
                 <li key={t}>
                   <button
                     type="button"
-                    className="group flex w-full items-start gap-4 rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-ring"
+                    onClick={() => handlePromptClick(message)}
+                    className="group flex w-full items-start gap-4 rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-ring lg:gap-3 lg:p-3"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)]/20 text-primary transition-colors group-hover:bg-[oklch(0.78_0.12_162)]">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)]/20 text-primary transition-colors group-hover:bg-[oklch(0.78_0.12_162)] lg:h-8 lg:w-8">
                       <Icon size={16} />
                     </span>
                     <span className="min-w-0">
@@ -164,26 +195,32 @@ function AIPartner() {
                           className="opacity-0 transition-all group-hover:translate-x-0.5 group-hover:opacity-100"
                         />
                       </span>
-                      <span className="mt-1 block text-xs leading-relaxed text-foreground/70">{d}</span>
+                      <span className="mt-1 block text-xs leading-relaxed text-foreground/70">
+                        {d}
+                      </span>
                     </span>
                   </button>
                 </li>
               ))}
             </ul>
 
-            <div className="mt-auto rounded-2xl border border-[oklch(0.78_0.12_162)]/30 bg-[oklch(0.78_0.12_162)]/10 p-5">
-              <p className="text-sm font-semibold text-primary">¿Prefieres hablar con una persona?</p>
-              <p className="mt-1 text-xs leading-relaxed text-foreground/70">
-                Agenda una llamada gratuita de 30 minutos con nuestro equipo.
-              </p>
-              <Link
-                to="/"
-                hash="calendario"
-                className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
-              >
-                <CalendarClock size={14} />
-                Agendar una llamada
-              </Link>
+            <div className="mt-auto pt-6 lg:pt-4">
+              <div className="rounded-2xl border border-[oklch(0.78_0.12_162)]/30 bg-[oklch(0.78_0.12_162)]/10 p-5 lg:p-4">
+                <p className="text-sm font-semibold text-primary">
+                  ¿Prefieres hablar con una persona?
+                </p>
+                <p className="mt-1 text-xs leading-relaxed text-foreground/70">
+                  Agenda una llamada gratuita de 30 minutos con nuestro equipo.
+                </p>
+                <Link
+                  to="/"
+                  hash="calendario"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 lg:mt-3"
+                >
+                  <CalendarClock size={14} />
+                  Agendar una llamada
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -201,7 +238,9 @@ function AIPartner() {
               key={n}
               className="relative rounded-3xl border border-border bg-card p-6 shadow-soft transition-all hover:-translate-y-1 hover:shadow-glow"
             >
-              <span className="text-4xl font-extrabold leading-none text-[oklch(0.78_0.12_162)]/40">{n}</span>
+              <span className="text-4xl font-extrabold leading-none text-[oklch(0.78_0.12_162)]/40">
+                {n}
+              </span>
               <h3 className="mt-4 text-lg font-bold text-primary">{title}</h3>
               <p className="mt-2 text-sm leading-relaxed text-foreground/70">{desc}</p>
             </div>
@@ -219,7 +258,8 @@ function AIPartner() {
                 Beneficios
               </span>
               <h2 className="mt-5 text-balance text-3xl font-extrabold leading-[1.05] text-primary md:text-4xl">
-                Una lectura honesta, <span className="text-[oklch(0.55_0.13_162)]">sin fricción.</span>
+                Una lectura honesta,{" "}
+                <span className="text-[oklch(0.55_0.13_162)]">sin fricción.</span>
               </h2>
               <p className="mt-4 max-w-xl text-pretty text-base leading-relaxed text-foreground/75 md:text-lg">
                 El AI Partner está entrenado para entender el contexto de tu empresa y darte
