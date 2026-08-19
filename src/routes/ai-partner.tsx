@@ -151,10 +151,10 @@ function AIPartner() {
       </section>
 
       {/* Chat + prompts */}
-      <Section className="!pt-2 lg:!pt-4">
+      <Section className="!pb-0 !pt-10 lg:!pt-14">
         <div className="grid gap-8 lg:grid-cols-[1.35fr_1fr]">
           {/* AI Partner chat */}
-          <div ref={chatContainerRef} className="relative scroll-mt-24 lg:h-full lg:min-h-[700px]">
+          <div ref={chatContainerRef} className="relative scroll-mt-24 lg:h-full lg:min-h-[640px]">
             <div
               className="absolute -inset-3 rounded-[2rem] bg-[oklch(0.78_0.12_162)]/15 blur-2xl"
               aria-hidden
@@ -165,7 +165,7 @@ function AIPartner() {
           </div>
 
           {/* Prompts panel */}
-          <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch lg:p-8">
+          <div className="flex flex-col rounded-3xl border border-border bg-card p-6 shadow-soft lg:self-stretch">
             <div className="flex items-center gap-2 text-primary">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-[oklch(0.78_0.12_162)]/20 text-primary">
                 <MessageSquare size={14} />
@@ -176,15 +176,15 @@ function AIPartner() {
               Toca cualquiera para inspirar tu conversación con el AI Partner.
             </p>
 
-            <ul className="mt-6 space-y-3">
+            <ul className="mt-6 space-y-3 lg:mt-4 lg:space-y-2">
               {prompts.map(({ icon: Icon, t, d, message }) => (
                 <li key={t}>
                   <button
                     type="button"
                     onClick={() => handlePromptClick(message)}
-                    className="group flex w-full items-start gap-4 rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-ring"
+                    className="group flex w-full items-start gap-4 rounded-2xl border border-border bg-surface p-4 text-left transition-all hover:-translate-y-0.5 hover:border-[oklch(0.55_0.13_162)]/40 hover:shadow-soft focus:outline-none focus:ring-2 focus:ring-ring lg:gap-3 lg:p-3"
                   >
-                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)]/20 text-primary transition-colors group-hover:bg-[oklch(0.78_0.12_162)]">
+                    <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[oklch(0.78_0.12_162)]/20 text-primary transition-colors group-hover:bg-[oklch(0.78_0.12_162)] lg:h-8 lg:w-8">
                       <Icon size={16} />
                     </span>
                     <span className="min-w-0">
@@ -204,8 +204,8 @@ function AIPartner() {
               ))}
             </ul>
 
-            <div className="mt-auto pt-6">
-              <div className="rounded-2xl border border-[oklch(0.78_0.12_162)]/30 bg-[oklch(0.78_0.12_162)]/10 p-5">
+            <div className="mt-auto pt-6 lg:pt-4">
+              <div className="rounded-2xl border border-[oklch(0.78_0.12_162)]/30 bg-[oklch(0.78_0.12_162)]/10 p-5 lg:p-4">
                 <p className="text-sm font-semibold text-primary">
                   ¿Prefieres hablar con una persona?
                 </p>
@@ -215,7 +215,7 @@ function AIPartner() {
                 <Link
                   to="/"
                   hash="calendario"
-                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5"
+                  className="mt-4 inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-xs font-semibold text-primary-foreground transition-transform hover:-translate-y-0.5 lg:mt-3"
                 >
                   <CalendarClock size={14} />
                   Agendar una llamada
