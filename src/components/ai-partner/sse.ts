@@ -3,12 +3,19 @@ import type { ChatSseEvent } from "./types";
 const CHAT_EVENT_NAMES = new Set<ChatSseEvent["event"]>([
   "token",
   "checkup",
+  "checkup_fase",
   "diagnostico",
   "done",
   "error",
 ]);
 
 export type StreamChatHttpErrorKind = "rate_limited" | "http";
+
+export interface LeadPayload {
+  nombre: string;
+  empresa: string;
+  correo: string;
+}
 
 export class StreamChatHttpError extends Error {
   readonly status: number;
@@ -26,6 +33,8 @@ export interface StreamChatOptions {
   apiBaseUrl: string;
   message: string;
   sessionId?: string;
+  checkupAnswer?: { question_id: string; valor: number };
+  lead?: LeadPayload;
   signal?: AbortSignal;
   onEvent: (event: ChatSseEvent) => void;
 }
@@ -76,10 +85,16 @@ export async function streamChat({
   apiBaseUrl,
   message,
   sessionId,
+  checkupAnswer,
+  lead,
   signal,
   onEvent,
 }: StreamChatOptions): Promise<StreamChatResult> {
-  const body = sessionId === undefined ? { message } : { message, session_id: sessionId };
+  const body: Record<string, unknown> = { message };
+  if (sessionId !== undefined) body.session_id = sessionId;
+  if (checkupAnswer !== undefined) body.checkup_answer = checkupAnswer;
+  if (lead !== undefined) body.lead = lead;
+
   const response = await fetch(`${apiBaseUrl.replace(/\/+$/, "")}/v1/chat`, {
     method: "POST",
     headers: {

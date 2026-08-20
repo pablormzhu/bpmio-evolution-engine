@@ -18,6 +18,24 @@ export interface CheckupOption {
   label: string;
 }
 
+export type CheckupFase = "intro" | "oferta" | "formulario";
+
+export interface CheckupFaseEventData {
+  fase: CheckupFase;
+}
+
+export interface CheckupQuestion {
+  index: number;
+  total: number;
+  question_id: string;
+  stem: string;
+  options: CheckupOption[];
+  valor?: number;
+  texto?: string;
+}
+
+export type CheckupCardFase = "intro" | "in_progress" | "cerrada";
+
 export interface TokenEventData {
   text: string;
 }
@@ -52,6 +70,7 @@ export interface ErrorEventData {
 export type ChatSseEvent =
   | { event: "token"; data: TokenEventData }
   | { event: "checkup"; data: CheckupEventData }
+  | { event: "checkup_fase"; data: CheckupFaseEventData }
   | { event: "diagnostico"; data: DiagnosticoEventData }
   | { event: "done"; data: DoneEventData }
   | { event: "error"; data: ErrorEventData };
@@ -72,13 +91,22 @@ export type ChatMessage =
   | {
       id: string;
       role: "assistant";
-      kind: "checkup";
-      index: number;
-      total: number;
-      question_id: string;
-      stem: string;
-      options: CheckupOption[];
-      answeredValue?: number;
+      kind: "checkup_card";
+      fase: CheckupCardFase;
+      preguntas: CheckupQuestion[];
+      visible: number;
+    }
+  | {
+      id: string;
+      role: "assistant";
+      kind: "checkup_oferta";
+      resuelta: boolean;
+    }
+  | {
+      id: string;
+      role: "assistant";
+      kind: "checkup_formulario";
+      resuelta: boolean;
     }
   | {
       id: string;

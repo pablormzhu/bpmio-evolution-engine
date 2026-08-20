@@ -8,7 +8,7 @@ type MarkdownTextProps = {
 type MarkdownBlock =
   | { kind: "paragraph"; lines: string[] }
   | { kind: "unordered-list"; items: string[] }
-  | { kind: "ordered-list"; items: string[] };
+  | { kind: "ordered-list"; items: string[]; start: number };
 
 function parseBlocks(text: string): MarkdownBlock[] {
   const blocks: MarkdownBlock[] = [];
@@ -40,7 +40,7 @@ function parseBlocks(text: string): MarkdownBlock[] {
     if (orderedItem) {
       if (current?.kind !== "ordered-list") {
         flushCurrent();
-        current = { kind: "ordered-list", items: [] };
+        current = { kind: "ordered-list", items: [], start: Number(orderedItem[1]) };
       }
       current.items.push(orderedItem[2]);
       continue;
@@ -103,7 +103,11 @@ export function MarkdownText({ text, className = "" }: MarkdownTextProps) {
         const listStyle = block.kind === "ordered-list" ? "list-decimal" : "list-disc";
 
         return (
-          <List key={`list-${blockIndex}`} className={`${listStyle} space-y-1 pl-5`}>
+          <List
+            key={`list-${blockIndex}`}
+            start={block.kind === "ordered-list" ? block.start : undefined}
+            className={`${listStyle} space-y-1 pl-5`}
+          >
             {block.items.map((item, itemIndex) => (
               <li key={`item-${blockIndex}-${itemIndex}`}>
                 {renderInline(item, `item-${blockIndex}-${itemIndex}`)}

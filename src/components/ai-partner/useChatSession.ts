@@ -1,11 +1,15 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { StreamChatHttpError, streamChat } from "./sse";
+import { StreamChatHttpError, streamChat, type LeadPayload } from "./sse";
 import type {
   ChatMessage,
   ChatStatus,
+  CheckupCardFase,
   CheckupEventData,
+  CheckupFase,
+  CheckupFaseEventData,
   CheckupOption,
+  CheckupQuestion,
   DiagnosticoEventData,
   DoneEventData,
   FinishedReason,
@@ -14,7 +18,8 @@ import type {
 } from "./types";
 
 const API_BASE = import.meta.env.VITE_API_BASE_URL?.trim();
-const STORAGE_KEY = "bpm-ai-partner-v1";
+const STORAGE_KEY = "bpm-ai-partner-v2";
+const REVEAL_DELAY_MS = 900;
 
 const WELCOME_TEXT =
   "¡Hola! Soy el AI Partner de BPM.io, tu consultor digital 👋 Estoy aquí para orientarte en tu transformación digital: puedo evaluar la madurez de tu empresa con el Check Up Digital o resolver tus dudas. ¿Por dónde empezamos?";
@@ -43,11 +48,46 @@ const FINISHED_REASONS = new Set<FinishedReason>([
   "error",
 ]);
 
+const CHECKUP_CARD_FASES_BY_NAME = {
+  intro: true,
+  in_progress: true,
+  cerrada: true,
+} satisfies Record<CheckupCardFase, true>;
+
+const CHECKUP_CARD_FASES = new Set<CheckupCardFase>(
+  Object.keys(CHECKUP_CARD_FASES_BY_NAME) as CheckupCardFase[],
+);
+
+const CHECKUP_EVENT_FASES = new Set<CheckupFase>(["intro", "oferta", "formulario"]);
+
 type PendingRequest = {
   wireMessage: string;
   displayText: string;
+  checkupAnswer?: { question_id: string; valor: number };
+  lead?: LeadPayload;
+  freeTextContext?: FreeTextContext;
+  deferredUserMessage?: DeferredUserMessage;
   failedResponseMessageIds?: string[];
 };
+
+type FreeTextContext = {
+  cardId: string;
+  questionId: string;
+  text: string;
+};
+
+type PendingFreeText = FreeTextContext & {
+  requestId: number;
+};
+
+type DeferredUserMessage = Extract<ChatMessage, { role: "user" }>;
+
+export type SendMessageOptions = {
+  appendUser?: boolean;
+  lead?: LeadPayload;
+};
+
+type CheckupCardMessage = Extract<ChatMessage, { kind: "checkup_card" }>;
 
 type BeginRequestOptions = {
   appendUser: boolean;
@@ -56,14 +96,18 @@ type BeginRequestOptions = {
 
 export interface UseChatSessionResult {
   messages: ChatMessage[];
+  visibleMessages: ChatMessage[];
   sessionId: string | null;
   status: ChatStatus;
   lastFinishedReason: FinishedReason | null;
   isHydrated: boolean;
   isConfigured: boolean;
   isAwaitingFirstToken: boolean;
-  sendMessage: (text: string, displayText?: string) => boolean;
-  answerCheckup: (messageId: string, value: number, label: string) => boolean;
+  isRevealing: boolean;
+  sendMessage: (text: string, displayText?: string, options?: SendMessageOptions) => boolean;
+  answerCurrent: (value: number, label: string) => boolean;
+  editAnswer: (questionId: string, value: number, label: string) => boolean;
+  setCheckupVisible: (cardId: string, visible: number) => void;
   retryLastMessage: () => boolean;
   startNewConversation: () => void;
 }
@@ -96,6 +140,77 @@ function isFiniteNumber(value: unknown): value is number {
   return typeof value === "number" && Number.isFinite(value);
 }
 
+function isCheckupCardFase(value: unknown): value is CheckupCardFase {
+  return typeof value === "string" && CHECKUP_CARD_FASES.has(value as CheckupCardFase);
+}
+
+function isCheckupFase(value: unknown): value is CheckupFase {
+  return typeof value === "string" && CHECKUP_EVENT_FASES.has(value as CheckupFase);
+}
+
+function findActiveCheckupCard(messages: readonly ChatMessage[]): CheckupCardMessage | undefined {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (
+      message.role === "assistant" &&
+      message.kind === "checkup_card" &&
+      message.fase !== "cerrada"
+    ) {
+      return message;
+    }
+  }
+
+  return undefined;
+}
+
+function findCheckupCardById(
+  messages: readonly ChatMessage[],
+  cardId: string | null,
+): CheckupCardMessage | undefined {
+  if (cardId === null) return undefined;
+
+  return messages.find(
+    (message): message is CheckupCardMessage =>
+      message.role === "assistant" && message.kind === "checkup_card" && message.id === cardId,
+  );
+}
+
+function findLastUnresolvedCheckupMessageIndex(
+  messages: readonly ChatMessage[],
+  kind: "checkup_oferta" | "checkup_formulario",
+): number {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (message.role === "assistant" && message.kind === kind && !message.resuelta) {
+      return index;
+    }
+  }
+
+  return -1;
+}
+
+export function isCheckupQuestionAnswered(
+  preguntas: readonly CheckupQuestion[],
+  questionIndex: number,
+  fase: CheckupCardFase,
+): boolean {
+  const question = preguntas[questionIndex];
+  if (!question) return false;
+
+  return questionIndex < preguntas.length - 1 || question.valor !== undefined || fase === "cerrada";
+}
+
+function withOptionAnswer(question: CheckupQuestion, value: number): CheckupQuestion {
+  return {
+    index: question.index,
+    total: question.total,
+    question_id: question.question_id,
+    stem: question.stem,
+    options: question.options,
+    valor: value,
+  };
+}
+
 function parseCheckupOptions(value: unknown): CheckupOption[] | null {
   if (!Array.isArray(value) || value.length === 0 || value.length > 20) {
     return null;
@@ -111,6 +226,35 @@ function parseCheckupOptions(value: unknown): CheckupOption[] | null {
 
   if (options.some((option) => option === null)) return null;
   return options as CheckupOption[];
+}
+
+function parseStoredCheckupQuestion(value: unknown): CheckupQuestion | null {
+  if (!isRecord(value)) return null;
+
+  const options = parseCheckupOptions(value.options);
+  if (
+    !isFiniteNumber(value.index) ||
+    !Number.isInteger(value.index) ||
+    !isFiniteNumber(value.total) ||
+    !Number.isInteger(value.total) ||
+    !isNonEmptyString(value.question_id) ||
+    !isNonEmptyString(value.stem) ||
+    options === null ||
+    (value.valor !== undefined && !isFiniteNumber(value.valor)) ||
+    (value.texto !== undefined && !isNonEmptyString(value.texto))
+  ) {
+    return null;
+  }
+
+  return {
+    index: value.index,
+    total: value.total,
+    question_id: value.question_id,
+    stem: value.stem,
+    options,
+    ...(value.valor === undefined ? {} : { valor: value.valor }),
+    ...(value.texto === undefined ? {} : { texto: value.texto }),
+  };
 }
 
 function parseStoredMessage(value: unknown): ChatMessage | null {
@@ -155,31 +299,54 @@ function parseStoredMessage(value: unknown): ChatMessage | null {
     };
   }
 
-  if (value.kind === "checkup") {
-    const options = parseCheckupOptions(value.options);
+  if (value.kind === "checkup_card") {
     if (
-      !isFiniteNumber(value.index) ||
-      !Number.isInteger(value.index) ||
-      !isFiniteNumber(value.total) ||
-      !Number.isInteger(value.total) ||
-      !isNonEmptyString(value.question_id) ||
-      !isNonEmptyString(value.stem) ||
-      options === null ||
-      (value.answeredValue !== undefined && !isFiniteNumber(value.answeredValue))
+      !isCheckupCardFase(value.fase) ||
+      !Array.isArray(value.preguntas) ||
+      !isFiniteNumber(value.visible) ||
+      !Number.isInteger(value.visible)
     ) {
+      return null;
+    }
+
+    const preguntas = value.preguntas.map(parseStoredCheckupQuestion);
+    if (preguntas.some((question) => question === null)) return null;
+
+    if (preguntas.length === 0) {
+      if (value.fase !== "intro" || value.visible !== 0) return null;
+    } else if (value.visible < 0 || value.visible >= preguntas.length) {
       return null;
     }
 
     return {
       id: value.id,
       role: "assistant",
-      kind: "checkup",
-      index: value.index,
-      total: value.total,
-      question_id: value.question_id,
-      stem: value.stem,
-      options,
-      ...(value.answeredValue === undefined ? {} : { answeredValue: value.answeredValue }),
+      kind: "checkup_card",
+      fase: value.fase,
+      preguntas: preguntas as CheckupQuestion[],
+      visible: value.visible,
+    };
+  }
+
+  if (value.kind === "checkup_oferta") {
+    if (typeof value.resuelta !== "boolean") return null;
+
+    return {
+      id: value.id,
+      role: "assistant",
+      kind: "checkup_oferta",
+      resuelta: value.resuelta,
+    };
+  }
+
+  if (value.kind === "checkup_formulario") {
+    if (typeof value.resuelta !== "boolean") return null;
+
+    return {
+      id: value.id,
+      role: "assistant",
+      kind: "checkup_formulario",
+      resuelta: value.resuelta,
     };
   }
 
@@ -227,9 +394,16 @@ function parsePersistedSession(value: unknown): PersistedChatSession | null {
   const messages = value.messages.map(parseStoredMessage);
   if (messages.some((message) => message === null)) return null;
 
+  const parsedMessages = messages as ChatMessage[];
+  const activeCheckupCards = parsedMessages.filter(
+    (message) =>
+      message.role === "assistant" && message.kind === "checkup_card" && message.fase !== "cerrada",
+  );
+  if (activeCheckupCards.length > 1) return null;
+
   return {
     sessionId: value.sessionId,
-    messages: messages as ChatMessage[],
+    messages: parsedMessages,
     lastFinishedReason: value.lastFinishedReason,
     lockedFlag: value.lockedFlag,
   };
@@ -251,6 +425,10 @@ function isCheckupEventData(value: unknown): value is CheckupEventData {
     isNonEmptyString(value.stem) &&
     parseCheckupOptions(value.options) !== null
   );
+}
+
+function isCheckupFaseEventData(value: unknown): value is CheckupFaseEventData {
+  return isRecord(value) && isCheckupFase(value.fase);
 }
 
 function isDiagnosticoEventData(value: unknown): value is DiagnosticoEventData {
@@ -319,6 +497,7 @@ export function useChatSession(): UseChatSessionResult {
   const [lastFinishedReason, setLastFinishedReason] = useState<FinishedReason | null>(null);
   const [isHydrated, setIsHydrated] = useState(false);
   const [isAwaitingFirstToken, setIsAwaitingFirstToken] = useState(false);
+  const [pendingRevealIds, setPendingRevealIds] = useState<string[]>([]);
 
   const messagesRef = useRef(messages);
   const sessionIdRef = useRef(sessionId);
@@ -331,10 +510,26 @@ export function useChatSession(): UseChatSessionResult {
   const requestSequenceRef = useRef(0);
   const messageSequenceRef = useRef(0);
   const lastRequestRef = useRef<PendingRequest | null>(null);
+  const activeCheckupCardIdRef = useRef<string | null>(null);
+  const pendingFreeTextRef = useRef<PendingFreeText | null>(null);
+  const pendingRevealIdsRef = useRef<string[]>([]);
+  const revealQueueRef = useRef<string[]>([]);
+  const revealTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const revealGenerationRef = useRef(0);
+
+  const isRevealing = pendingRevealIds.length > 0;
+  const visibleMessages = useMemo(() => {
+    if (pendingRevealIds.length === 0) return messages;
+
+    const pendingIds = new Set(pendingRevealIds);
+    const firstPendingIndex = messages.findIndex((message) => pendingIds.has(message.id));
+    return firstPendingIndex === -1 ? messages : messages.slice(0, firstPendingIndex);
+  }, [messages, pendingRevealIds]);
 
   const replaceMessages = useCallback((updater: (current: ChatMessage[]) => ChatMessage[]) => {
     const next = updater(messagesRef.current);
     messagesRef.current = next;
+    activeCheckupCardIdRef.current = findActiveCheckupCard(next)?.id ?? null;
     setMessages(next);
     return next;
   }, []);
@@ -354,8 +549,71 @@ export function useChatSession(): UseChatSessionResult {
     return `${prefix}-${Date.now()}-${messageSequenceRef.current}`;
   }, []);
 
+  const clearRevealState = useCallback((publishState: boolean) => {
+    revealGenerationRef.current += 1;
+    if (revealTimerRef.current !== null) {
+      clearTimeout(revealTimerRef.current);
+      revealTimerRef.current = null;
+    }
+    const hadPendingMessages = pendingRevealIdsRef.current.length > 0;
+    pendingRevealIdsRef.current = [];
+    revealQueueRef.current = [];
+    if (publishState && mountedRef.current && hadPendingMessages) {
+      setPendingRevealIds([]);
+    }
+  }, []);
+
+  const flushPendingReveals = useCallback(() => {
+    clearRevealState(true);
+  }, [clearRevealState]);
+
+  const hideMessageUntilReveal = useCallback((messageId: string) => {
+    if (pendingRevealIdsRef.current.includes(messageId)) return;
+
+    const nextPendingIds = [...pendingRevealIdsRef.current, messageId];
+    pendingRevealIdsRef.current = nextPendingIds;
+    if (mountedRef.current) setPendingRevealIds(nextPendingIds);
+  }, []);
+
+  const startRevealSequence = useCallback(() => {
+    const pendingIds = new Set(pendingRevealIdsRef.current);
+    const nextQueue = messagesRef.current
+      .filter((message) => pendingIds.has(message.id))
+      .map((message) => message.id);
+    pendingRevealIdsRef.current = nextQueue;
+    setPendingRevealIds(nextQueue);
+    if (nextQueue.length === 0) return;
+
+    revealGenerationRef.current += 1;
+    const generation = revealGenerationRef.current;
+    if (revealTimerRef.current !== null) clearTimeout(revealTimerRef.current);
+    revealQueueRef.current = nextQueue;
+
+    const revealNextMessage = () => {
+      if (!mountedRef.current || revealGenerationRef.current !== generation) return;
+
+      const [messageId, ...remainingQueue] = revealQueueRef.current;
+      if (!messageId) {
+        revealTimerRef.current = null;
+        return;
+      }
+
+      revealQueueRef.current = remainingQueue;
+      const remainingPendingIds = pendingRevealIdsRef.current.filter((id) => id !== messageId);
+      pendingRevealIdsRef.current = remainingPendingIds;
+      setPendingRevealIds(remainingPendingIds);
+
+      revealTimerRef.current =
+        remainingQueue.length > 0 ? setTimeout(revealNextMessage, REVEAL_DELAY_MS) : null;
+    };
+
+    revealTimerRef.current = setTimeout(revealNextMessage, REVEAL_DELAY_MS);
+  }, []);
+
   useEffect(() => {
+    clearRevealState(false);
     mountedRef.current = true;
+    setPendingRevealIds([]);
 
     let restoredSession: PersistedChatSession | null = null;
 
@@ -402,6 +660,8 @@ export function useChatSession(): UseChatSessionResult {
     messagesRef.current = nextMessages;
     sessionIdRef.current = restoredSession?.sessionId ?? null;
     statusRef.current = restoredStatus;
+    activeCheckupCardIdRef.current = findActiveCheckupCard(nextMessages)?.id ?? null;
+    pendingFreeTextRef.current = null;
     isHydratedRef.current = true;
     setMessages(nextMessages);
     setSessionId(restoredSession?.sessionId ?? null);
@@ -412,20 +672,36 @@ export function useChatSession(): UseChatSessionResult {
     return () => {
       mountedRef.current = false;
       isHydratedRef.current = false;
+      clearRevealState(false);
       requestSequenceRef.current += 1;
       activeControllerRef.current?.abort();
       activeControllerRef.current = null;
       inFlightRef.current = false;
+      pendingFreeTextRef.current = null;
     };
-  }, []);
+  }, [clearRevealState]);
 
   const executeRequest = useCallback(
-    async (request: PendingRequest, requestId: number, controller: AbortController) => {
+    async (
+      request: PendingRequest,
+      requestId: number,
+      controller: AbortController,
+      responseStartIndex: number,
+    ) => {
       let activeAssistantMessageId: string | null = null;
       const activeResponseMessageIds: string[] = [];
+      const assistantResponseMessageIds: string[] = [];
       let turnSettled = false;
+      let retryFreeTextContext = request.freeTextContext;
+      let receivedCheckupResolution = false;
 
       const isCurrentRequest = () => mountedRef.current && requestSequenceRef.current === requestId;
+
+      const registerNewAssistantMessage = (messageId: string) => {
+        activeResponseMessageIds.push(messageId);
+        if (assistantResponseMessageIds.length > 0) hideMessageUntilReveal(messageId);
+        assistantResponseMessageIds.push(messageId);
+      };
 
       const closeActiveAssistantMessage = (current: ChatMessage[]) =>
         activeAssistantMessageId === null
@@ -438,26 +714,64 @@ export function useChatSession(): UseChatSessionResult {
                 : message,
             );
 
+      const insertDeferredUserMessage = (current: ChatMessage[]) => {
+        const deferredUserMessage = receivedCheckupResolution
+          ? undefined
+          : request.deferredUserMessage;
+        if (!deferredUserMessage) return current;
+
+        if (!activeResponseMessageIds.includes(deferredUserMessage.id)) {
+          activeResponseMessageIds.push(deferredUserMessage.id);
+        }
+        if (current.some((message) => message.id === deferredUserMessage.id)) return current;
+
+        const responseMessageIds = new Set(activeResponseMessageIds);
+        const firstResponseIndex = current.findIndex((message) =>
+          responseMessageIds.has(message.id),
+        );
+        const insertionIndex =
+          firstResponseIndex === -1
+            ? Math.min(responseStartIndex, current.length)
+            : firstResponseIndex;
+
+        return [
+          ...current.slice(0, insertionIndex),
+          deferredUserMessage,
+          ...current.slice(insertionIndex),
+        ];
+      };
+
       const finishWithFailure = (reason: "rate_limited" | "error", text: string) => {
         if (turnSettled || !isCurrentRequest()) return;
 
         turnSettled = true;
         setIsAwaitingFirstToken(false);
-        replaceMessages((current) => [
-          ...closeActiveAssistantMessage(current),
-          {
-            id: makeMessageId("notice"),
-            role: "system",
-            kind: "notice",
-            text,
-            retryable: true,
-          },
-        ]);
+        flushPendingReveals();
+        replaceMessages((current) => {
+          const responseMessages = insertDeferredUserMessage(closeActiveAssistantMessage(current));
+          return [
+            ...responseMessages,
+            {
+              id: makeMessageId("notice"),
+              role: "system",
+              kind: "notice",
+              text,
+              retryable: true,
+            },
+          ];
+        });
         setLastFinishedReason(reason);
         replaceStatus("idle");
         canRetryRef.current = true;
         lastRequestRef.current = {
-          ...request,
+          wireMessage: request.wireMessage,
+          displayText: request.displayText,
+          ...(request.checkupAnswer ? { checkupAnswer: request.checkupAnswer } : {}),
+          ...(request.lead ? { lead: request.lead } : {}),
+          ...(retryFreeTextContext ? { freeTextContext: retryFreeTextContext } : {}),
+          ...(retryFreeTextContext && request.deferredUserMessage
+            ? { deferredUserMessage: request.deferredUserMessage }
+            : {}),
           ...(activeResponseMessageIds.length > 0
             ? { failedResponseMessageIds: activeResponseMessageIds }
             : {}),
@@ -469,6 +783,8 @@ export function useChatSession(): UseChatSessionResult {
           apiBaseUrl: API_BASE as string,
           message: request.wireMessage,
           ...(sessionIdRef.current ? { sessionId: sessionIdRef.current } : {}),
+          ...(request.checkupAnswer ? { checkupAnswer: request.checkupAnswer } : {}),
+          ...(request.lead ? { lead: request.lead } : {}),
           signal: controller.signal,
           onEvent: (event) => {
             if (!isCurrentRequest() || turnSettled) return;
@@ -482,7 +798,7 @@ export function useChatSession(): UseChatSessionResult {
 
               if (activeAssistantMessageId === null) {
                 activeAssistantMessageId = makeMessageId("assistant");
-                activeResponseMessageIds.push(activeAssistantMessageId);
+                registerNewAssistantMessage(activeAssistantMessageId);
                 replaceMessages((current) => [
                   ...current,
                   {
@@ -514,23 +830,243 @@ export function useChatSession(): UseChatSessionResult {
               const options = parseCheckupOptions(event.data.options);
               if (options === null) return;
 
+              receivedCheckupResolution = true;
               setIsAwaitingFirstToken(false);
-              const checkupMessageId = makeMessageId("checkup");
-              activeResponseMessageIds.push(checkupMessageId);
-              replaceMessages((current) => [
-                ...closeActiveAssistantMessage(current),
-                {
-                  id: checkupMessageId,
-                  role: "assistant",
-                  kind: "checkup",
+              const pendingFreeText = pendingFreeTextRef.current;
+              const shouldConsumePendingFreeText = pendingFreeText?.requestId === requestId;
+
+              replaceMessages((current) => {
+                const closedMessages = closeActiveAssistantMessage(current);
+                const activeCardId = activeCheckupCardIdRef.current;
+                const activeCardIndex = closedMessages.findIndex(
+                  (message) =>
+                    message.role === "assistant" &&
+                    message.kind === "checkup_card" &&
+                    message.id === activeCardId &&
+                    message.fase !== "cerrada",
+                );
+                const incomingQuestion: CheckupQuestion = {
                   index: event.data.index,
                   total: event.data.total,
                   question_id: event.data.question_id,
                   stem: event.data.stem,
                   options,
-                },
-              ]);
+                };
+
+                if (activeCardIndex === -1) {
+                  const checkupCardId = makeMessageId("checkup-card");
+                  registerNewAssistantMessage(checkupCardId);
+                  return [
+                    ...closedMessages,
+                    {
+                      id: checkupCardId,
+                      role: "assistant",
+                      kind: "checkup_card",
+                      fase: "in_progress",
+                      preguntas: [incomingQuestion],
+                      visible: 0,
+                    },
+                  ];
+                }
+
+                const activeCard = closedMessages[activeCardIndex] as CheckupCardMessage;
+                const questionsWithPendingText = activeCard.preguntas.map((question) =>
+                  shouldConsumePendingFreeText &&
+                  pendingFreeText.cardId === activeCard.id &&
+                  pendingFreeText.questionId === question.question_id
+                    ? { ...question, texto: pendingFreeText.text }
+                    : question,
+                );
+                const existingQuestionIndex = questionsWithPendingText.findIndex(
+                  (question) => question.question_id === event.data.question_id,
+                );
+                let nextQuestions: CheckupQuestion[];
+
+                if (existingQuestionIndex === -1) {
+                  nextQuestions = [...questionsWithPendingText, incomingQuestion];
+                } else {
+                  nextQuestions = questionsWithPendingText.map((question, questionIndex) =>
+                    questionIndex === existingQuestionIndex
+                      ? {
+                          ...incomingQuestion,
+                          ...(question.valor === undefined ? {} : { valor: question.valor }),
+                          ...(question.texto === undefined ? {} : { texto: question.texto }),
+                        }
+                      : question,
+                  );
+                }
+
+                const nextCard: CheckupCardMessage = {
+                  ...activeCard,
+                  fase: "in_progress",
+                  preguntas: nextQuestions,
+                  visible: nextQuestions.length - 1,
+                };
+                return [
+                  ...closedMessages.slice(0, activeCardIndex),
+                  ...closedMessages.slice(activeCardIndex + 1),
+                  nextCard,
+                ];
+              });
+
+              if (shouldConsumePendingFreeText) {
+                pendingFreeTextRef.current = null;
+                retryFreeTextContext = undefined;
+              }
               activeAssistantMessageId = null;
+              return;
+            }
+
+            if (event.event === "checkup_fase") {
+              if (!isCheckupFaseEventData(event.data)) return;
+
+              setIsAwaitingFirstToken(false);
+              const nextFase = event.data.fase;
+              if (nextFase === "oferta") receivedCheckupResolution = true;
+              const pendingFreeText = nextFase === "oferta" ? pendingFreeTextRef.current : null;
+              const shouldConsumePendingFreeText = pendingFreeText?.requestId === requestId;
+
+              replaceMessages((current) => {
+                const activeCardId = activeCheckupCardIdRef.current;
+                const activeCard = current.find(
+                  (message): message is CheckupCardMessage =>
+                    message.role === "assistant" &&
+                    message.kind === "checkup_card" &&
+                    message.id === activeCardId &&
+                    message.fase !== "cerrada",
+                );
+
+                if (nextFase === "intro") {
+                  if (activeCard) {
+                    if (activeCard.preguntas.length > 0) return current;
+                    return current.map((message) =>
+                      message.id === activeCard.id ? { ...activeCard, fase: "intro" } : message,
+                    );
+                  }
+
+                  const checkupCardId = makeMessageId("checkup-card");
+                  registerNewAssistantMessage(checkupCardId);
+                  return [
+                    ...current,
+                    {
+                      id: checkupCardId,
+                      role: "assistant",
+                      kind: "checkup_card",
+                      fase: "intro",
+                      preguntas: [],
+                      visible: 0,
+                    },
+                  ];
+                }
+
+                if (nextFase === "oferta") {
+                  const unresolvedOfferIndex = findLastUnresolvedCheckupMessageIndex(
+                    current,
+                    "checkup_oferta",
+                  );
+
+                  if (activeCard) {
+                    const nextQuestions = activeCard.preguntas.map((question) =>
+                      shouldConsumePendingFreeText &&
+                      pendingFreeText.cardId === activeCard.id &&
+                      pendingFreeText.questionId === question.question_id
+                        ? { ...question, texto: pendingFreeText.text }
+                        : question,
+                    );
+                    const offerMessageId = makeMessageId("checkup-offer");
+                    registerNewAssistantMessage(offerMessageId);
+                    const closedCard: CheckupCardMessage = {
+                      ...activeCard,
+                      fase: "cerrada",
+                      preguntas: nextQuestions,
+                    };
+                    const updatedMessages = current.map((message, messageIndex) => {
+                      if (message.id === activeCard.id) return closedCard;
+                      if (
+                        messageIndex === unresolvedOfferIndex &&
+                        message.role === "assistant" &&
+                        message.kind === "checkup_oferta"
+                      ) {
+                        return { ...message, resuelta: true };
+                      }
+                      return message;
+                    });
+
+                    return [
+                      ...updatedMessages,
+                      {
+                        id: offerMessageId,
+                        role: "assistant",
+                        kind: "checkup_oferta",
+                        resuelta: false,
+                      },
+                    ];
+                  }
+
+                  if (unresolvedOfferIndex !== -1) {
+                    const existingOffer = current[unresolvedOfferIndex];
+                    return [
+                      ...current.slice(0, unresolvedOfferIndex),
+                      ...current.slice(unresolvedOfferIndex + 1),
+                      existingOffer,
+                    ];
+                  }
+
+                  const offerMessageId = makeMessageId("checkup-offer");
+                  registerNewAssistantMessage(offerMessageId);
+                  return [
+                    ...current,
+                    {
+                      id: offerMessageId,
+                      role: "assistant",
+                      kind: "checkup_oferta",
+                      resuelta: false,
+                    },
+                  ];
+                }
+
+                const unresolvedOfferIndex = findLastUnresolvedCheckupMessageIndex(
+                  current,
+                  "checkup_oferta",
+                );
+                const unresolvedFormIndex = findLastUnresolvedCheckupMessageIndex(
+                  current,
+                  "checkup_formulario",
+                );
+                const messagesWithResolvedOffer = current.map((message, messageIndex) =>
+                  messageIndex === unresolvedOfferIndex &&
+                  message.role === "assistant" &&
+                  message.kind === "checkup_oferta"
+                    ? { ...message, resuelta: true }
+                    : message,
+                );
+
+                if (unresolvedFormIndex !== -1) {
+                  const existingForm = messagesWithResolvedOffer[unresolvedFormIndex];
+                  return [
+                    ...messagesWithResolvedOffer.slice(0, unresolvedFormIndex),
+                    ...messagesWithResolvedOffer.slice(unresolvedFormIndex + 1),
+                    existingForm,
+                  ];
+                }
+
+                const formMessageId = makeMessageId("checkup-form");
+                registerNewAssistantMessage(formMessageId);
+                return [
+                  ...messagesWithResolvedOffer,
+                  {
+                    id: formMessageId,
+                    role: "assistant",
+                    kind: "checkup_formulario",
+                    resuelta: false,
+                  },
+                ];
+              });
+
+              if (nextFase === "oferta") {
+                pendingFreeTextRef.current = null;
+                if (shouldConsumePendingFreeText) retryFreeTextContext = undefined;
+              }
               return;
             }
 
@@ -539,21 +1075,43 @@ export function useChatSession(): UseChatSessionResult {
 
               setIsAwaitingFirstToken(false);
               const diagnosticoMessageId = makeMessageId("diagnostico");
-              activeResponseMessageIds.push(diagnosticoMessageId);
-              replaceMessages((current) => [
-                ...closeActiveAssistantMessage(current),
-                {
-                  id: diagnosticoMessageId,
-                  role: "assistant",
-                  kind: "diagnostico",
-                  nivel: event.data.nivel,
-                  nivel_nombre: event.data.nivel_nombre,
-                  headline: event.data.headline,
-                  body: event.data.body,
-                  cta_text: event.data.cta_text,
-                  cta_url: event.data.cta_url,
-                },
-              ]);
+              registerNewAssistantMessage(diagnosticoMessageId);
+              replaceMessages((current) => {
+                const closedMessages = closeActiveAssistantMessage(current);
+                const unresolvedOfferIndex = findLastUnresolvedCheckupMessageIndex(
+                  closedMessages,
+                  "checkup_oferta",
+                );
+                const unresolvedFormIndex = findLastUnresolvedCheckupMessageIndex(
+                  closedMessages,
+                  "checkup_formulario",
+                );
+                const resolvedMessages = closedMessages.map((message, messageIndex) =>
+                  (messageIndex === unresolvedOfferIndex &&
+                    message.role === "assistant" &&
+                    message.kind === "checkup_oferta") ||
+                  (messageIndex === unresolvedFormIndex &&
+                    message.role === "assistant" &&
+                    message.kind === "checkup_formulario")
+                    ? { ...message, resuelta: true }
+                    : message,
+                );
+
+                return [
+                  ...resolvedMessages,
+                  {
+                    id: diagnosticoMessageId,
+                    role: "assistant",
+                    kind: "diagnostico",
+                    nivel: event.data.nivel,
+                    nivel_nombre: event.data.nivel_nombre,
+                    headline: event.data.headline,
+                    body: event.data.body,
+                    cta_text: event.data.cta_text,
+                    cta_url: event.data.cta_url,
+                  },
+                ];
+              });
               activeAssistantMessageId = null;
               return;
             }
@@ -576,15 +1134,18 @@ export function useChatSession(): UseChatSessionResult {
 
             turnSettled = true;
             setIsAwaitingFirstToken(false);
+            pendingFreeTextRef.current = null;
 
             const behaviorReason = event.data.locked ? "locked" : event.data.finished_reason;
             const notice = getNoticeForReason(behaviorReason);
             const nextMessages = replaceMessages((current) => {
               const closedMessages = closeActiveAssistantMessage(current);
-              if (notice === null) return closedMessages;
+              const orderedMessages = insertDeferredUserMessage(closedMessages);
+
+              if (notice === null) return orderedMessages;
 
               return [
-                ...closedMessages,
+                ...orderedMessages,
                 {
                   id: makeMessageId("notice"),
                   role: "system",
@@ -601,7 +1162,14 @@ export function useChatSession(): UseChatSessionResult {
             canRetryRef.current = behaviorReason === "rate_limited" || behaviorReason === "error";
             lastRequestRef.current = canRetryRef.current
               ? {
-                  ...request,
+                  wireMessage: request.wireMessage,
+                  displayText: request.displayText,
+                  ...(request.checkupAnswer ? { checkupAnswer: request.checkupAnswer } : {}),
+                  ...(request.lead ? { lead: request.lead } : {}),
+                  ...(retryFreeTextContext ? { freeTextContext: retryFreeTextContext } : {}),
+                  ...(retryFreeTextContext && request.deferredUserMessage
+                    ? { deferredUserMessage: request.deferredUserMessage }
+                    : {}),
                   ...(activeResponseMessageIds.length > 0
                     ? { failedResponseMessageIds: activeResponseMessageIds }
                     : {}),
@@ -621,6 +1189,7 @@ export function useChatSession(): UseChatSessionResult {
               // The conversation remains usable when storage is unavailable.
             }
 
+            startRevealSequence();
             controller.abort();
           },
         });
@@ -646,7 +1215,15 @@ export function useChatSession(): UseChatSessionResult {
         }
       }
     },
-    [makeMessageId, replaceMessages, replaceSessionId, replaceStatus],
+    [
+      flushPendingReveals,
+      hideMessageUntilReveal,
+      makeMessageId,
+      replaceMessages,
+      replaceSessionId,
+      replaceStatus,
+      startRevealSequence,
+    ],
   );
 
   const beginRequest = useCallback(
@@ -660,6 +1237,7 @@ export function useChatSession(): UseChatSessionResult {
         return false;
       }
 
+      flushPendingReveals();
       const requestId = requestSequenceRef.current + 1;
       requestSequenceRef.current = requestId;
       const controller = new AbortController();
@@ -669,9 +1247,15 @@ export function useChatSession(): UseChatSessionResult {
       lastRequestRef.current = {
         wireMessage: request.wireMessage,
         displayText: request.displayText,
+        ...(request.checkupAnswer ? { checkupAnswer: request.checkupAnswer } : {}),
+        ...(request.lead ? { lead: request.lead } : {}),
+        ...(request.freeTextContext ? { freeTextContext: request.freeTextContext } : {}),
+        ...(request.deferredUserMessage
+          ? { deferredUserMessage: request.deferredUserMessage }
+          : {}),
       };
 
-      replaceMessages((current) => {
+      const nextMessages = replaceMessages((current) => {
         const cleanedMessages = current.filter(
           (message) =>
             !(message.role === "system" && message.kind === "notice" && message.retryable) &&
@@ -691,74 +1275,238 @@ export function useChatSession(): UseChatSessionResult {
       });
 
       replaceStatus("streaming");
-      setIsAwaitingFirstToken(true);
-      void executeRequest(request, requestId, controller);
+      setIsAwaitingFirstToken(request.checkupAnswer === undefined);
+      void executeRequest(request, requestId, controller, nextMessages.length);
       return true;
     },
-    [executeRequest, makeMessageId, replaceMessages, replaceStatus],
+    [executeRequest, flushPendingReveals, makeMessageId, replaceMessages, replaceStatus],
+  );
+
+  const createPendingFreeText = useCallback(
+    (text: string, requestId: number): PendingFreeText | null => {
+      const activeCard = findCheckupCardById(messagesRef.current, activeCheckupCardIdRef.current);
+      if (activeCard?.fase !== "in_progress" || activeCard.preguntas.length === 0) {
+        return null;
+      }
+
+      const currentQuestionIndex = activeCard.preguntas.length - 1;
+      const currentQuestion = activeCard.preguntas[currentQuestionIndex];
+      if (
+        activeCard.visible !== currentQuestionIndex ||
+        isCheckupQuestionAnswered(activeCard.preguntas, currentQuestionIndex, activeCard.fase)
+      ) {
+        return null;
+      }
+
+      return {
+        cardId: activeCard.id,
+        questionId: currentQuestion.question_id,
+        text,
+        requestId,
+      };
+    },
+    [],
   );
 
   const sendMessage = useCallback(
-    (text: string, displayText?: string) => {
+    (text: string, displayText?: string, options?: SendMessageOptions) => {
       const wireMessage = text.trim();
       if (wireMessage.length === 0 || wireMessage.length > 4000) return false;
 
       const visibleText = displayText?.trim() || wireMessage;
-      return beginRequest({ wireMessage, displayText: visibleText }, { appendUser: true });
+      const appendUser = options?.appendUser ?? true;
+      const previousPendingFreeText = pendingFreeTextRef.current;
+      const pendingFreeText = createPendingFreeText(wireMessage, requestSequenceRef.current + 1);
+      const deferredUserMessage =
+        pendingFreeText && !appendUser
+          ? {
+              id: makeMessageId("user"),
+              role: "user" as const,
+              text: visibleText,
+            }
+          : undefined;
+      pendingFreeTextRef.current = pendingFreeText;
+
+      const accepted = beginRequest(
+        {
+          wireMessage,
+          displayText: visibleText,
+          ...(pendingFreeText
+            ? {
+                freeTextContext: {
+                  cardId: pendingFreeText.cardId,
+                  questionId: pendingFreeText.questionId,
+                  text: pendingFreeText.text,
+                },
+              }
+            : {}),
+          ...(deferredUserMessage ? { deferredUserMessage } : {}),
+          ...(options?.lead ? { lead: options.lead } : {}),
+        },
+        { appendUser },
+      );
+      if (!accepted) pendingFreeTextRef.current = previousPendingFreeText;
+      return accepted;
     },
-    [beginRequest],
+    [beginRequest, createPendingFreeText, makeMessageId],
   );
 
-  const answerCheckup = useCallback(
-    (messageId: string, value: number, label: string) => {
+  const answerCurrent = useCallback(
+    (value: number, label: string) => {
       if (
         !API_BASE ||
         !isHydratedRef.current ||
         inFlightRef.current ||
         statusRef.current !== "idle" ||
+        pendingRevealIdsRef.current.length > 0 ||
         !Number.isFinite(value)
       ) {
         return false;
       }
 
-      const latestUnanswered = [...messagesRef.current]
-        .reverse()
-        .find(
-          (message) =>
-            message.role === "assistant" &&
-            message.kind === "checkup" &&
-            message.answeredValue === undefined,
-        );
+      const activeCard = findCheckupCardById(messagesRef.current, activeCheckupCardIdRef.current);
+      if (activeCard?.fase !== "in_progress" || activeCard.preguntas.length === 0) {
+        return false;
+      }
 
+      const currentQuestionIndex = activeCard.preguntas.length - 1;
       if (
-        !latestUnanswered ||
-        latestUnanswered.role !== "assistant" ||
-        latestUnanswered.kind !== "checkup" ||
-        latestUnanswered.id !== messageId
+        activeCard.visible !== currentQuestionIndex ||
+        isCheckupQuestionAnswered(activeCard.preguntas, currentQuestionIndex, activeCard.fase)
       ) {
         return false;
       }
 
-      const selectedOption = latestUnanswered.options.find((option) => option.value === value);
+      const currentQuestion = activeCard.preguntas[currentQuestionIndex];
+      const selectedOption = currentQuestion.options.find((option) => option.value === value);
       if (!selectedOption) return false;
 
       replaceMessages((current) =>
         current.map((message) =>
-          message.role === "assistant" && message.kind === "checkup" && message.id === messageId
-            ? { ...message, answeredValue: value }
+          message.role === "assistant" &&
+          message.kind === "checkup_card" &&
+          message.id === activeCard.id
+            ? {
+                ...message,
+                preguntas: message.preguntas.map((question, questionIndex) =>
+                  questionIndex === currentQuestionIndex
+                    ? withOptionAnswer(question, value)
+                    : question,
+                ),
+              }
             : message,
         ),
       );
 
-      return beginRequest(
+      const previousPendingFreeText = pendingFreeTextRef.current;
+      pendingFreeTextRef.current = null;
+      const accepted = beginRequest(
         {
           wireMessage: String(value),
           displayText: label.trim() || selectedOption.label,
         },
-        { appendUser: true },
+        { appendUser: false },
       );
+      if (!accepted) pendingFreeTextRef.current = previousPendingFreeText;
+      return accepted;
     },
     [beginRequest, replaceMessages],
+  );
+
+  const editAnswer = useCallback(
+    (questionId: string, value: number, label: string) => {
+      if (
+        !API_BASE ||
+        !isHydratedRef.current ||
+        inFlightRef.current ||
+        statusRef.current !== "idle" ||
+        pendingRevealIdsRef.current.length > 0 ||
+        !Number.isFinite(value)
+      ) {
+        return false;
+      }
+
+      const activeCard = findCheckupCardById(messagesRef.current, activeCheckupCardIdRef.current);
+      if (activeCard?.fase !== "in_progress") return false;
+
+      const questionIndex = activeCard.preguntas.findIndex(
+        (question) => question.question_id === questionId,
+      );
+      if (
+        questionIndex === -1 ||
+        !isCheckupQuestionAnswered(activeCard.preguntas, questionIndex, activeCard.fase)
+      ) {
+        return false;
+      }
+
+      const question = activeCard.preguntas[questionIndex];
+      if (question.valor === value) return false;
+
+      const selectedOption = question.options.find((option) => option.value === value);
+      if (!selectedOption) return false;
+
+      replaceMessages((current) =>
+        current.map((message) =>
+          message.role === "assistant" &&
+          message.kind === "checkup_card" &&
+          message.id === activeCard.id
+            ? {
+                ...message,
+                preguntas: message.preguntas.map((currentQuestion, currentQuestionIndex) =>
+                  currentQuestionIndex === questionIndex
+                    ? withOptionAnswer(currentQuestion, value)
+                    : currentQuestion,
+                ),
+              }
+            : message,
+        ),
+      );
+
+      const previousPendingFreeText = pendingFreeTextRef.current;
+      pendingFreeTextRef.current = null;
+      const accepted = beginRequest(
+        {
+          wireMessage: "Actualicé mi respuesta.",
+          displayText: label.trim() || selectedOption.label,
+          checkupAnswer: { question_id: questionId, valor: value },
+        },
+        { appendUser: false },
+      );
+      if (!accepted) pendingFreeTextRef.current = previousPendingFreeText;
+      return accepted;
+    },
+    [beginRequest, replaceMessages],
+  );
+
+  const setCheckupVisible = useCallback(
+    (cardId: string, visible: number) => {
+      if (
+        statusRef.current !== "idle" ||
+        pendingRevealIdsRef.current.length > 0 ||
+        !Number.isFinite(visible)
+      ) {
+        return;
+      }
+
+      replaceMessages((current) => {
+        const card = findCheckupCardById(current, cardId);
+        if (
+          !card ||
+          (card.fase !== "intro" && card.fase !== "in_progress") ||
+          card.preguntas.length === 0
+        ) {
+          return current;
+        }
+
+        const nextVisible = Math.min(card.preguntas.length - 1, Math.max(0, Math.trunc(visible)));
+        if (nextVisible === card.visible) return current;
+
+        return current.map((message) =>
+          message.id === card.id ? { ...card, visible: nextVisible } : message,
+        );
+      });
+    },
+    [replaceMessages],
   );
 
   const retryLastMessage = useCallback(() => {
@@ -768,30 +1516,51 @@ export function useChatSession(): UseChatSessionResult {
       !canRetryRef.current ||
       !isHydratedRef.current ||
       inFlightRef.current ||
-      statusRef.current !== "idle"
+      statusRef.current !== "idle" ||
+      pendingRevealIdsRef.current.length > 0
     ) {
       return false;
     }
 
-    return beginRequest(
+    const previousPendingFreeText = pendingFreeTextRef.current;
+    pendingFreeTextRef.current =
+      lastRequest.freeTextContext === undefined
+        ? null
+        : {
+            ...lastRequest.freeTextContext,
+            requestId: requestSequenceRef.current + 1,
+          };
+
+    const accepted = beginRequest(
       {
         wireMessage: lastRequest.wireMessage,
         displayText: lastRequest.displayText,
+        ...(lastRequest.checkupAnswer ? { checkupAnswer: lastRequest.checkupAnswer } : {}),
+        ...(lastRequest.lead ? { lead: lastRequest.lead } : {}),
+        ...(lastRequest.freeTextContext ? { freeTextContext: lastRequest.freeTextContext } : {}),
+        ...(lastRequest.deferredUserMessage
+          ? { deferredUserMessage: lastRequest.deferredUserMessage }
+          : {}),
       },
       {
         appendUser: false,
         discardResponseMessageIds: lastRequest.failedResponseMessageIds,
       },
     );
+    if (!accepted) pendingFreeTextRef.current = previousPendingFreeText;
+    return accepted;
   }, [beginRequest]);
 
   const startNewConversation = useCallback(() => {
+    flushPendingReveals();
     requestSequenceRef.current += 1;
     activeControllerRef.current?.abort();
     activeControllerRef.current = null;
     inFlightRef.current = false;
     canRetryRef.current = false;
     lastRequestRef.current = null;
+    activeCheckupCardIdRef.current = null;
+    pendingFreeTextRef.current = null;
     setIsAwaitingFirstToken(false);
 
     try {
@@ -817,18 +1586,22 @@ export function useChatSession(): UseChatSessionResult {
     setSessionId(null);
     setStatus("idle");
     setLastFinishedReason(null);
-  }, []);
+  }, [flushPendingReveals]);
 
   return {
     messages,
+    visibleMessages,
     sessionId,
     status,
     lastFinishedReason,
     isHydrated,
     isConfigured: Boolean(API_BASE),
     isAwaitingFirstToken,
+    isRevealing,
     sendMessage,
-    answerCheckup,
+    answerCurrent,
+    editAnswer,
+    setCheckupVisible,
     retryLastMessage,
     startNewConversation,
   };
