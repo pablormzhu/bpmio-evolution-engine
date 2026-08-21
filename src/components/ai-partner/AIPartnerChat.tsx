@@ -33,9 +33,9 @@ const MAX_MESSAGE_LENGTH = 4000;
 const COUNTER_THRESHOLD = 3600;
 const EMAIL_PATTERN = /^[^@\s]+@[^@\s]+\.[A-Za-z]{2,}$/;
 const LEAD_INPUT_CLASS =
-  "min-h-11 w-full rounded-xl border border-input bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/35 focus:ring-2 focus:ring-ring/20";
+  "min-h-11 w-full rounded-xl border border-input bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/35 focus:ring-2 focus:ring-ring/20 pointer-coarse:text-base";
 const LEAD_INPUT_ERROR_CLASS =
-  "min-h-11 w-full rounded-xl border border-destructive bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground";
+  "min-h-11 w-full rounded-xl border border-destructive bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground pointer-coarse:text-base";
 const ROOT_NORMAL_CLASS =
   "flex h-[650px] w-full min-w-0 flex-col bg-card lg:absolute lg:inset-0 lg:h-auto";
 const ROOT_FULLSCREEN_CLASS =
@@ -139,7 +139,7 @@ function CheckupFreeTextInput({ onSend }: { onSend: (text: string) => boolean })
         onKeyDown={handleKeyDown}
         placeholder="o respóndeme con tus palabras…"
         aria-label="Respuesta con tus palabras"
-        className="min-h-11 w-full min-w-0 bg-transparent px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground"
+        className="min-h-11 w-full min-w-0 bg-transparent px-3 text-sm text-foreground outline-none placeholder:text-muted-foreground pointer-coarse:text-base"
       />
       <button
         type="button"
@@ -951,7 +951,7 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
                 aria-describedby={
                   draft.length >= COUNTER_THRESHOLD ? "ai-partner-character-count" : undefined
                 }
-                className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65"
+                className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65 pointer-coarse:text-base"
               />
               {draft.length >= COUNTER_THRESHOLD && (
                 <p
