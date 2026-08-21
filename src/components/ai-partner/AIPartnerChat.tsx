@@ -43,6 +43,13 @@ const ROOT_FULLSCREEN_CLASS =
 
 type SendMessage = (text: string, displayText?: string, options?: SendMessageOptions) => boolean;
 
+function dismissMobileKeyboard() {
+  if (typeof window === "undefined") return;
+  if (!window.matchMedia("(pointer: coarse)").matches) return;
+  const active = document.activeElement;
+  if (active instanceof HTMLElement) active.blur();
+}
+
 type AIPartnerChatProps = {
   ref?: Ref<AIPartnerChatHandle>;
 };
@@ -121,7 +128,10 @@ function CheckupFreeTextInput({ onSend }: { onSend: (text: string) => boolean })
 
   const submit = () => {
     if (!text.trim()) return;
-    if (onSend(text)) setText("");
+    if (onSend(text)) {
+      setText("");
+      dismissMobileKeyboard();
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -213,10 +223,14 @@ function CheckupLeadForm({
     setErrors(nextErrors);
     if (Object.keys(nextErrors).length > 0) return;
 
-    onSendMessage("Aquí van mis datos", undefined, {
-      appendUser: false,
-      lead: trimmedLead,
-    });
+    if (
+      onSendMessage("Aquí van mis datos", undefined, {
+        appendUser: false,
+        lead: trimmedLead,
+      })
+    ) {
+      dismissMobileKeyboard();
+    }
   };
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -729,7 +743,10 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
   };
 
   const submitDraft = () => {
-    if (sendMessage(draft)) clearDraft();
+    if (sendMessage(draft)) {
+      clearDraft();
+      dismissMobileKeyboard();
+    }
   };
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -766,217 +783,224 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
         : "Inicia una nueva conversación para continuar";
 
   return (
-    <div ref={overlayRef} className={isFullscreen ? ROOT_FULLSCREEN_CLASS : ROOT_NORMAL_CLASS}>
-      <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 py-4 sm:px-5">
+    <>
+      {isFullscreen && <div className="fixed inset-0 z-[99] bg-card" aria-hidden />}
+
+      <div ref={overlayRef} className={isFullscreen ? ROOT_FULLSCREEN_CLASS : ROOT_NORMAL_CLASS}>
+        <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 py-4 sm:px-5">
+          <div
+            className={
+              isFullscreen
+                ? "mx-auto flex w-full max-w-3xl items-center justify-between gap-3"
+                : "flex w-full items-center justify-between gap-3"
+            }
+          >
+            <div className="flex min-w-0 items-center gap-3">
+              <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-mint/35 bg-card shadow-soft">
+                <img src={bpmAiMark} alt="" className="h-7 w-7 object-contain" />
+                <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-mint" />
+              </span>
+              <p className="truncate text-sm font-extrabold text-primary sm:text-base">
+                BPM AI Partner
+              </p>
+            </div>
+
+            <div className="flex shrink-0 items-center gap-2">
+              <button
+                type="button"
+                onClick={toggle}
+                className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label={
+                  isFullscreen ? "Salir de pantalla completa" : "Ver en pantalla completa"
+                }
+                aria-pressed={isFullscreen}
+                title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+              >
+                {isFullscreen ? (
+                  <Minimize2 size={16} aria-hidden />
+                ) : (
+                  <Maximize2 size={16} aria-hidden />
+                )}
+              </button>
+
+              <button
+                type="button"
+                onClick={handleNewConversation}
+                className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-border bg-surface px-3 text-xs font-semibold text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:px-4"
+                aria-label="Iniciar una nueva conversación"
+                title="Nueva conversación"
+              >
+                <RotateCcw size={15} aria-hidden />
+                <span className="hidden sm:inline">Nueva conversación</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
         <div
+          ref={messagesRef}
+          onScroll={handleScroll}
           className={
             isFullscreen
-              ? "mx-auto flex w-full max-w-3xl items-center justify-between gap-3"
-              : "flex w-full items-center justify-between gap-3"
+              ? "min-h-0 flex flex-1 flex-col overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
+              : "min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
           }
+          aria-live="polite"
+          aria-busy={isResponseInProgress}
         >
-          <div className="flex min-w-0 items-center gap-3">
-            <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-mint/35 bg-card shadow-soft">
-              <img src={bpmAiMark} alt="" className="h-7 w-7 object-contain" />
-              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-mint" />
-            </span>
-            <p className="truncate text-sm font-extrabold text-primary sm:text-base">
-              BPM AI Partner
+          {isFullscreen && <div className="flex-1" aria-hidden />}
+
+          <div className={isFullscreen ? "mx-auto w-full max-w-3xl space-y-4" : "space-y-4"}>
+            {visibleMessages.map((message, index) => {
+              if (message.role === "user")
+                return <UserMessage key={message.id} message={message} />;
+
+              if (message.kind === "text") {
+                return <AssistantTextMessage key={message.id} message={message} />;
+              }
+
+              if (message.kind === "checkup_card") {
+                return (
+                  <CheckupCard
+                    key={message.id}
+                    message={message}
+                    active={
+                      !interactionBlocked &&
+                      (message.fase === "intro" || message.fase === "in_progress")
+                    }
+                    onAnswerCurrent={answerCurrent}
+                    onEditAnswer={editAnswer}
+                    onSetVisible={setCheckupVisible}
+                    onSendMessage={sendMessage}
+                  />
+                );
+              }
+
+              if (message.kind === "checkup_oferta") {
+                return (
+                  <CheckupOfferMessage
+                    key={message.id}
+                    message={message}
+                    active={!interactionBlocked && !message.resuelta}
+                    onSendMessage={sendMessage}
+                  />
+                );
+              }
+
+              if (message.kind === "checkup_formulario") {
+                return (
+                  <CheckupFormMessage
+                    key={message.id}
+                    message={message}
+                    active={!interactionBlocked && !message.resuelta}
+                    isSending={status !== "idle"}
+                    onSendMessage={sendMessage}
+                  />
+                );
+              }
+
+              if (message.kind === "diagnostico") {
+                return (
+                  <DiagnosticoMessage
+                    key={message.id}
+                    message={message}
+                    active={!isResponseInProgress}
+                  />
+                );
+              }
+
+              return (
+                <NoticeMessage
+                  key={message.id}
+                  message={message}
+                  isLatest={index === visibleMessages.length - 1}
+                  lastFinishedReason={lastFinishedReason}
+                  onRetry={retryLastMessage}
+                  onNewConversation={handleNewConversation}
+                />
+              );
+            })}
+
+            {(isAwaitingFirstToken || isRevealing) && <TypingIndicator />}
+          </div>
+        </div>
+
+        <form
+          onSubmit={handleSubmit}
+          className="shrink-0 border-t border-border bg-card px-3 pb-3 pt-3 sm:px-5 sm:pb-4"
+        >
+          <div className={isFullscreen ? "mx-auto w-full max-w-3xl" : ""}>
+            {!hasUserMessages && (
+              <div
+                className={
+                  isFullscreen
+                    ? "mb-3 flex flex-wrap justify-center gap-2"
+                    : "mb-3 flex flex-wrap gap-2"
+                }
+                aria-label="Sugerencias para comenzar"
+              >
+                {[
+                  "Quiero hacer el Check Up Digital",
+                  "¿Qué hace BPM.io?",
+                  "Cuéntame casos de éxito",
+                ].map((suggestion) => (
+                  <button
+                    key={suggestion}
+                    type="button"
+                    disabled={inputDisabled}
+                    onClick={() => sendMessage(suggestion)}
+                    className="inline-flex min-h-11 items-center rounded-full border border-primary/20 bg-card px-3.5 py-2 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {suggestion}
+                  </button>
+                ))}
+              </div>
+            )}
+            <div className="flex min-w-0 items-end gap-2 rounded-2xl border border-input bg-surface p-1.5 shadow-sm transition-colors focus-within:border-primary/35 focus-within:ring-2 focus-within:ring-ring/20">
+              <div className="min-w-0 flex-1">
+                <textarea
+                  ref={textareaRef}
+                  value={draft}
+                  maxLength={MAX_MESSAGE_LENGTH}
+                  rows={1}
+                  disabled={inputDisabled}
+                  onChange={(event) => {
+                    setDraft(event.target.value);
+                    resizeTextarea(event.target);
+                  }}
+                  onKeyDown={handleKeyDown}
+                  placeholder={placeholder}
+                  aria-label="Mensaje para el AI Partner"
+                  aria-describedby={
+                    draft.length >= COUNTER_THRESHOLD ? "ai-partner-character-count" : undefined
+                  }
+                  className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65 pointer-coarse:text-base"
+                />
+                {draft.length >= COUNTER_THRESHOLD && (
+                  <p
+                    id="ai-partner-character-count"
+                    className="px-3 pb-1 text-right text-[11px] tabular-nums text-muted-foreground"
+                  >
+                    {draft.length}/{MAX_MESSAGE_LENGTH}
+                  </p>
+                )}
+              </div>
+              <button
+                type="submit"
+                disabled={inputDisabled || !draft.trim()}
+                className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+                aria-label="Enviar mensaje"
+              >
+                <Send size={17} aria-hidden />
+              </button>
+            </div>
+            <p className="mt-2 text-center text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]">
+              El AI Partner puede cometer errores. Verifica la información importante.
             </p>
           </div>
-
-          <div className="flex shrink-0 items-center gap-2">
-            <button
-              type="button"
-              onClick={toggle}
-              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-              aria-label={isFullscreen ? "Salir de pantalla completa" : "Ver en pantalla completa"}
-              aria-pressed={isFullscreen}
-              title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
-            >
-              {isFullscreen ? (
-                <Minimize2 size={16} aria-hidden />
-              ) : (
-                <Maximize2 size={16} aria-hidden />
-              )}
-            </button>
-
-            <button
-              type="button"
-              onClick={handleNewConversation}
-              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-border bg-surface px-3 text-xs font-semibold text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:px-4"
-              aria-label="Iniciar una nueva conversación"
-              title="Nueva conversación"
-            >
-              <RotateCcw size={15} aria-hidden />
-              <span className="hidden sm:inline">Nueva conversación</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      <div
-        ref={messagesRef}
-        onScroll={handleScroll}
-        className={
-          isFullscreen
-            ? "min-h-0 flex flex-1 flex-col overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
-            : "min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
-        }
-        aria-live="polite"
-        aria-busy={isResponseInProgress}
-      >
-        {isFullscreen && <div className="flex-1" aria-hidden />}
-
-        <div className={isFullscreen ? "mx-auto w-full max-w-3xl space-y-4" : "space-y-4"}>
-          {visibleMessages.map((message, index) => {
-            if (message.role === "user") return <UserMessage key={message.id} message={message} />;
-
-            if (message.kind === "text") {
-              return <AssistantTextMessage key={message.id} message={message} />;
-            }
-
-            if (message.kind === "checkup_card") {
-              return (
-                <CheckupCard
-                  key={message.id}
-                  message={message}
-                  active={
-                    !interactionBlocked &&
-                    (message.fase === "intro" || message.fase === "in_progress")
-                  }
-                  onAnswerCurrent={answerCurrent}
-                  onEditAnswer={editAnswer}
-                  onSetVisible={setCheckupVisible}
-                  onSendMessage={sendMessage}
-                />
-              );
-            }
-
-            if (message.kind === "checkup_oferta") {
-              return (
-                <CheckupOfferMessage
-                  key={message.id}
-                  message={message}
-                  active={!interactionBlocked && !message.resuelta}
-                  onSendMessage={sendMessage}
-                />
-              );
-            }
-
-            if (message.kind === "checkup_formulario") {
-              return (
-                <CheckupFormMessage
-                  key={message.id}
-                  message={message}
-                  active={!interactionBlocked && !message.resuelta}
-                  isSending={status !== "idle"}
-                  onSendMessage={sendMessage}
-                />
-              );
-            }
-
-            if (message.kind === "diagnostico") {
-              return (
-                <DiagnosticoMessage
-                  key={message.id}
-                  message={message}
-                  active={!isResponseInProgress}
-                />
-              );
-            }
-
-            return (
-              <NoticeMessage
-                key={message.id}
-                message={message}
-                isLatest={index === visibleMessages.length - 1}
-                lastFinishedReason={lastFinishedReason}
-                onRetry={retryLastMessage}
-                onNewConversation={handleNewConversation}
-              />
-            );
-          })}
-
-          {(isAwaitingFirstToken || isRevealing) && <TypingIndicator />}
-        </div>
+        </form>
       </div>
-
-      <form
-        onSubmit={handleSubmit}
-        className="shrink-0 border-t border-border bg-card px-3 pb-3 pt-3 sm:px-5 sm:pb-4"
-      >
-        <div className={isFullscreen ? "mx-auto w-full max-w-3xl" : ""}>
-          {!hasUserMessages && (
-            <div
-              className={
-                isFullscreen
-                  ? "mb-3 flex flex-wrap justify-center gap-2"
-                  : "mb-3 flex flex-wrap gap-2"
-              }
-              aria-label="Sugerencias para comenzar"
-            >
-              {[
-                "Quiero hacer el Check Up Digital",
-                "¿Qué hace BPM.io?",
-                "Cuéntame casos de éxito",
-              ].map((suggestion) => (
-                <button
-                  key={suggestion}
-                  type="button"
-                  disabled={inputDisabled}
-                  onClick={() => sendMessage(suggestion)}
-                  className="inline-flex min-h-11 items-center rounded-full border border-primary/20 bg-card px-3.5 py-2 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {suggestion}
-                </button>
-              ))}
-            </div>
-          )}
-          <div className="flex min-w-0 items-end gap-2 rounded-2xl border border-input bg-surface p-1.5 shadow-sm transition-colors focus-within:border-primary/35 focus-within:ring-2 focus-within:ring-ring/20">
-            <div className="min-w-0 flex-1">
-              <textarea
-                ref={textareaRef}
-                value={draft}
-                maxLength={MAX_MESSAGE_LENGTH}
-                rows={1}
-                disabled={inputDisabled}
-                onChange={(event) => {
-                  setDraft(event.target.value);
-                  resizeTextarea(event.target);
-                }}
-                onKeyDown={handleKeyDown}
-                placeholder={placeholder}
-                aria-label="Mensaje para el AI Partner"
-                aria-describedby={
-                  draft.length >= COUNTER_THRESHOLD ? "ai-partner-character-count" : undefined
-                }
-                className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65 pointer-coarse:text-base"
-              />
-              {draft.length >= COUNTER_THRESHOLD && (
-                <p
-                  id="ai-partner-character-count"
-                  className="px-3 pb-1 text-right text-[11px] tabular-nums text-muted-foreground"
-                >
-                  {draft.length}/{MAX_MESSAGE_LENGTH}
-                </p>
-              )}
-            </div>
-            <button
-              type="submit"
-              disabled={inputDisabled || !draft.trim()}
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-              aria-label="Enviar mensaje"
-            >
-              <Send size={17} aria-hidden />
-            </button>
-          </div>
-          <p className="mt-2 text-center text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]">
-            El AI Partner puede cometer errores. Verifica la información importante.
-          </p>
-        </div>
-      </form>
-    </div>
+    </>
   );
 }
 
