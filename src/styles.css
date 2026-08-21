@@ -122,6 +122,12 @@
 }
 
 @layer utilities {
+  @media (min-width: 64rem) {
+    html.bpm-chat-fullscreen {
+      font-size: 18px;
+    }
+  }
+
   .bg-radial-mint {
     background-image:
       radial-gradient(60% 50% at 80% 0%, color-mix(in oklab, var(--mint) 35%, transparent), transparent 60%),
@@ -160,4 +166,3 @@
   }
   .animate-marquee { animation: marquee 80s linear infinite; }
 }
-

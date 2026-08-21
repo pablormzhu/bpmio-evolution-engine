@@ -13,6 +13,8 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Maximize2,
+  Minimize2,
   RotateCcw,
   Send,
 } from "lucide-react";
@@ -20,6 +22,7 @@ import bpmAiMark from "@/assets/bpm-ai-mark.png";
 import { MarkdownText } from "./markdown";
 import type { LeadPayload } from "./sse";
 import type { AIPartnerChatHandle, ChatMessage, FinishedReason } from "./types";
+import { useChatFullscreen } from "./useChatFullscreen";
 import {
   isCheckupQuestionAnswered,
   useChatSession,
@@ -33,6 +36,10 @@ const LEAD_INPUT_CLASS =
   "min-h-11 w-full rounded-xl border border-input bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:border-primary/35 focus:ring-2 focus:ring-ring/20";
 const LEAD_INPUT_ERROR_CLASS =
   "min-h-11 w-full rounded-xl border border-destructive bg-surface px-3.5 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground";
+const ROOT_NORMAL_CLASS =
+  "flex h-[650px] w-full min-w-0 flex-col bg-card lg:absolute lg:inset-0 lg:h-auto";
+const ROOT_FULLSCREEN_CLASS =
+  "fixed inset-x-0 top-0 z-[100] flex h-dvh w-full min-w-0 flex-col bg-card";
 
 type SendMessage = (text: string, displayText?: string, options?: SendMessageOptions) => boolean;
 
@@ -669,6 +676,7 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
     retryLastMessage,
     startNewConversation,
   } = useChatSession();
+  const { isFullscreen, toggle, exit, overlayRef } = useChatFullscreen();
   const [draft, setDraft] = useState("");
   const messagesRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -690,7 +698,14 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
       top: container.scrollHeight,
       behavior: status === "streaming" ? "auto" : "smooth",
     });
-  }, [lastVisibleMessage, visibleMessages.length, isAwaitingFirstToken, isRevealing, status]);
+  }, [
+    lastVisibleMessage,
+    visibleMessages.length,
+    isAwaitingFirstToken,
+    isRevealing,
+    status,
+    isFullscreen,
+  ]);
 
   if (!isHydrated) return <ChatSkeleton />;
 
@@ -751,38 +766,69 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
         : "Inicia una nueva conversación para continuar";
 
   return (
-    <div className="flex h-[650px] w-full min-w-0 flex-col bg-card lg:absolute lg:inset-0 lg:h-auto">
+    <div ref={overlayRef} className={isFullscreen ? ROOT_FULLSCREEN_CLASS : ROOT_NORMAL_CLASS}>
       <header className="flex shrink-0 items-center justify-between gap-3 border-b border-border bg-card/95 px-4 py-4 sm:px-5">
-        <div className="flex min-w-0 items-center gap-3">
-          <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-mint/35 bg-card shadow-soft">
-            <img src={bpmAiMark} alt="" className="h-7 w-7 object-contain" />
-            <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-mint" />
-          </span>
-          <p className="truncate text-sm font-extrabold text-primary sm:text-base">
-            BPM AI Partner
-          </p>
-        </div>
-
-        <button
-          type="button"
-          onClick={handleNewConversation}
-          className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-border bg-surface px-3 text-xs font-semibold text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:px-4"
-          aria-label="Iniciar una nueva conversación"
-          title="Nueva conversación"
+        <div
+          className={
+            isFullscreen
+              ? "mx-auto flex w-full max-w-3xl items-center justify-between gap-3"
+              : "flex w-full items-center justify-between gap-3"
+          }
         >
-          <RotateCcw size={15} aria-hidden />
-          <span className="hidden sm:inline">Nueva conversación</span>
-        </button>
+          <div className="flex min-w-0 items-center gap-3">
+            <span className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl border border-mint/35 bg-card shadow-soft">
+              <img src={bpmAiMark} alt="" className="h-7 w-7 object-contain" />
+              <span className="absolute -bottom-0.5 -right-0.5 h-3.5 w-3.5 rounded-full border-2 border-card bg-mint" />
+            </span>
+            <p className="truncate text-sm font-extrabold text-primary sm:text-base">
+              BPM AI Partner
+            </p>
+          </div>
+
+          <div className="flex shrink-0 items-center gap-2">
+            <button
+              type="button"
+              onClick={toggle}
+              className="inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-border bg-surface text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              aria-label={isFullscreen ? "Salir de pantalla completa" : "Ver en pantalla completa"}
+              aria-pressed={isFullscreen}
+              title={isFullscreen ? "Salir de pantalla completa" : "Pantalla completa"}
+            >
+              {isFullscreen ? (
+                <Minimize2 size={16} aria-hidden />
+              ) : (
+                <Maximize2 size={16} aria-hidden />
+              )}
+            </button>
+
+            <button
+              type="button"
+              onClick={handleNewConversation}
+              className="inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full border border-border bg-surface px-3 text-xs font-semibold text-primary transition-colors hover:border-primary/25 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 sm:px-4"
+              aria-label="Iniciar una nueva conversación"
+              title="Nueva conversación"
+            >
+              <RotateCcw size={15} aria-hidden />
+              <span className="hidden sm:inline">Nueva conversación</span>
+            </button>
+          </div>
+        </div>
       </header>
 
       <div
         ref={messagesRef}
         onScroll={handleScroll}
-        className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5"
+        className={
+          isFullscreen
+            ? "min-h-0 flex flex-1 flex-col overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
+            : "min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-3 py-4 sm:px-5 sm:py-5 overscroll-contain"
+        }
         aria-live="polite"
         aria-busy={isResponseInProgress}
       >
-        <div className="space-y-4">
+        {isFullscreen && <div className="flex-1" aria-hidden />}
+
+        <div className={isFullscreen ? "mx-auto w-full max-w-3xl space-y-4" : "space-y-4"}>
           {visibleMessages.map((message, index) => {
             if (message.role === "user") return <UserMessage key={message.id} message={message} />;
 
@@ -860,66 +906,75 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
         onSubmit={handleSubmit}
         className="shrink-0 border-t border-border bg-card px-3 pb-3 pt-3 sm:px-5 sm:pb-4"
       >
-        {!hasUserMessages && (
-          <div className="mb-3 flex flex-wrap gap-2" aria-label="Sugerencias para comenzar">
-            {[
-              "Quiero hacer el Check Up Digital",
-              "¿Qué hace BPM.io?",
-              "Cuéntame casos de éxito",
-            ].map((suggestion) => (
-              <button
-                key={suggestion}
-                type="button"
-                disabled={inputDisabled}
-                onClick={() => sendMessage(suggestion)}
-                className="inline-flex min-h-11 items-center rounded-full border border-primary/20 bg-card px-3.5 py-2 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-              >
-                {suggestion}
-              </button>
-            ))}
-          </div>
-        )}
-        <div className="flex min-w-0 items-end gap-2 rounded-2xl border border-input bg-surface p-1.5 shadow-sm transition-colors focus-within:border-primary/35 focus-within:ring-2 focus-within:ring-ring/20">
-          <div className="min-w-0 flex-1">
-            <textarea
-              ref={textareaRef}
-              value={draft}
-              maxLength={MAX_MESSAGE_LENGTH}
-              rows={1}
-              disabled={inputDisabled}
-              onChange={(event) => {
-                setDraft(event.target.value);
-                resizeTextarea(event.target);
-              }}
-              onKeyDown={handleKeyDown}
-              placeholder={placeholder}
-              aria-label="Mensaje para el AI Partner"
-              aria-describedby={
-                draft.length >= COUNTER_THRESHOLD ? "ai-partner-character-count" : undefined
+        <div className={isFullscreen ? "mx-auto w-full max-w-3xl" : ""}>
+          {!hasUserMessages && (
+            <div
+              className={
+                isFullscreen
+                  ? "mb-3 flex flex-wrap justify-center gap-2"
+                  : "mb-3 flex flex-wrap gap-2"
               }
-              className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65"
-            />
-            {draft.length >= COUNTER_THRESHOLD && (
-              <p
-                id="ai-partner-character-count"
-                className="px-3 pb-1 text-right text-[11px] tabular-nums text-muted-foreground"
-              >
-                {draft.length}/{MAX_MESSAGE_LENGTH}
-              </p>
-            )}
+              aria-label="Sugerencias para comenzar"
+            >
+              {[
+                "Quiero hacer el Check Up Digital",
+                "¿Qué hace BPM.io?",
+                "Cuéntame casos de éxito",
+              ].map((suggestion) => (
+                <button
+                  key={suggestion}
+                  type="button"
+                  disabled={inputDisabled}
+                  onClick={() => sendMessage(suggestion)}
+                  className="inline-flex min-h-11 items-center rounded-full border border-primary/20 bg-card px-3.5 py-2 text-left text-xs font-semibold text-primary shadow-sm transition-all hover:-translate-y-0.5 hover:border-primary/40 hover:bg-surface focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  {suggestion}
+                </button>
+              ))}
+            </div>
+          )}
+          <div className="flex min-w-0 items-end gap-2 rounded-2xl border border-input bg-surface p-1.5 shadow-sm transition-colors focus-within:border-primary/35 focus-within:ring-2 focus-within:ring-ring/20">
+            <div className="min-w-0 flex-1">
+              <textarea
+                ref={textareaRef}
+                value={draft}
+                maxLength={MAX_MESSAGE_LENGTH}
+                rows={1}
+                disabled={inputDisabled}
+                onChange={(event) => {
+                  setDraft(event.target.value);
+                  resizeTextarea(event.target);
+                }}
+                onKeyDown={handleKeyDown}
+                placeholder={placeholder}
+                aria-label="Mensaje para el AI Partner"
+                aria-describedby={
+                  draft.length >= COUNTER_THRESHOLD ? "ai-partner-character-count" : undefined
+                }
+                className="block min-h-11 w-full resize-none overflow-y-hidden bg-transparent px-3 py-3 text-sm leading-5 text-foreground outline-none placeholder:text-muted-foreground disabled:cursor-not-allowed disabled:opacity-65"
+              />
+              {draft.length >= COUNTER_THRESHOLD && (
+                <p
+                  id="ai-partner-character-count"
+                  className="px-3 pb-1 text-right text-[11px] tabular-nums text-muted-foreground"
+                >
+                  {draft.length}/{MAX_MESSAGE_LENGTH}
+                </p>
+              )}
+            </div>
+            <button
+              type="submit"
+              disabled={inputDisabled || !draft.trim()}
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
+              aria-label="Enviar mensaje"
+            >
+              <Send size={17} aria-hidden />
+            </button>
           </div>
-          <button
-            type="submit"
-            disabled={inputDisabled || !draft.trim()}
-            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-foreground shadow-soft transition-transform hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-40 disabled:hover:translate-y-0"
-            aria-label="Enviar mensaje"
-          >
-            <Send size={17} aria-hidden />
-          </button>
+          <p className="mt-2 text-center text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]">
+            El AI Partner puede cometer errores. Verifica la información importante.
+          </p>
         </div>
-        <p className="mt-2 text-center text-[10px] leading-relaxed text-foreground/50 sm:text-[11px]">
-          El AI Partner puede cometer errores. Verifica la información importante.
-        </p>
       </form>
     </div>
   );
