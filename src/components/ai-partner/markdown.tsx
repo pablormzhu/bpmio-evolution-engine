@@ -7,6 +7,7 @@ type MarkdownTextProps = {
 
 type MarkdownBlock =
   | { kind: "paragraph"; lines: string[] }
+  | { kind: "heading"; text: string }
   | { kind: "unordered-list"; items: string[] }
   | { kind: "ordered-list"; items: string[]; start: number };
 
@@ -27,16 +28,24 @@ function parseBlocks(text: string): MarkdownBlock[] {
       continue;
     }
 
-    if (line.startsWith("- ")) {
+    const heading = /^#{1,6}\s+(.*)$/.exec(line);
+    if (heading) {
+      flushCurrent();
+      blocks.push({ kind: "heading", text: heading[1] });
+      continue;
+    }
+
+    const unorderedItem = /^[-*•]\s+(.*)$/.exec(line);
+    if (unorderedItem) {
       if (current?.kind !== "unordered-list") {
         flushCurrent();
         current = { kind: "unordered-list", items: [] };
       }
-      current.items.push(line.slice(2));
+      current.items.push(unorderedItem[1]);
       continue;
     }
 
-    const orderedItem = /^(\d+)\. (.*)$/.exec(line);
+    const orderedItem = /^(\d+)[.)]\s+(.*)$/.exec(line);
     if (orderedItem) {
       if (current?.kind !== "ordered-list") {
         flushCurrent();
@@ -86,6 +95,14 @@ export function MarkdownText({ text, className = "" }: MarkdownTextProps) {
   return (
     <div className={`min-w-0 space-y-3 break-words ${className}`.trim()}>
       {blocks.map((block, blockIndex) => {
+        if (block.kind === "heading") {
+          return (
+            <p key={`heading-${blockIndex}`} className="font-bold">
+              {renderInline(block.text, `heading-${blockIndex}`)}
+            </p>
+          );
+        }
+
         if (block.kind === "paragraph") {
           return (
             <p key={`paragraph-${blockIndex}`}>

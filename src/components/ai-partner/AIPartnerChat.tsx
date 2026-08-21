@@ -43,9 +43,13 @@ const ROOT_FULLSCREEN_CLASS =
 
 type SendMessage = (text: string, displayText?: string, options?: SendMessageOptions) => boolean;
 
+function isCoarsePointer() {
+  if (typeof window === "undefined") return false;
+  return window.matchMedia("(pointer: coarse)").matches;
+}
+
 function dismissMobileKeyboard() {
-  if (typeof window === "undefined") return;
-  if (!window.matchMedia("(pointer: coarse)").matches) return;
+  if (!isCoarsePointer()) return;
   const active = document.activeElement;
   if (active instanceof HTMLElement) active.blur();
 }
@@ -756,6 +760,7 @@ function AIPartnerChatClient({ ref }: AIPartnerChatProps) {
 
   const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
     if (event.key !== "Enter" || event.shiftKey || event.nativeEvent.isComposing) return;
+    if (isCoarsePointer()) return;
     event.preventDefault();
     submitDraft();
   };
